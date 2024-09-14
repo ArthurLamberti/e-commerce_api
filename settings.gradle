@@ -1,2 +1,6 @@
 rootProject.name = 'e-commerce_api'
+include 'application'
+include 'application'
+include 'domain'
+include 'infrastructure'
 

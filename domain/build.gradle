@@ -2,14 +2,15 @@ plugins {
     id 'java'
 }
 
-group 'com.arthurlamberti.ecommerce'
-version '1.0-SNAPSHOT'
+group 'com.arthurlamberti.ecommerce.domain'
 
 repositories {
     mavenCentral()
 }
 
 dependencies {
+    compileOnly group: 'org.projectlombok', name: 'lombok', version: '1.18.30'
+    annotationProcessor 'org.projectlombok:lombok:1.18.20'
 
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'

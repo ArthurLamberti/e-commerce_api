@@ -1,0 +1,35 @@
+plugins {
+    id 'java'
+}
+
+group 'com.arthurlamberti.ecommerce.infrastructure'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation(project(":domain"))
+    implementation(project(":application"))
+
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
+
+    implementation('org.springdoc:springdoc-openapi-webmvc-core:1.6.14')
+    implementation('org.springdoc:springdoc-openapi-ui:1.6.14')
+
+    implementation('org.springframework.boot:spring-boot-starter-web') {
+        exclude module: 'spring-boot-starter-tomcat'
+    }
+
+
+    implementation('com.fasterxml.jackson.module:jackson-module-afterburner')//
+    // https://mvnrepository.com/artifact/com.fasterxml.jackson.datatype/jackson-datatype-jdk8
+    implementation group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jdk8', version: '2.17.2'
+
+}
+
+test {
+    useJUnitPlatform()
+}
