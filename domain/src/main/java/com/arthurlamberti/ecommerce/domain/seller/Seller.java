@@ -13,6 +13,7 @@ import java.time.Instant;
 public class Seller extends AggregateRoot<SellerID> {
 
     private String name;
+    private String description;
     private boolean active;
     private Instant createdAt;
     private Instant updatedAt;
@@ -20,12 +21,14 @@ public class Seller extends AggregateRoot<SellerID> {
 
     protected Seller(final SellerID sellerID,
                      final String name,
+                     final String description,
                      final boolean active,
                      final Instant createdAt,
                      final Instant updatedAt,
                      final Instant deletedAt) {
         super(sellerID);
         this.name = name;
+        this.description = description;
         this.active = active;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
@@ -33,11 +36,11 @@ public class Seller extends AggregateRoot<SellerID> {
         selfValidate();
     }
 
-    public static Seller newSeller(final String name, final Boolean active) {
+    public static Seller newSeller(final String name, final String description, final Boolean active) {
         final var anId = SellerID.unique();
         final var now = InstantUtils.now();
         final var deletedAt = active ? null : now;
-        return new Seller(anId, name, active, now, now, deletedAt);
+        return new Seller(anId, name, description, active, now, now, deletedAt);
     }
 
     @Override

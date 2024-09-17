@@ -19,6 +19,9 @@ public final class Fixture {
         return FAKER.name().firstName();
     }
 
+    public static String sellerDescription() {
+        return FAKER.lorem().characters(0, 2999);
+    }
     public static Boolean isActive() {
         return FAKER.bool().bool();
     }
