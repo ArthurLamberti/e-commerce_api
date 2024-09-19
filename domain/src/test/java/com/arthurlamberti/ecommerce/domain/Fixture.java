@@ -37,4 +37,10 @@ public final class Fixture {
     public static Boolean isActive() {
         return FAKER.bool().bool();
     }
+    public static Integer positiveNumber() {
+        return FAKER.number().numberBetween(1, Integer.MAX_VALUE);
+    }
+    public static Integer negativeNumber() {
+        return FAKER.number().numberBetween(Integer.MIN_VALUE, -1);
+    }
 }

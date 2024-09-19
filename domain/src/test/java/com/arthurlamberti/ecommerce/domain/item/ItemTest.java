@@ -5,6 +5,7 @@ import com.arthurlamberti.ecommerce.domain.UnitTest;
 import com.arthurlamberti.ecommerce.domain.exceptions.NotificationException;
 import com.arthurlamberti.ecommerce.domain.seller.Seller;
 import com.arthurlamberti.ecommerce.domain.seller.Status;
+import com.github.javafaker.Faker;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -397,6 +398,7 @@ public class ItemTest extends UnitTest {
         final var expectedErrorMessage = "Review score must be between 1 and 5";
 
         final var actualItem = Item.newItem(expectedSellerId, expectedName, expectedDescription, expectedImageUrl);
+        actualItem.activate();
 
         final var actualError = assertThrows(
                 NotificationException.class,
@@ -417,6 +419,7 @@ public class ItemTest extends UnitTest {
         final var expectedErrorMessage = "Review score must be between 1 and 5";
 
         final var actualItem = Item.newItem(expectedSellerId, expectedName, expectedDescription, expectedImageUrl);
+        actualItem.activate();
 
         final var actualError = assertThrows(
                 NotificationException.class,
@@ -447,27 +450,192 @@ public class ItemTest extends UnitTest {
         assertEquals(expectedErrorMessage, actualError.getFirstError().get().message());
     }
 
+    @Test
     public void givenAValidItem_whenCallAddStockWithValidParams_shouldReceiveOK(){
+        final var expectedName = Fixture.name();
+        final var expectedDescription = Fixture.characters(11, 300);
+        final var expectedImageUrl = Fixture.imageUrl();
+        final var expectedSellerId = Fixture.uuid();
+        final var expectedQtyAvailable = Fixture.positiveNumber();
+        final var expectedStatus = Status.INACTIVE;
+        final var expectedQtySold = 0;
+        final var expectedQtyReview = 0;
+        final var expectedScore = 0;
 
+
+        final var actualItem = Item.newItem(expectedSellerId, expectedName, expectedDescription, expectedImageUrl);
+        actualItem.activate();
+        actualItem.addStock(expectedQtyAvailable);
+        final var actualUpdatedAt = actualItem.getUpdatedAt();
+
+        assertNotNull(actualItem);
+        assertNotNull(actualItem.getId());
+        assertEquals(expectedName, actualItem.getName());
+        assertEquals(expectedDescription, actualItem.getDescription());
+        assertEquals(expectedImageUrl, actualItem.getImageUrl());
+        assertEquals(expectedStatus, actualItem.getStatus());
+        assertEquals(expectedQtyAvailable, actualItem.getQtyAvailable());
+        assertEquals(expectedQtySold, actualItem.getQtySold());
+        assertEquals(expectedQtyReview, actualItem.getQtyReviews());
+        assertEquals(expectedScore, actualItem.getScoreReview());
+        assertNotNull(actualItem.getCreatedAt());
+        assertTrue(actualItem.getUpdatedAt().isAfter(actualUpdatedAt));
+        assertNull(actualItem.getDeletedAt());
     }
 
+    @Test
+    public void givenAValidItemWithStock_whenCallSoldItem_shouldReceiveOK(){
+        final var expectedName = Fixture.name();
+        final var expectedDescription = Fixture.characters(11, 300);
+        final var expectedImageUrl = Fixture.imageUrl();
+        final var expectedSellerId = Fixture.uuid();
+        final var expectedQtyAvailable = 30;
+        final var qtySold = 4;
+        final var expectedStatus = Status.INACTIVE;
+        final var expectedQtySold = 0;
+        final var expectedQtyReview = 0;
+        final var expectedScore = 0;
+
+
+        final var actualItem = Item.newItem(expectedSellerId, expectedName, expectedDescription, expectedImageUrl);
+        actualItem.activate();
+        final var actualUpdatedAt = actualItem.getUpdatedAt();
+
+        assertNotNull(actualItem);
+        assertNotNull(actualItem.getId());
+
+        actualItem.addStock(expectedQtyAvailable);
+        assertEquals(expectedQtyAvailable, actualItem.getQtyAvailable());
+
+        actualItem.soldItem(qtySold);
+
+        assertEquals(expectedQtyAvailable-qtySold, actualItem.getQtyAvailable());
+        assertEquals(expectedName, actualItem.getName());
+        assertEquals(expectedDescription, actualItem.getDescription());
+        assertEquals(expectedImageUrl, actualItem.getImageUrl());
+        assertEquals(expectedStatus, actualItem.getStatus());
+        assertEquals(expectedQtyAvailable, actualItem.getQtyAvailable());
+        assertEquals(expectedQtySold, actualItem.getQtySold());
+        assertEquals(expectedQtyReview, actualItem.getQtyReviews());
+        assertEquals(expectedScore, actualItem.getScoreReview());
+        assertNotNull(actualItem.getCreatedAt());
+        assertTrue(actualItem.getUpdatedAt().isAfter(actualUpdatedAt));
+        assertNull(actualItem.getDeletedAt());
+    }
+
+    @Test
     public void givenAValidItem_whenCallAddStockWithInvalidParams_shouldReceiveAnError(){
+        final var expectedName = Fixture.name();
+        final var expectedDescription = Fixture.characters(11, 300);
+        final var expectedImageUrl = Fixture.imageUrl();
+        final var expectedSellerId = Fixture.uuid();
+        final var qtyStock = Fixture.negativeNumber();
 
+        final var expectedErrorCount = 1;
+        final var expectedErrorMessage = "Quantity should be positive";
+
+        final var actualItem = Item.newItem(expectedSellerId, expectedName, expectedDescription, expectedImageUrl);
+        actualItem.activate();
+
+        final var actualError = assertThrows(
+                NotificationException.class,
+                () -> actualItem.addStock(qtyStock)
+        );
+
+        assertEquals(expectedErrorCount, actualError.getErrors().size());
+        assertEquals(expectedErrorMessage, actualError.getFirstError().get().message());
     }
 
+    @Test
     public void givenAnInvalidItem_whenCallAddStockWithValidParams_shouldReceiveAnError(){
+        final var expectedName = Fixture.name();
+        final var expectedDescription = Fixture.characters(11, 300);
+        final var expectedImageUrl = Fixture.imageUrl();
+        final var expectedSellerId = Fixture.uuid();
+        final var qtyStock = Fixture.positiveNumber();
 
+        final var expectedErrorCount = 1;
+        final var expectedErrorMessage = "Item should be activate to add stock";
+
+        final var actualItem = Item.newItem(expectedSellerId, expectedName, expectedDescription, expectedImageUrl);
+
+        final var actualError = assertThrows(
+                NotificationException.class,
+                () -> actualItem.addStock(qtyStock)
+        );
+
+        assertEquals(expectedErrorCount, actualError.getErrors().size());
+        assertEquals(expectedErrorMessage, actualError.getFirstError().get().message());
     }
-    public void givenAValidItem_whenCallSoldItemWithValidParams_shouldReceiveOK(){
 
+    @Test
+    public void givenAValidItemWithoutStock_whenCallSoldItemWithValidParams_shouldReceiveOK(){
+        final var expectedName = Fixture.name();
+        final var expectedDescription = Fixture.characters(11, 300);
+        final var expectedImageUrl = Fixture.imageUrl();
+        final var expectedSellerId = Fixture.uuid();
+        final var qtySold = 10;
+
+        final var expectedErrorCount = 1;
+        final var expectedErrorMessage = "Item without stock";
+
+        final var actualItem = Item.newItem(expectedSellerId, expectedName, expectedDescription, expectedImageUrl);
+        actualItem.activate();
+        actualItem.addStock(3);
+
+        final var actualError = assertThrows(
+                NotificationException.class,
+                () -> actualItem.soldItem(qtySold)
+        );
+
+        assertEquals(expectedErrorCount, actualError.getErrors().size());
+        assertEquals(expectedErrorMessage, actualError.getFirstError().get().message());
     }
 
-
+    @Test
     public void givenAValidItem_whenCallSoldItemWithInvalidParams_shouldReceiveAnError(){
+        final var expectedName = Fixture.name();
+        final var expectedDescription = Fixture.characters(11, 300);
+        final var expectedImageUrl = Fixture.imageUrl();
+        final var expectedSellerId = Fixture.uuid();
+        final var qtySold = Fixture.negativeNumber();
+
+        final var expectedErrorCount = 1;
+        final var expectedErrorMessage = "Quantity sold should be positive";
+
+        final var actualItem = Item.newItem(expectedSellerId, expectedName, expectedDescription, expectedImageUrl);
+        actualItem.activate();
+        actualItem.addStock(3);
+
+        final var actualError = assertThrows(
+                NotificationException.class,
+                () -> actualItem.soldItem(qtySold)
+        );
+
+        assertEquals(expectedErrorCount, actualError.getErrors().size());
+        assertEquals(expectedErrorMessage, actualError.getFirstError().get().message());
 
     }
 
+    @Test
     public void givenAnInvalidItem_whenCallSoldItemWithValidParams_shouldReceiveAnError(){
+        final var expectedName = Fixture.name();
+        final var expectedDescription = Fixture.characters(11, 300);
+        final var expectedImageUrl = Fixture.imageUrl();
+        final var expectedSellerId = Fixture.uuid();
+        final var qtySold = 10;
 
+        final var expectedErrorCount = 1;
+        final var expectedErrorMessage = "Item should be activate to be sold";
+
+        final var actualItem = Item.newItem(expectedSellerId, expectedName, expectedDescription, expectedImageUrl);
+
+        final var actualError = assertThrows(
+                NotificationException.class,
+                () -> actualItem.soldItem(qtySold)
+        );
+
+        assertEquals(expectedErrorCount, actualError.getErrors().size());
+        assertEquals(expectedErrorMessage, actualError.getFirstError().get().message());
     }
 }
