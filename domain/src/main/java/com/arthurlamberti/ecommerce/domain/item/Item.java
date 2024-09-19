@@ -67,4 +67,29 @@ public class Item extends AggregateRoot<ItemID> {
     public void validate(ValidationHandler handler) {
 
     }
+
+    public Item activate() {
+        return this;
+    }
+
+    public Item deactivate() {
+        return this;
+    }
+
+    public void addStock(Integer qtyAvailable) {
+
+    }
+
+    public void soldItem(Integer qtySold) {
+
+    }
+
+    public void addReview(Integer scoreReview) {
+        this.scoreReview += scoreReview;
+        this.qtyReviews++;
+    }
+
+    public double getReviewScore(){
+        return scoreReview/Double.valueOf(qtyReviews);
+    }
 }
