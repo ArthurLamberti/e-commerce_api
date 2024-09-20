@@ -1,12 +1,18 @@
 package com.arthurlamberti.ecommerce.domain.item;
 
 import com.arthurlamberti.ecommerce.domain.AggregateRoot;
+import com.arthurlamberti.ecommerce.domain.exceptions.DomainException;
+import com.arthurlamberti.ecommerce.domain.exceptions.NotificationException;
 import com.arthurlamberti.ecommerce.domain.seller.Status;
 import com.arthurlamberti.ecommerce.domain.utils.InstantUtils;
+import com.arthurlamberti.ecommerce.domain.validation.Error;
 import com.arthurlamberti.ecommerce.domain.validation.ValidationHandler;
+import com.arthurlamberti.ecommerce.domain.validation.handler.Notification;
 import lombok.Getter;
 
 import java.time.Instant;
+
+import static java.util.Objects.isNull;
 
 @Getter
 public class Item extends AggregateRoot<ItemID> {
@@ -50,6 +56,8 @@ public class Item extends AggregateRoot<ItemID> {
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
         this.deletedAt = deletedAt;
+
+        selfValidate();
     }
 
     public static Item newItem(
@@ -60,36 +68,94 @@ public class Item extends AggregateRoot<ItemID> {
     ) {
         final var anId = ItemID.unique();
         final var now = InstantUtils.now();
-        return new Item(anId, sellerId, name, description, imageUrl, null, 0, 0, 0, 0, now, now, null);
+        return new Item(anId, sellerId, name, description, imageUrl, Status.INACTIVE, 0, 0, 0, 0, now, now, null);
     }
 
     @Override
     public void validate(ValidationHandler handler) {
-
+        new ItemValidator(this, handler).validate();
     }
 
     public Item activate() {
+        this.deletedAt = null;
+        this.status = Status.ACTIVE;
+        this.updatedAt = InstantUtils.now();
         return this;
     }
 
     public Item deactivate() {
+        var now = InstantUtils.now();
+        if (isNull(this.deletedAt))
+            this.deletedAt = now;
+        this.status = Status.INACTIVE;
+        this.updatedAt = now;
         return this;
     }
 
     public void addStock(Integer qtyAvailable) {
+        final var notification = Notification.create();
+        if (qtyAvailable <= 0) {
+            notification.append(new Error("Quantity should be positive"));
+        }
+        if (this.status == Status.INACTIVE) {
+            notification.append(new Error("Item should be activate to add stock"));
+        }
 
+        if (notification.hasError()) {
+            throw new NotificationException("Failed to add stock", notification);
+        }
+
+        this.qtyAvailable += qtyAvailable;
+        this.updatedAt = InstantUtils.now();
     }
 
     public void soldItem(Integer qtySold) {
+        final var notification = Notification.create();
+        if (qtySold <= 0) {
+            notification.append(new Error("Quantity sold should be positive"));
+        }
+        if (qtySold > this.qtyAvailable) {
+            notification.append(new Error("Item without stock"));
+        }
+        if (this.status == Status.INACTIVE) {
+            notification.append(new Error("Item should be activate to sold item"));
+        }
 
+        if (notification.hasError()) {
+            throw new NotificationException("Failed to sold item", notification);
+        }
+
+        this.qtyAvailable -= qtySold;
     }
 
     public void addReview(Integer scoreReview) {
+        final var notification = Notification.create();
+        if (scoreReview <= 0 || scoreReview > 5)
+            notification.append(new Error("Review score must be between 1 and 5"));
+        if (this.status == Status.INACTIVE) {
+            notification.append(new Error("Item should be activate to add review"));
+        }
+
+        if (notification.hasError()) {
+            throw new NotificationException("Failed to add review item", notification);
+        }
+
         this.scoreReview += scoreReview;
         this.qtyReviews++;
+        this.updatedAt = InstantUtils.now();
     }
 
     public double getReviewScore(){
         return scoreReview/Double.valueOf(qtyReviews);
+    }
+
+    private void selfValidate() {
+        final var notification = Notification.create();
+        validate(notification);
+        if (notification.hasError())
+            throw new NotificationException("Failed to create an Item", notification);
+    }
+
+    private void updateValidate(final String message) {
     }
 }
