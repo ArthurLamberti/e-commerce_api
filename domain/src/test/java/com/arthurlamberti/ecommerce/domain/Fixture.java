@@ -50,5 +50,9 @@ public final class Fixture {
             return characters(11,99);
         }
 
+        public static String description() {
+            return characters(51,999);
+        }
+
     }
 }

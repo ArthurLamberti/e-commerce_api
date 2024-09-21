@@ -15,7 +15,7 @@ public class ItemTest extends UnitTest {
     @Test
     public void givenValidParams_whenCallNewItem_shouldInstantiateAnItem() {
         final var expectedName = Fixture.Item.name();
-        final var expectedDescription = Fixture.characters(11, 300);
+        final var expectedDescription = Fixture.Item.description();
         final var expectedStatus = Status.INACTIVE;
         final var expectedImageUrl = Fixture.imageUrl();
         final var expectedSellerId = Fixture.uuid();
@@ -40,7 +40,7 @@ public class ItemTest extends UnitTest {
     @Test
     public void givenInvalidNullSellerId_whenCallNewItem_shouldReturnAnException() {
         final var expectedName = Fixture.Item.name();
-        final var expectedDescription = Fixture.characters(11, 300);
+        final var expectedDescription = Fixture.Item.description();
         final var expectedImageUrl = Fixture.imageUrl();
         final String expectedSellerId = null;
         final var expectedErrorCount = 1;
@@ -58,7 +58,7 @@ public class ItemTest extends UnitTest {
     @Test
     public void givenInvalidEmptySellerId_whenCallNewItem_shouldReturnAnException() {
         final var expectedName = Fixture.Item.name();
-        final var expectedDescription = Fixture.characters(51, 300);
+        final var expectedDescription = Fixture.Item.description();
         final var expectedImageUrl = Fixture.imageUrl();
         final var expectedSellerId = " ";
         final var expectedErrorCount = 1;
@@ -77,7 +77,7 @@ public class ItemTest extends UnitTest {
     public void givenInvalidNullName_whenCallNewItem_shouldReturnAnException() {
 
         final String expectedName = null;
-        final var expectedDescription = Fixture.characters(51, 999);
+        final var expectedDescription = Fixture.Item.description();
         final var expectedImageUrl = Fixture.imageUrl();
         final var expectedSellerId = Fixture.uuid();
         final var expectedErrorCount = 1;
@@ -96,7 +96,7 @@ public class ItemTest extends UnitTest {
     public void givenInvalidEmptyName_whenCallNewItem_shouldReturnAnException() {
 
         final var expectedName = "";
-        final var expectedDescription = Fixture.characters(11, 300);
+        final var expectedDescription = Fixture.Item.description();
         final var expectedImageUrl = Fixture.imageUrl();
         final var expectedSellerId = Fixture.uuid();
         final var expectedErrorCount = 1;
@@ -115,7 +115,7 @@ public class ItemTest extends UnitTest {
     public void givenInvalidNameWithLengthLessThan10_whenCallNewItem_shouldReturnAnException() {
 
         final var expectedName = Fixture.characters(1, 9);
-        final var expectedDescription = Fixture.characters(51, 300);
+        final var expectedDescription = Fixture.Item.description();
         final var expectedImageUrl = Fixture.imageUrl();
         final var expectedSellerId = Fixture.uuid();
         final var expectedErrorCount = 1;
@@ -134,7 +134,7 @@ public class ItemTest extends UnitTest {
     public void givenInvalidNameWithLengthGreaterThan100_whenCallNewItem_shouldReturnAnException() {
 
         final var expectedName = Fixture.characters(101, 1000);
-        final var expectedDescription = Fixture.characters(51, 999);
+        final var expectedDescription = Fixture.Item.description();
         final var expectedImageUrl = Fixture.imageUrl();
         final var expectedSellerId = Fixture.uuid();
         final var expectedErrorCount = 1;
@@ -227,7 +227,7 @@ public class ItemTest extends UnitTest {
     @Test
     public void givenInvalidNullImageUrl_whenCallNewItem_shouldReturnAnException() {
         final var expectedName = Fixture.Item.name();
-        final var expectedDescription = Fixture.characters(51, 999);
+        final var expectedDescription = Fixture.Item.description();
         final String expectedImageUrl = null;
         final var expectedSellerId = Fixture.uuid();
         final var expectedErrorCount = 1;
@@ -245,7 +245,7 @@ public class ItemTest extends UnitTest {
     @Test
     public void givenInvalidEmptyUrl_whenCallNewItem_shouldReturnAnException() {
         final var expectedName = Fixture.Item.name();
-        final var expectedDescription = Fixture.characters(51, 999);
+        final var expectedDescription = Fixture.Item.description();
         final var expectedImageUrl = "";
         final var expectedSellerId = Fixture.uuid();
         final var expectedErrorCount = 1;
@@ -263,7 +263,7 @@ public class ItemTest extends UnitTest {
     @Test
     public void givenAnInactiveItem_whenCallActivate_shouldReceiveOK() {
         final var expectedName = Fixture.Item.name();
-        final var expectedDescription = Fixture.characters(51, 300);
+        final var expectedDescription = Fixture.Item.description();
         final var expectedStatus = Status.ACTIVE;
         final var expectedImageUrl = Fixture.imageUrl();
         final var expectedSellerId = Fixture.uuid();
@@ -295,7 +295,7 @@ public class ItemTest extends UnitTest {
     @Test
     public void givenAnActiveItem_whenCallDeativate_shouldReceiveOK() {
         final var expectedName = Fixture.Item.name();
-        final var expectedDescription = Fixture.characters(51, 300);
+        final var expectedDescription = Fixture.Item.description();
         final var expectedStatus = Status.INACTIVE;
         final var expectedImageUrl = Fixture.imageUrl();
         final var expectedSellerId = Fixture.uuid();
@@ -329,7 +329,7 @@ public class ItemTest extends UnitTest {
     @Test
     public void givenAnActiveItem_whenCallAddReview_shouldIncrementReviewQtyAndScore() {
         final var expectedName = Fixture.Item.name();
-        final var expectedDescription = Fixture.characters(51, 300);
+        final var expectedDescription = Fixture.Item.description();
         final var expectedImageUrl = Fixture.imageUrl();
         final var expectedSellerId = Fixture.uuid();
         final var expectedQtyAvailable = 0;
@@ -359,7 +359,7 @@ public class ItemTest extends UnitTest {
     @Test
     public void givenAnActiveItem_whenAddSomeReviews_shouldIncrementReviewQtyAndScore() {
         final var expectedName = Fixture.Item.name();
-        final var expectedDescription = Fixture.characters(51, 300);
+        final var expectedDescription =Fixture.Item.description();
         final var expectedImageUrl = Fixture.imageUrl();
         final var expectedSellerId = Fixture.uuid();
         final var expectedQtyAvailable = 0;
@@ -390,7 +390,7 @@ public class ItemTest extends UnitTest {
     @Test
     public void givenAnActiveItem_whenCallAddReviewIfInvalidScore0_shouldReturnAnError() {
         final var expectedName = Fixture.Item.name();
-        final var expectedDescription = Fixture.characters(51, 999);
+        final var expectedDescription = Fixture.Item.description();
         final var expectedImageUrl = Fixture.imageUrl();
         final var expectedSellerId = Fixture.uuid();
         final var expectedErrorCount = 1;
@@ -411,7 +411,7 @@ public class ItemTest extends UnitTest {
     @Test
     public void givenAnActiveItem_whenCallAddReviewWithInvalidScore6_shouldReturnAnError() {
         final var expectedName = Fixture.Item.name();
-        final var expectedDescription = Fixture.characters(51, 300);
+        final var expectedDescription = Fixture.Item.description();
         final var expectedImageUrl = Fixture.imageUrl();
         final var expectedSellerId = Fixture.uuid();
         final var expectedErrorCount = 1;
@@ -432,7 +432,7 @@ public class ItemTest extends UnitTest {
     @Test
     public void givenAnInactiveItem_whenCallAddReview_shouldReceiveAnError() {
         final var expectedName = Fixture.Item.name();
-        final var expectedDescription = Fixture.characters(51, 999);
+        final var expectedDescription = Fixture.Item.description();
         final var expectedImageUrl = Fixture.imageUrl();
         final var expectedSellerId = Fixture.uuid();
         final var expectedErrorCount = 1;
@@ -452,7 +452,7 @@ public class ItemTest extends UnitTest {
     @Test
     public void givenAValidItem_whenCallAddStockWithValidParams_shouldReceiveOK(){
         final var expectedName = Fixture.Item.name();
-        final var expectedDescription = Fixture.characters(51, 300);
+        final var expectedDescription = Fixture.Item.description();
         final var expectedImageUrl = Fixture.imageUrl();
         final var expectedSellerId = Fixture.uuid();
         final var expectedQtyAvailable = Fixture.positiveNumber();
@@ -486,7 +486,7 @@ public class ItemTest extends UnitTest {
     @Test
     public void givenAValidItemWithStock_whenCallSoldItem_shouldReceiveOK(){
         final var expectedName = Fixture.Item.name();
-        final var expectedDescription = Fixture.characters(51, 999);
+        final var expectedDescription = Fixture.Item.description();
         final var expectedImageUrl = Fixture.imageUrl();
         final var expectedSellerId = Fixture.uuid();
         final var expectedQtyAvailable = 30;
@@ -525,7 +525,7 @@ public class ItemTest extends UnitTest {
     @Test
     public void givenAValidItem_whenCallAddStockWithInvalidParams_shouldReceiveAnError(){
         final var expectedName = Fixture.Item.name();
-        final var expectedDescription = Fixture.characters(51, 999);
+        final var expectedDescription = Fixture.Item.description();
         final var expectedImageUrl = Fixture.imageUrl();
         final var expectedSellerId = Fixture.uuid();
         final var qtyStock = Fixture.negativeNumber();
@@ -548,7 +548,7 @@ public class ItemTest extends UnitTest {
     @Test
     public void givenAnInvalidItem_whenCallAddStockWithValidParams_shouldReceiveAnError(){
         final var expectedName = Fixture.Item.name();
-        final var expectedDescription = Fixture.characters(51, 300);
+        final var expectedDescription = Fixture.Item.description();
         final var expectedImageUrl = Fixture.imageUrl();
         final var expectedSellerId = Fixture.uuid();
         final var qtyStock = Fixture.positiveNumber();
@@ -570,7 +570,7 @@ public class ItemTest extends UnitTest {
     @Test
     public void givenAValidItemWithoutStock_whenCallSoldItemWithValidParams_shouldReceiveOK(){
         final var expectedName = Fixture.Item.name();
-        final var expectedDescription = Fixture.characters(51, 999);
+        final var expectedDescription = Fixture.Item.description();
         final var expectedImageUrl = Fixture.imageUrl();
         final var expectedSellerId = Fixture.uuid();
         final var qtySold = 10;
@@ -594,7 +594,7 @@ public class ItemTest extends UnitTest {
     @Test
     public void givenAValidItem_whenCallSoldItemWithInvalidParams_shouldReceiveAnError(){
         final var expectedName = Fixture.Item.name();
-        final var expectedDescription = Fixture.characters(51, 999);
+        final var expectedDescription = Fixture.Item.description();
         final var expectedImageUrl = Fixture.imageUrl();
         final var expectedSellerId = Fixture.uuid();
         final var qtySold = Fixture.negativeNumber();
@@ -619,7 +619,7 @@ public class ItemTest extends UnitTest {
     @Test
     public void givenAnInvalidItem_whenCallSoldItemWithValidParams_shouldReceiveAnError(){
         final var expectedName = Fixture.Item.name();
-        final var expectedDescription = Fixture.characters(51, 999);
+        final var expectedDescription =Fixture.Item.description();
         final var expectedImageUrl = Fixture.imageUrl();
         final var expectedSellerId = Fixture.uuid();
         final var qtySold = 10;
