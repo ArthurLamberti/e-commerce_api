@@ -43,4 +43,12 @@ public final class Fixture {
     public static Integer negativeNumber() {
         return FAKER.number().numberBetween(Integer.MIN_VALUE, -1);
     }
+
+    public static final class Item {
+
+        public static String name () {
+            return characters(11,99);
+        }
+
+    }
 }
