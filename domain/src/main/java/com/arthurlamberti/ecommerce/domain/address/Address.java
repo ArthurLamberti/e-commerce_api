@@ -2,12 +2,14 @@ package com.arthurlamberti.ecommerce.domain.address;
 
 import com.arthurlamberti.ecommerce.domain.AggregateRoot;
 import com.arthurlamberti.ecommerce.domain.validation.ValidationHandler;
+import lombok.Getter;
 
 import java.time.Instant;
 
+@Getter
 public class Address extends AggregateRoot<AddressID> {
     private final String country;
-    private final String province;
+    private final String state;
     private final String city;
     private final String street;
     private final String zipCode;
@@ -21,7 +23,7 @@ public class Address extends AggregateRoot<AddressID> {
     protected Address(
             final AddressID anId,
             final String aCountry,
-            final String aProvince,
+            final String aState,
             final String aCity,
             final String aStreet,
             final String aZipCode,
@@ -34,7 +36,7 @@ public class Address extends AggregateRoot<AddressID> {
     ) {
         super(anId);
         this.country = aCountry;
-        this.province = aProvince;
+        this.state = aState;
         this.city = aCity;
         this.street = aStreet;
         this.zipCode = aZipCode;
@@ -48,7 +50,7 @@ public class Address extends AggregateRoot<AddressID> {
 
     public static Address newAddress(
             final String aCountry,
-            final String aProvince,
+            final String aState,
             final String aCity,
             final String aStreet,
             final String aZipCode,
