@@ -65,4 +65,11 @@ public class Address extends AggregateRoot<AddressID> {
     public void validate(ValidationHandler handler) {
 
     }
+    public void activate() {
+
+    }
+
+    public void deactivate() {
+
+    }
 }
