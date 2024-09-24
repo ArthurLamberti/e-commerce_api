@@ -2,6 +2,8 @@ package com.arthurlamberti.ecommerce.domain.address;
 
 import com.arthurlamberti.ecommerce.domain.Fixture;
 import com.arthurlamberti.ecommerce.domain.UnitTest;
+import com.arthurlamberti.ecommerce.domain.exceptions.NotificationException;
+import com.arthurlamberti.ecommerce.domain.item.Item;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -41,15 +43,325 @@ public class AddressTest extends UnitTest {
         assertEquals(actualAddress.getCreatedAt(), actualAddress.getUpdatedAt());
         assertNull(actualAddress.getDeletedAt());
     }
-    public void givenInvalidNullCountry_whenCallNewAddress_shouldReceiveAnException(){}
-    public void givenInvalidEmptyCountry_whenCallNewAddress_shouldReceiveAnException(){}
-    public void givenInvalidNullState_whenCallNewAddress_shouldReceiveAnException(){}
-    public void givenInvalidEmptyState_whenCallNewAddress_shouldReceiveAnException(){}
-    public void givenInvalidNullCity_whenCallNewAddress_shouldReceiveAnException(){}
-    public void givenInvalidEmptyCity_whenCallNewAddress_shouldReceiveAnException(){}
-    public void givenInvalidNullStreet_whenCallNewAddress_shouldReceiveAnException(){}
-    public void givenInvalidEmptyStreet_whenCallNewAddress_shouldReceiveAnException(){}
-    public void givenInvalidNullNumber_whenCallNewAddress_shouldReceiveAnException(){}
+
+    @Test
+    public void givenInvalidNullCountry_whenCallNewAddress_shouldReceiveAnException(){
+        final String expectedCountry = null;
+        final var expectedState = Fixture.Address.state();
+        final var expectedCity = Fixture.Address.city();
+        final var expectedStreet = Fixture.Address.street();
+        final var expectedZipCode = Fixture.Address.zipCode();
+        final var expectedNumber = Fixture.Address.number();
+        final var expectedComplement = Fixture.characters(1, 100);
+
+        final var expectedErrorCount = 1;
+        final var expectedErrorMessage = "'country' should not be null";
+
+        final var actualError = assertThrows(
+                NotificationException.class,
+                () ->  Address.newAddress(
+                        expectedCountry,
+                        expectedState,
+                        expectedCity,
+                        expectedStreet,
+                        expectedZipCode,
+                        expectedNumber,
+                        expectedComplement)
+        );
+
+        assertEquals(expectedErrorCount, actualError.getErrors().size());
+        assertEquals(expectedErrorMessage, actualError.getFirstError().get().message());
+    }
+
+    @Test
+    public void givenInvalidEmptyCountry_whenCallNewAddress_shouldReceiveAnException(){
+        final String expectedCountry = " ";
+        final var expectedState = Fixture.Address.state();
+        final var expectedCity = Fixture.Address.city();
+        final var expectedStreet = Fixture.Address.street();
+        final var expectedZipCode = Fixture.Address.zipCode();
+        final var expectedNumber = Fixture.Address.number();
+        final var expectedComplement = Fixture.characters(1, 100);
+
+        final var expectedErrorCount = 1;
+        final var expectedErrorMessage = "'country' should not be empty";
+
+        final var actualError = assertThrows(
+                NotificationException.class,
+                () ->  Address.newAddress(
+                        expectedCountry,
+                        expectedState,
+                        expectedCity,
+                        expectedStreet,
+                        expectedZipCode,
+                        expectedNumber,
+                        expectedComplement)
+        );
+
+        assertEquals(expectedErrorCount, actualError.getErrors().size());
+        assertEquals(expectedErrorMessage, actualError.getFirstError().get().message());
+    }
+
+    @Test
+    public void givenInvalidNullState_whenCallNewAddress_shouldReceiveAnException(){
+        final var expectedCountry = Fixture.Address.country();
+        final String expectedState = null;
+        final var expectedCity = Fixture.Address.city();
+        final var expectedStreet = Fixture.Address.street();
+        final var expectedZipCode = Fixture.Address.zipCode();
+        final var expectedNumber = Fixture.Address.number();
+        final var expectedComplement = Fixture.characters(1, 100);
+
+        final var expectedErrorCount = 1;
+        final var expectedErrorMessage = "'state' should not be null";
+
+        final var actualError = assertThrows(
+                NotificationException.class,
+                () ->  Address.newAddress(
+                        expectedCountry,
+                        expectedState,
+                        expectedCity,
+                        expectedStreet,
+                        expectedZipCode,
+                        expectedNumber,
+                        expectedComplement)
+        );
+
+        assertEquals(expectedErrorCount, actualError.getErrors().size());
+        assertEquals(expectedErrorMessage, actualError.getFirstError().get().message());
+    }
+
+    @Test
+    public void givenInvalidEmptyState_whenCallNewAddress_shouldReceiveAnException(){
+        final var expectedCountry = Fixture.Address.country();
+        final String expectedState = " ";
+        final var expectedCity = Fixture.Address.city();
+        final var expectedStreet = Fixture.Address.street();
+        final var expectedZipCode = Fixture.Address.zipCode();
+        final var expectedNumber = Fixture.Address.number();
+        final var expectedComplement = Fixture.characters(1, 100);
+
+        final var expectedErrorCount = 1;
+        final var expectedErrorMessage = "'state' should not be empty";
+
+        final var actualError = assertThrows(
+                NotificationException.class,
+                () ->  Address.newAddress(
+                        expectedCountry,
+                        expectedState,
+                        expectedCity,
+                        expectedStreet,
+                        expectedZipCode,
+                        expectedNumber,
+                        expectedComplement)
+        );
+
+        assertEquals(expectedErrorCount, actualError.getErrors().size());
+        assertEquals(expectedErrorMessage, actualError.getFirstError().get().message());
+    }
+
+    @Test
+    public void givenInvalidNullCity_whenCallNewAddress_shouldReceiveAnException(){
+        final var expectedCountry = Fixture.Address.country();
+        final var expectedState = Fixture.Address.state();
+        final String expectedCity = null;
+        final var expectedStreet = Fixture.Address.street();
+        final var expectedZipCode = Fixture.Address.zipCode();
+        final var expectedNumber = Fixture.Address.number();
+        final var expectedComplement = Fixture.characters(1, 100);
+
+        final var expectedErrorCount = 1;
+        final var expectedErrorMessage = "'city' should not be null";
+
+        final var actualError = assertThrows(
+                NotificationException.class,
+                () ->  Address.newAddress(
+                        expectedCountry,
+                        expectedState,
+                        expectedCity,
+                        expectedStreet,
+                        expectedZipCode,
+                        expectedNumber,
+                        expectedComplement)
+        );
+
+        assertEquals(expectedErrorCount, actualError.getErrors().size());
+        assertEquals(expectedErrorMessage, actualError.getFirstError().get().message());
+    }
+
+    @Test
+    public void givenInvalidEmptyCity_whenCallNewAddress_shouldReceiveAnException(){
+        final var expectedCountry = Fixture.Address.country();
+        final var expectedState = Fixture.Address.state();
+        final String expectedCity = "";
+        final var expectedStreet = Fixture.Address.street();
+        final var expectedZipCode = Fixture.Address.zipCode();
+        final var expectedNumber = Fixture.Address.number();
+        final var expectedComplement = Fixture.characters(1, 100);
+
+        final var expectedErrorCount = 1;
+        final var expectedErrorMessage = "'city' should not be empty";
+
+        final var actualError = assertThrows(
+                NotificationException.class,
+                () ->  Address.newAddress(
+                        expectedCountry,
+                        expectedState,
+                        expectedCity,
+                        expectedStreet,
+                        expectedZipCode,
+                        expectedNumber,
+                        expectedComplement)
+        );
+
+        assertEquals(expectedErrorCount, actualError.getErrors().size());
+        assertEquals(expectedErrorMessage, actualError.getFirstError().get().message());
+    }
+
+    @Test
+    public void givenInvalidNullStreet_whenCallNewAddress_shouldReceiveAnException(){
+        final var expectedCountry = Fixture.Address.country();
+        final var expectedState = Fixture.Address.state();
+        final var expectedCity = Fixture.Address.city();
+        final String expectedStreet = null;
+        final var expectedZipCode = Fixture.Address.zipCode();
+        final var expectedNumber = Fixture.Address.number();
+        final var expectedComplement = Fixture.characters(1, 100);
+
+        final var expectedErrorCount = 1;
+        final var expectedErrorMessage = "'street' should not be null";
+
+        final var actualError = assertThrows(
+                NotificationException.class,
+                () ->  Address.newAddress(
+                        expectedCountry,
+                        expectedState,
+                        expectedCity,
+                        expectedStreet,
+                        expectedZipCode,
+                        expectedNumber,
+                        expectedComplement)
+        );
+
+        assertEquals(expectedErrorCount, actualError.getErrors().size());
+        assertEquals(expectedErrorMessage, actualError.getFirstError().get().message());
+    }
+
+    @Test
+    public void givenInvalidEmptyStreet_whenCallNewAddress_shouldReceiveAnException(){
+        final var expectedCountry = Fixture.Address.country();
+        final var expectedState = Fixture.Address.state();
+        final var expectedCity = Fixture.Address.city();
+        final var expectedStreet = "";
+        final var expectedZipCode = Fixture.Address.zipCode();
+        final var expectedNumber = Fixture.Address.number();
+        final var expectedComplement = Fixture.characters(1, 100);
+
+        final var expectedErrorCount = 1;
+        final var expectedErrorMessage = "'street' should not be empty";
+
+        final var actualError = assertThrows(
+                NotificationException.class,
+                () ->  Address.newAddress(
+                        expectedCountry,
+                        expectedState,
+                        expectedCity,
+                        expectedStreet,
+                        expectedZipCode,
+                        expectedNumber,
+                        expectedComplement)
+        );
+
+        assertEquals(expectedErrorCount, actualError.getErrors().size());
+        assertEquals(expectedErrorMessage, actualError.getFirstError().get().message());
+    }
+
+    @Test
+    public void givenInvalidNullZipCode_whenCallNewAddress_shouldReceiveAnException(){
+        final var expectedCountry = Fixture.Address.country();
+        final var expectedState = Fixture.Address.state();
+        final var expectedCity = Fixture.Address.city();
+        final var expectedStreet = Fixture.Address.street();
+        final var expectedZipCode = Fixture.Address.zipCode();
+        final var expectedNumber = Fixture.Address.number();
+        final var expectedComplement = Fixture.characters(1, 100);
+
+        final var expectedErrorCount = 1;
+        final var expectedErrorMessage = "'zipcode' should not be null";
+
+        final var actualError = assertThrows(
+                NotificationException.class,
+                () ->  Address.newAddress(
+                        expectedCountry,
+                        expectedState,
+                        expectedCity,
+                        expectedStreet,
+                        expectedZipCode,
+                        expectedNumber,
+                        expectedComplement)
+        );
+
+        assertEquals(expectedErrorCount, actualError.getErrors().size());
+        assertEquals(expectedErrorMessage, actualError.getFirstError().get().message());
+    }
+
+    @Test
+    public void givenInvalidEmptyZipCode_whenCallNewAddress_shouldReceiveAnException(){
+        final var expectedCountry = Fixture.Address.country();
+        final var expectedState = Fixture.Address.state();
+        final var expectedCity = Fixture.Address.city();
+        final var expectedStreet = Fixture.Address.street();
+        final var expectedZipCode = "";
+        final var expectedNumber = Fixture.Address.number();
+        final var expectedComplement = Fixture.characters(1, 100);
+
+        final var expectedErrorCount = 1;
+        final var expectedErrorMessage = "'zipcode' should not be empty";
+
+        final var actualError = assertThrows(
+                NotificationException.class,
+                () ->  Address.newAddress(
+                        expectedCountry,
+                        expectedState,
+                        expectedCity,
+                        expectedStreet,
+                        expectedZipCode,
+                        expectedNumber,
+                        expectedComplement)
+        );
+
+        assertEquals(expectedErrorCount, actualError.getErrors().size());
+        assertEquals(expectedErrorMessage, actualError.getFirstError().get().message());
+    }
+
+    @Test
+    public void givenInvalidNullNumber_whenCallNewAddress_shouldReceiveAnException(){
+
+        final var expectedCountry = Fixture.Address.country();
+        final var expectedState = Fixture.Address.state();
+        final var expectedCity = Fixture.Address.city();
+        final var expectedStreet = Fixture.Address.street();
+        final var expectedZipCode = Fixture.Address.zipCode();
+        final String expectedNumber = null;
+        final var expectedComplement = Fixture.characters(1,99);
+
+        final var expectedErrorCount = 1;
+        final var expectedErrorMessage = "'number' should not be null";
+
+        final var actualError = assertThrows(
+                NotificationException.class,
+                () ->  Address.newAddress(
+                        expectedCountry,
+                        expectedState,
+                        expectedCity,
+                        expectedStreet,
+                        expectedZipCode,
+                        expectedNumber,
+                        expectedComplement)
+        );
+
+        assertEquals(expectedErrorCount, actualError.getErrors().size());
+        assertEquals(expectedErrorMessage, actualError.getFirstError().get().message());}
 
     @Test
     public void givenInvalidEmptyNumber_whenCallNewAddress_shouldReceiveAnException(){
@@ -59,31 +371,26 @@ public class AddressTest extends UnitTest {
         final var expectedCity = Fixture.Address.city();
         final var expectedStreet = Fixture.Address.street();
         final var expectedZipCode = Fixture.Address.zipCode();
-        final var expectedNumber = Fixture.Address.number();
-        final var expectedComplement = "";
-        final var expectedIsActive = Boolean.TRUE;
+        final var expectedNumber = "";
+        final var expectedComplement = Fixture.characters(1,99);
 
-        final var actualAddress = Address.newAddress(
-                expectedCountry,
-                expectedState,
-                expectedCity,
-                expectedStreet,
-                expectedZipCode,
-                expectedNumber,
-                expectedComplement);
+        final var expectedErrorCount = 1;
+        final var expectedErrorMessage = "'number' should not be empty";
 
-        assertNotNull(actualAddress);
-        assertNotNull(actualAddress.getId());
-        assertEquals(expectedCountry, actualAddress.getCountry());
-        assertEquals(expectedState, actualAddress.getState());
-        assertEquals(expectedCity, actualAddress.getCity());
-        assertEquals(expectedStreet, actualAddress.getStreet());
-        assertEquals(expectedZipCode, actualAddress.getZipCode());
-        assertEquals(expectedNumber, actualAddress.getNumber());
-        assertEquals(expectedComplement, actualAddress.getComplement());
-        assertEquals(expectedIsActive, actualAddress.isActive());
-        assertEquals(actualAddress.getCreatedAt(), actualAddress.getUpdatedAt());
-        assertNull(actualAddress.getDeletedAt());
+        final var actualError = assertThrows(
+                NotificationException.class,
+                () ->  Address.newAddress(
+                        expectedCountry,
+                        expectedState,
+                        expectedCity,
+                        expectedStreet,
+                        expectedZipCode,
+                        expectedNumber,
+                        expectedComplement)
+        );
+
+        assertEquals(expectedErrorCount, actualError.getErrors().size());
+        assertEquals(expectedErrorMessage, actualError.getFirstError().get().message());
     }
 
     @Test
@@ -120,6 +427,8 @@ public class AddressTest extends UnitTest {
         assertEquals(actualAddress.getCreatedAt(), actualAddress.getUpdatedAt());
         assertNull(actualAddress.getDeletedAt());
     }
+
+    @Test
     public void givenAValidAddress_whenCallDeactivate_shouldReceiveOk(){
 
         final var expectedCountry = Fixture.Address.country();
