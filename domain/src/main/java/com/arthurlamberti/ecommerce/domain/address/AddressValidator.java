@@ -102,7 +102,7 @@ public class AddressValidator extends Validator {
     private void checkComplementConstraints() {
         final var complement = anAddress.getComplement();
         if (isNull(complement) || complement.isBlank())
-            return;domain/src/main/java/com/arthurlamberti/ecommerce/domain/address/Address.java
+            return;
 
         if (complement.trim().length() > COMPLEMENT_MAX_LENGTH)
             this.validationHandler().append(new Error("'complement' should contains max of 100 characters"));
