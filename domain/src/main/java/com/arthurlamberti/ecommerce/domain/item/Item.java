@@ -1,9 +1,7 @@
 package com.arthurlamberti.ecommerce.domain.item;
 
 import com.arthurlamberti.ecommerce.domain.AggregateRoot;
-import com.arthurlamberti.ecommerce.domain.exceptions.DomainException;
 import com.arthurlamberti.ecommerce.domain.exceptions.NotificationException;
-import com.arthurlamberti.ecommerce.domain.seller.Status;
 import com.arthurlamberti.ecommerce.domain.utils.InstantUtils;
 import com.arthurlamberti.ecommerce.domain.validation.Error;
 import com.arthurlamberti.ecommerce.domain.validation.ValidationHandler;

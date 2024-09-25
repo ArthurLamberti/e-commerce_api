@@ -3,8 +3,9 @@ package com.arthurlamberti.ecommerce.domain.address;
 import com.arthurlamberti.ecommerce.domain.Fixture;
 import com.arthurlamberti.ecommerce.domain.UnitTest;
 import com.arthurlamberti.ecommerce.domain.exceptions.NotificationException;
-import com.arthurlamberti.ecommerce.domain.item.Item;
 import org.junit.jupiter.api.Test;
+
+import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -282,7 +283,7 @@ public class AddressTest extends UnitTest {
         final var expectedState = Fixture.Address.state();
         final var expectedCity = Fixture.Address.city();
         final var expectedStreet = Fixture.Address.street();
-        final var expectedZipCode = Fixture.Address.zipCode();
+        final String expectedZipCode = null;
         final var expectedNumber = Fixture.Address.number();
         final var expectedComplement = Fixture.characters(1, 100);
 
@@ -429,6 +430,36 @@ public class AddressTest extends UnitTest {
     }
 
     @Test
+    public void givenInvalidComplementGreaterThan100_whenCallNewAddress_shouldReceiveAnException(){
+
+        final var expectedCountry = Fixture.Address.country();
+        final var expectedState = Fixture.Address.state();
+        final var expectedCity = Fixture.Address.city();
+        final var expectedStreet = Fixture.Address.street();
+        final var expectedZipCode = Fixture.Address.zipCode();
+        final var expectedNumber = Fixture.Address.number();
+        final var expectedComplement = Fixture.characters(101,300);
+
+        final var expectedErrorCount = 1;
+        final var expectedErrorMessage = "'complement' should contains max of 100 characters";
+
+        final var actualError = assertThrows(
+                NotificationException.class,
+                () ->  Address.newAddress(
+                        expectedCountry,
+                        expectedState,
+                        expectedCity,
+                        expectedStreet,
+                        expectedZipCode,
+                        expectedNumber,
+                        expectedComplement)
+        );
+
+        assertEquals(expectedErrorCount, actualError.getErrors().size());
+        assertEquals(expectedErrorMessage, actualError.getFirstError().get().message());
+    }
+
+    @Test
     public void givenAValidAddress_whenCallDeactivate_shouldReceiveOk(){
 
         final var expectedCountry = Fixture.Address.country();
@@ -466,6 +497,8 @@ public class AddressTest extends UnitTest {
         assertTrue(actualAddress.getCreatedAt().isBefore(actualAddress.getUpdatedAt()));
         assertNotNull(actualAddress.getDeletedAt());
     }
+
+    @Test
     public void givenAValidInactiveAddress_whenCallActivate_shouldReceiveOk(){
         final var expectedCountry = Fixture.Address.country();
         final var expectedState = Fixture.Address.state();

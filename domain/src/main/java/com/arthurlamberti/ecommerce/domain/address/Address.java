@@ -1,10 +1,15 @@
 package com.arthurlamberti.ecommerce.domain.address;
 
 import com.arthurlamberti.ecommerce.domain.AggregateRoot;
+import com.arthurlamberti.ecommerce.domain.exceptions.NotificationException;
+import com.arthurlamberti.ecommerce.domain.utils.InstantUtils;
 import com.arthurlamberti.ecommerce.domain.validation.ValidationHandler;
+import com.arthurlamberti.ecommerce.domain.validation.handler.Notification;
 import lombok.Getter;
 
 import java.time.Instant;
+
+import static java.util.Objects.isNull;
 
 @Getter
 public class Address extends AggregateRoot<AddressID> {
@@ -16,7 +21,7 @@ public class Address extends AggregateRoot<AddressID> {
     private final String number;
     private final String complement;
     private boolean active;
-    private Instant createdAt;
+    private final Instant createdAt;
     private Instant updatedAt;
     private Instant deletedAt;
 
@@ -46,6 +51,8 @@ public class Address extends AggregateRoot<AddressID> {
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
         this.deletedAt = deletedAt;
+
+        selfValidate();
     }
 
     public static Address newAddress(
@@ -57,19 +64,36 @@ public class Address extends AggregateRoot<AddressID> {
             final String aNumber,
             final String aComplement
     ) {
-        return new Address(
-                null,null,null,null,null,null,null,null,true,null,null,null);
+        final var anId = AddressID.unique();
+        final var now = InstantUtils.now();
+        return new Address(anId,aCountry,aState,aCity,aStreet,aZipCode,aNumber,aComplement,true,now,now,null);
     }
 
     @Override
     public void validate(ValidationHandler handler) {
-
-    }
-    public void activate() {
-
+        new AddressValidator(this, handler).validate();
     }
 
-    public void deactivate() {
+    private void selfValidate() {
+        final var notification = Notification.create();
+        validate(notification);
+        if (notification.hasError())
+            throw new NotificationException("Failed to create an Address", notification);
+    }
 
+    public Address activate() {
+        this.deletedAt = null;
+        this.updatedAt = Instant.now();
+        this.active = true;
+        return this;
+    }
+
+    public Address deactivate() {
+        var now = InstantUtils.now();
+        if (isNull(this.deletedAt))
+            this.deletedAt = now;
+        this.updatedAt = now;
+        this.active = false;
+        return this;
     }
 }

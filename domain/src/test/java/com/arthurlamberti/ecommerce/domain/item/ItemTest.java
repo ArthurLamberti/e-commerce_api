@@ -3,9 +3,6 @@ package com.arthurlamberti.ecommerce.domain.item;
 import com.arthurlamberti.ecommerce.domain.Fixture;
 import com.arthurlamberti.ecommerce.domain.UnitTest;
 import com.arthurlamberti.ecommerce.domain.exceptions.NotificationException;
-import com.arthurlamberti.ecommerce.domain.seller.Seller;
-import com.arthurlamberti.ecommerce.domain.seller.Status;
-import com.github.javafaker.Faker;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
