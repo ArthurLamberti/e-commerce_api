@@ -5,18 +5,55 @@ on:
     branches:
       - 'feat/**'
       - 'main'
+  pull_request:
+    branches:
+      - 'main'
   workflow_dispatch: # rodar via interfacee
 
 jobs:
-  tests:
-    name: Tests runner
+  build:
+    name: Build runner
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout
+        uses: actions/checkout@v3
+
       - name: Set up JDK 17
         uses: actions/setup-java@v3
         with:
           java-version: '17'
           distribution: 'temurin'
-      - name: Run application tests
+
+      - name: Cache Gradle packages
+        uses: actions/cache@v3
+        with:
+          path: ~/.gradle/caches
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle
+
+      - name: Build
+        run: ./gradlew build
+
+      - name: Run tests
         run: ./gradlew test
+
+      - name: Upload tests result
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: test-results
+          path: build/test-results/test
+
+#  tests:
+#    name: Tests runner
+#    runs-on: ubuntu-latest
+#    steps:
+#      - uses: actions/checkout@v3
+#      - name: Set up JDK 17
+#        uses: actions/setup-java@v3
+#        with:
+#          java-version: '17'
+#          distribution: 'temurin'
+#      - name: Run application tests
+#        run: ./gradlew test
