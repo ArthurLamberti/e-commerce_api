@@ -1,5 +1,6 @@
 package com.arthurlamberti.ecommerce.domain;
 
+import com.arthurlamberti.ecommerce.domain.address.Address;
 import com.arthurlamberti.ecommerce.domain.utils.IdUtils;
 import com.github.javafaker.Faker;
 
@@ -10,6 +11,14 @@ public final class Fixture {
 
     public static String name() {
         return FAKER.name().fullName();
+    }
+
+    public static String email() {
+        return FAKER.internet().emailAddress();
+    }
+
+    public static String document() {
+        return FAKER.idNumber().valid();
     }
 
     public static String characters(Integer qty) {
@@ -59,7 +68,7 @@ public final class Fixture {
         }
     }
 
-    public static final class Address {
+    public static final class AddressFixture {
         public static String country() {
             return FAKER.address().country();
         }
@@ -82,6 +91,18 @@ public final class Fixture {
 
         public static String number() {
             return FAKER.address().buildingNumber();
+        }
+
+        public static Address validAddress() {
+            return Address.newAddress(
+                    country(),
+                    state(),
+                    city(),
+                    street(),
+                    zipCode(),
+                    number(),
+                    null
+            );
         }
     }
 }
