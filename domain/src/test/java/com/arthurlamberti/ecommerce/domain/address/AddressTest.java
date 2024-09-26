@@ -5,20 +5,18 @@ import com.arthurlamberti.ecommerce.domain.UnitTest;
 import com.arthurlamberti.ecommerce.domain.exceptions.NotificationException;
 import org.junit.jupiter.api.Test;
 
-import java.util.stream.Stream;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 public class AddressTest extends UnitTest {
 
     @Test
     public void givenValidParams_whenCallNewAddress_shouldInstantiateAnAddress() {
-        final var expectedCountry = Fixture.Address.country();
-        final var expectedState = Fixture.Address.state();
-        final var expectedCity = Fixture.Address.city();
-        final var expectedStreet = Fixture.Address.street();
-        final var expectedZipCode = Fixture.Address.zipCode();
-        final var expectedNumber = Fixture.Address.number();
+        final var expectedCountry = Fixture.AddressFixture.country();
+        final var expectedState = Fixture.AddressFixture.state();
+        final var expectedCity = Fixture.AddressFixture.city();
+        final var expectedStreet = Fixture.AddressFixture.street();
+        final var expectedZipCode = Fixture.AddressFixture.zipCode();
+        final var expectedNumber = Fixture.AddressFixture.number();
         final var expectedComplement = Fixture.characters(1, 100);
         final var expectedIsActive = Boolean.TRUE;
 
@@ -48,11 +46,11 @@ public class AddressTest extends UnitTest {
     @Test
     public void givenInvalidNullCountry_whenCallNewAddress_shouldReceiveAnException(){
         final String expectedCountry = null;
-        final var expectedState = Fixture.Address.state();
-        final var expectedCity = Fixture.Address.city();
-        final var expectedStreet = Fixture.Address.street();
-        final var expectedZipCode = Fixture.Address.zipCode();
-        final var expectedNumber = Fixture.Address.number();
+        final var expectedState = Fixture.AddressFixture.state();
+        final var expectedCity = Fixture.AddressFixture.city();
+        final var expectedStreet = Fixture.AddressFixture.street();
+        final var expectedZipCode = Fixture.AddressFixture.zipCode();
+        final var expectedNumber = Fixture.AddressFixture.number();
         final var expectedComplement = Fixture.characters(1, 100);
 
         final var expectedErrorCount = 1;
@@ -77,11 +75,11 @@ public class AddressTest extends UnitTest {
     @Test
     public void givenInvalidEmptyCountry_whenCallNewAddress_shouldReceiveAnException(){
         final String expectedCountry = " ";
-        final var expectedState = Fixture.Address.state();
-        final var expectedCity = Fixture.Address.city();
-        final var expectedStreet = Fixture.Address.street();
-        final var expectedZipCode = Fixture.Address.zipCode();
-        final var expectedNumber = Fixture.Address.number();
+        final var expectedState = Fixture.AddressFixture.state();
+        final var expectedCity = Fixture.AddressFixture.city();
+        final var expectedStreet = Fixture.AddressFixture.street();
+        final var expectedZipCode = Fixture.AddressFixture.zipCode();
+        final var expectedNumber = Fixture.AddressFixture.number();
         final var expectedComplement = Fixture.characters(1, 100);
 
         final var expectedErrorCount = 1;
@@ -105,12 +103,12 @@ public class AddressTest extends UnitTest {
 
     @Test
     public void givenInvalidNullState_whenCallNewAddress_shouldReceiveAnException(){
-        final var expectedCountry = Fixture.Address.country();
+        final var expectedCountry = Fixture.AddressFixture.country();
         final String expectedState = null;
-        final var expectedCity = Fixture.Address.city();
-        final var expectedStreet = Fixture.Address.street();
-        final var expectedZipCode = Fixture.Address.zipCode();
-        final var expectedNumber = Fixture.Address.number();
+        final var expectedCity = Fixture.AddressFixture.city();
+        final var expectedStreet = Fixture.AddressFixture.street();
+        final var expectedZipCode = Fixture.AddressFixture.zipCode();
+        final var expectedNumber = Fixture.AddressFixture.number();
         final var expectedComplement = Fixture.characters(1, 100);
 
         final var expectedErrorCount = 1;
@@ -134,12 +132,12 @@ public class AddressTest extends UnitTest {
 
     @Test
     public void givenInvalidEmptyState_whenCallNewAddress_shouldReceiveAnException(){
-        final var expectedCountry = Fixture.Address.country();
+        final var expectedCountry = Fixture.AddressFixture.country();
         final String expectedState = " ";
-        final var expectedCity = Fixture.Address.city();
-        final var expectedStreet = Fixture.Address.street();
-        final var expectedZipCode = Fixture.Address.zipCode();
-        final var expectedNumber = Fixture.Address.number();
+        final var expectedCity = Fixture.AddressFixture.city();
+        final var expectedStreet = Fixture.AddressFixture.street();
+        final var expectedZipCode = Fixture.AddressFixture.zipCode();
+        final var expectedNumber = Fixture.AddressFixture.number();
         final var expectedComplement = Fixture.characters(1, 100);
 
         final var expectedErrorCount = 1;
@@ -163,12 +161,12 @@ public class AddressTest extends UnitTest {
 
     @Test
     public void givenInvalidNullCity_whenCallNewAddress_shouldReceiveAnException(){
-        final var expectedCountry = Fixture.Address.country();
-        final var expectedState = Fixture.Address.state();
+        final var expectedCountry = Fixture.AddressFixture.country();
+        final var expectedState = Fixture.AddressFixture.state();
         final String expectedCity = null;
-        final var expectedStreet = Fixture.Address.street();
-        final var expectedZipCode = Fixture.Address.zipCode();
-        final var expectedNumber = Fixture.Address.number();
+        final var expectedStreet = Fixture.AddressFixture.street();
+        final var expectedZipCode = Fixture.AddressFixture.zipCode();
+        final var expectedNumber = Fixture.AddressFixture.number();
         final var expectedComplement = Fixture.characters(1, 100);
 
         final var expectedErrorCount = 1;
@@ -192,12 +190,12 @@ public class AddressTest extends UnitTest {
 
     @Test
     public void givenInvalidEmptyCity_whenCallNewAddress_shouldReceiveAnException(){
-        final var expectedCountry = Fixture.Address.country();
-        final var expectedState = Fixture.Address.state();
+        final var expectedCountry = Fixture.AddressFixture.country();
+        final var expectedState = Fixture.AddressFixture.state();
         final String expectedCity = "";
-        final var expectedStreet = Fixture.Address.street();
-        final var expectedZipCode = Fixture.Address.zipCode();
-        final var expectedNumber = Fixture.Address.number();
+        final var expectedStreet = Fixture.AddressFixture.street();
+        final var expectedZipCode = Fixture.AddressFixture.zipCode();
+        final var expectedNumber = Fixture.AddressFixture.number();
         final var expectedComplement = Fixture.characters(1, 100);
 
         final var expectedErrorCount = 1;
@@ -221,12 +219,12 @@ public class AddressTest extends UnitTest {
 
     @Test
     public void givenInvalidNullStreet_whenCallNewAddress_shouldReceiveAnException(){
-        final var expectedCountry = Fixture.Address.country();
-        final var expectedState = Fixture.Address.state();
-        final var expectedCity = Fixture.Address.city();
+        final var expectedCountry = Fixture.AddressFixture.country();
+        final var expectedState = Fixture.AddressFixture.state();
+        final var expectedCity = Fixture.AddressFixture.city();
         final String expectedStreet = null;
-        final var expectedZipCode = Fixture.Address.zipCode();
-        final var expectedNumber = Fixture.Address.number();
+        final var expectedZipCode = Fixture.AddressFixture.zipCode();
+        final var expectedNumber = Fixture.AddressFixture.number();
         final var expectedComplement = Fixture.characters(1, 100);
 
         final var expectedErrorCount = 1;
@@ -250,12 +248,12 @@ public class AddressTest extends UnitTest {
 
     @Test
     public void givenInvalidEmptyStreet_whenCallNewAddress_shouldReceiveAnException(){
-        final var expectedCountry = Fixture.Address.country();
-        final var expectedState = Fixture.Address.state();
-        final var expectedCity = Fixture.Address.city();
+        final var expectedCountry = Fixture.AddressFixture.country();
+        final var expectedState = Fixture.AddressFixture.state();
+        final var expectedCity = Fixture.AddressFixture.city();
         final var expectedStreet = "";
-        final var expectedZipCode = Fixture.Address.zipCode();
-        final var expectedNumber = Fixture.Address.number();
+        final var expectedZipCode = Fixture.AddressFixture.zipCode();
+        final var expectedNumber = Fixture.AddressFixture.number();
         final var expectedComplement = Fixture.characters(1, 100);
 
         final var expectedErrorCount = 1;
@@ -279,12 +277,12 @@ public class AddressTest extends UnitTest {
 
     @Test
     public void givenInvalidNullZipCode_whenCallNewAddress_shouldReceiveAnException(){
-        final var expectedCountry = Fixture.Address.country();
-        final var expectedState = Fixture.Address.state();
-        final var expectedCity = Fixture.Address.city();
-        final var expectedStreet = Fixture.Address.street();
+        final var expectedCountry = Fixture.AddressFixture.country();
+        final var expectedState = Fixture.AddressFixture.state();
+        final var expectedCity = Fixture.AddressFixture.city();
+        final var expectedStreet = Fixture.AddressFixture.street();
         final String expectedZipCode = null;
-        final var expectedNumber = Fixture.Address.number();
+        final var expectedNumber = Fixture.AddressFixture.number();
         final var expectedComplement = Fixture.characters(1, 100);
 
         final var expectedErrorCount = 1;
@@ -308,12 +306,12 @@ public class AddressTest extends UnitTest {
 
     @Test
     public void givenInvalidEmptyZipCode_whenCallNewAddress_shouldReceiveAnException(){
-        final var expectedCountry = Fixture.Address.country();
-        final var expectedState = Fixture.Address.state();
-        final var expectedCity = Fixture.Address.city();
-        final var expectedStreet = Fixture.Address.street();
+        final var expectedCountry = Fixture.AddressFixture.country();
+        final var expectedState = Fixture.AddressFixture.state();
+        final var expectedCity = Fixture.AddressFixture.city();
+        final var expectedStreet = Fixture.AddressFixture.street();
         final var expectedZipCode = "";
-        final var expectedNumber = Fixture.Address.number();
+        final var expectedNumber = Fixture.AddressFixture.number();
         final var expectedComplement = Fixture.characters(1, 100);
 
         final var expectedErrorCount = 1;
@@ -338,11 +336,11 @@ public class AddressTest extends UnitTest {
     @Test
     public void givenInvalidNullNumber_whenCallNewAddress_shouldReceiveAnException(){
 
-        final var expectedCountry = Fixture.Address.country();
-        final var expectedState = Fixture.Address.state();
-        final var expectedCity = Fixture.Address.city();
-        final var expectedStreet = Fixture.Address.street();
-        final var expectedZipCode = Fixture.Address.zipCode();
+        final var expectedCountry = Fixture.AddressFixture.country();
+        final var expectedState = Fixture.AddressFixture.state();
+        final var expectedCity = Fixture.AddressFixture.city();
+        final var expectedStreet = Fixture.AddressFixture.street();
+        final var expectedZipCode = Fixture.AddressFixture.zipCode();
         final String expectedNumber = null;
         final var expectedComplement = Fixture.characters(1,99);
 
@@ -367,11 +365,11 @@ public class AddressTest extends UnitTest {
     @Test
     public void givenInvalidEmptyNumber_whenCallNewAddress_shouldReceiveAnException(){
 
-        final var expectedCountry = Fixture.Address.country();
-        final var expectedState = Fixture.Address.state();
-        final var expectedCity = Fixture.Address.city();
-        final var expectedStreet = Fixture.Address.street();
-        final var expectedZipCode = Fixture.Address.zipCode();
+        final var expectedCountry = Fixture.AddressFixture.country();
+        final var expectedState = Fixture.AddressFixture.state();
+        final var expectedCity = Fixture.AddressFixture.city();
+        final var expectedStreet = Fixture.AddressFixture.street();
+        final var expectedZipCode = Fixture.AddressFixture.zipCode();
         final var expectedNumber = "";
         final var expectedComplement = Fixture.characters(1,99);
 
@@ -397,12 +395,12 @@ public class AddressTest extends UnitTest {
     @Test
     public void givenValidNullComplement_whenCallNewAddress_shouldInstantiateAnAddress(){
 
-        final var expectedCountry = Fixture.Address.country();
-        final var expectedState = Fixture.Address.state();
-        final var expectedCity = Fixture.Address.city();
-        final var expectedStreet = Fixture.Address.street();
-        final var expectedZipCode = Fixture.Address.zipCode();
-        final var expectedNumber = Fixture.Address.number();
+        final var expectedCountry = Fixture.AddressFixture.country();
+        final var expectedState = Fixture.AddressFixture.state();
+        final var expectedCity = Fixture.AddressFixture.city();
+        final var expectedStreet = Fixture.AddressFixture.street();
+        final var expectedZipCode = Fixture.AddressFixture.zipCode();
+        final var expectedNumber = Fixture.AddressFixture.number();
         final String expectedComplement = null;
         final var expectedIsActive = Boolean.TRUE;
 
@@ -432,12 +430,12 @@ public class AddressTest extends UnitTest {
     @Test
     public void givenInvalidComplementGreaterThan100_whenCallNewAddress_shouldReceiveAnException(){
 
-        final var expectedCountry = Fixture.Address.country();
-        final var expectedState = Fixture.Address.state();
-        final var expectedCity = Fixture.Address.city();
-        final var expectedStreet = Fixture.Address.street();
-        final var expectedZipCode = Fixture.Address.zipCode();
-        final var expectedNumber = Fixture.Address.number();
+        final var expectedCountry = Fixture.AddressFixture.country();
+        final var expectedState = Fixture.AddressFixture.state();
+        final var expectedCity = Fixture.AddressFixture.city();
+        final var expectedStreet = Fixture.AddressFixture.street();
+        final var expectedZipCode = Fixture.AddressFixture.zipCode();
+        final var expectedNumber = Fixture.AddressFixture.number();
         final var expectedComplement = Fixture.characters(101,300);
 
         final var expectedErrorCount = 1;
@@ -462,12 +460,12 @@ public class AddressTest extends UnitTest {
     @Test
     public void givenAValidAddress_whenCallDeactivate_shouldReceiveOk(){
 
-        final var expectedCountry = Fixture.Address.country();
-        final var expectedState = Fixture.Address.state();
-        final var expectedCity = Fixture.Address.city();
-        final var expectedStreet = Fixture.Address.street();
-        final var expectedZipCode = Fixture.Address.zipCode();
-        final var expectedNumber = Fixture.Address.number();
+        final var expectedCountry = Fixture.AddressFixture.country();
+        final var expectedState = Fixture.AddressFixture.state();
+        final var expectedCity = Fixture.AddressFixture.city();
+        final var expectedStreet = Fixture.AddressFixture.street();
+        final var expectedZipCode = Fixture.AddressFixture.zipCode();
+        final var expectedNumber = Fixture.AddressFixture.number();
         final var expectedComplement = Fixture.characters(1, 100);
         final var expectedIsActive = Boolean.FALSE;
 
@@ -500,12 +498,12 @@ public class AddressTest extends UnitTest {
 
     @Test
     public void givenAValidInactiveAddress_whenCallActivate_shouldReceiveOk(){
-        final var expectedCountry = Fixture.Address.country();
-        final var expectedState = Fixture.Address.state();
-        final var expectedCity = Fixture.Address.city();
-        final var expectedStreet = Fixture.Address.street();
-        final var expectedZipCode = Fixture.Address.zipCode();
-        final var expectedNumber = Fixture.Address.number();
+        final var expectedCountry = Fixture.AddressFixture.country();
+        final var expectedState = Fixture.AddressFixture.state();
+        final var expectedCity = Fixture.AddressFixture.city();
+        final var expectedStreet = Fixture.AddressFixture.street();
+        final var expectedZipCode = Fixture.AddressFixture.zipCode();
+        final var expectedNumber = Fixture.AddressFixture.number();
         final var expectedComplement = Fixture.characters(1, 100);
         final var expectedIsActive = Boolean.TRUE;
 
