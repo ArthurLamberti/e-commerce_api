@@ -1,6 +1,7 @@
 package com.arthurlamberti.ecommerce.domain.item;
 
 import com.arthurlamberti.ecommerce.domain.AggregateRoot;
+import com.arthurlamberti.ecommerce.domain.enums.ItemStatus;
 import com.arthurlamberti.ecommerce.domain.exceptions.NotificationException;
 import com.arthurlamberti.ecommerce.domain.utils.InstantUtils;
 import com.arthurlamberti.ecommerce.domain.validation.Error;
@@ -19,7 +20,7 @@ public class Item extends AggregateRoot<ItemID> {
     private String name;
     private String description;
     private String imageUrl;
-    private Status status;
+    private ItemStatus status;
     private Integer qtyAvailable;
     private Integer qtySold;
     private Integer scoreReview;
@@ -33,7 +34,7 @@ public class Item extends AggregateRoot<ItemID> {
                    final String name,
                    final String description,
                    final String imageUrl,
-                   final Status status,
+                   final ItemStatus status,
                    final Integer qtyAvailable,
                    final Integer qtySold,
                    final Integer scoreReview,
@@ -66,7 +67,7 @@ public class Item extends AggregateRoot<ItemID> {
     ) {
         final var anId = ItemID.unique();
         final var now = InstantUtils.now();
-        return new Item(anId, sellerId, name, description, imageUrl, Status.INACTIVE, 0, 0, 0, 0, now, now, null);
+        return new Item(anId, sellerId, name, description, imageUrl, ItemStatus.INACTIVE, 0, 0, 0, 0, now, now, null);
     }
 
     @Override
@@ -76,7 +77,7 @@ public class Item extends AggregateRoot<ItemID> {
 
     public Item activate() {
         this.deletedAt = null;
-        this.status = Status.ACTIVE;
+        this.status = ItemStatus.ACTIVE;
         this.updatedAt = InstantUtils.now();
         return this;
     }
@@ -85,7 +86,7 @@ public class Item extends AggregateRoot<ItemID> {
         var now = InstantUtils.now();
         if (isNull(this.deletedAt))
             this.deletedAt = now;
-        this.status = Status.INACTIVE;
+        this.status = ItemStatus.INACTIVE;
         this.updatedAt = now;
         return this;
     }
@@ -95,7 +96,7 @@ public class Item extends AggregateRoot<ItemID> {
         if (qtyAvailable <= 0) {
             notification.append(new Error("Quantity should be positive"));
         }
-        if (this.status == Status.INACTIVE) {
+        if (this.status == ItemStatus.INACTIVE) {
             notification.append(new Error("Item should be activate to add stock"));
         }
 
@@ -115,7 +116,7 @@ public class Item extends AggregateRoot<ItemID> {
         if (qtySold > this.qtyAvailable) {
             notification.append(new Error("Item without stock"));
         }
-        if (this.status == Status.INACTIVE) {
+        if (this.status == ItemStatus.INACTIVE) {
             notification.append(new Error("Item should be activate to sold item"));
         }
 
@@ -130,7 +131,7 @@ public class Item extends AggregateRoot<ItemID> {
         final var notification = Notification.create();
         if (scoreReview <= 0 || scoreReview > 5)
             notification.append(new Error("Review score must be between 1 and 5"));
-        if (this.status == Status.INACTIVE) {
+        if (this.status == ItemStatus.INACTIVE) {
             notification.append(new Error("Item should be activate to add review"));
         }
 

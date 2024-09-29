@@ -2,6 +2,7 @@ package com.arthurlamberti.ecommerce.domain.item;
 
 import com.arthurlamberti.ecommerce.domain.Fixture;
 import com.arthurlamberti.ecommerce.domain.UnitTest;
+import com.arthurlamberti.ecommerce.domain.enums.ItemStatus;
 import com.arthurlamberti.ecommerce.domain.exceptions.NotificationException;
 import org.junit.jupiter.api.Test;
 
@@ -13,7 +14,7 @@ public class ItemTest extends UnitTest {
     public void givenValidParams_whenCallNewItem_shouldInstantiateAnItem() {
         final var expectedName = Fixture.Item.name();
         final var expectedDescription = Fixture.Item.description();
-        final var expectedStatus = Status.INACTIVE;
+        final var expectedStatus = ItemStatus.INACTIVE;
         final var expectedImageUrl = Fixture.imageUrl();
         final var expectedSellerId = Fixture.uuid();
         final var expectedQty = 0;
@@ -261,7 +262,7 @@ public class ItemTest extends UnitTest {
     public void givenAnInactiveItem_whenCallActivate_shouldReceiveOK() {
         final var expectedName = Fixture.Item.name();
         final var expectedDescription = Fixture.Item.description();
-        final var expectedStatus = Status.ACTIVE;
+        final var expectedStatus = ItemStatus.ACTIVE;
         final var expectedImageUrl = Fixture.imageUrl();
         final var expectedSellerId = Fixture.uuid();
         final var expectedQty = 0;
@@ -269,7 +270,7 @@ public class ItemTest extends UnitTest {
         final var actualItem = Item.newItem(expectedSellerId, expectedName, expectedDescription, expectedImageUrl);
         assertNotNull(actualItem);
         assertNotNull(actualItem.getId());
-        assertEquals(Status.INACTIVE, actualItem.getStatus());
+        assertEquals(ItemStatus.INACTIVE, actualItem.getStatus());
         final var actualCreatedAt = actualItem.getCreatedAt();
         final var actualUpdatedAt = actualItem.getUpdatedAt();
 
@@ -293,7 +294,7 @@ public class ItemTest extends UnitTest {
     public void givenAnActiveItem_whenCallDeativate_shouldReceiveOK() {
         final var expectedName = Fixture.Item.name();
         final var expectedDescription = Fixture.Item.description();
-        final var expectedStatus = Status.INACTIVE;
+        final var expectedStatus = ItemStatus.INACTIVE;
         final var expectedImageUrl = Fixture.imageUrl();
         final var expectedSellerId = Fixture.uuid();
         final var expectedQty = 0;
@@ -302,7 +303,7 @@ public class ItemTest extends UnitTest {
         actualItem.activate();
         assertNotNull(actualItem);
         assertNotNull(actualItem.getId());
-        assertEquals(Status.ACTIVE, actualItem.getStatus());
+        assertEquals(ItemStatus.ACTIVE, actualItem.getStatus());
         final var actualCreatedAt = actualItem.getCreatedAt();
         final var actualUpdatedAt = actualItem.getUpdatedAt();
 
@@ -453,7 +454,7 @@ public class ItemTest extends UnitTest {
         final var expectedImageUrl = Fixture.imageUrl();
         final var expectedSellerId = Fixture.uuid();
         final var expectedQtyAvailable = Fixture.positiveNumber();
-        final var expectedStatus = Status.ACTIVE;
+        final var expectedStatus = ItemStatus.ACTIVE;
         final var expectedQtySold = 0;
         final var expectedQtyReview = 0;
         final var expectedScore = 0;
@@ -488,7 +489,7 @@ public class ItemTest extends UnitTest {
         final var expectedSellerId = Fixture.uuid();
         final var expectedQtyAvailable = 30;
         final var qtySold = 4;
-        final var expectedStatus = Status.ACTIVE;
+        final var expectedStatus = ItemStatus.ACTIVE;
         final var expectedQtySold = 0;
         final var expectedQtyReview = 0;
         final var expectedScore = 0;

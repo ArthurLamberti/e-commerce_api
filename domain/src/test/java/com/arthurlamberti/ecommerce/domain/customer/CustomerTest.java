@@ -1,10 +1,9 @@
-package com.arthurlamberti.ecommerce.domain.custommer;
+package com.arthurlamberti.ecommerce.domain.customer;
 
 import com.arthurlamberti.ecommerce.domain.Fixture;
 import com.arthurlamberti.ecommerce.domain.UnitTest;
 import com.arthurlamberti.ecommerce.domain.address.Address;
 import com.arthurlamberti.ecommerce.domain.exceptions.NotificationException;
-import com.arthurlamberti.ecommerce.domain.seller.Seller;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

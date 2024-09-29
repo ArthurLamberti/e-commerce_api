@@ -1,4 +1,4 @@
-package com.arthurlamberti.ecommerce.domain.custommer;
+package com.arthurlamberti.ecommerce.domain.customer;
 
 import com.arthurlamberti.ecommerce.domain.AggregateRoot;
 import com.arthurlamberti.ecommerce.domain.address.Address;

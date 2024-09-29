@@ -1,4 +1,4 @@
-package com.arthurlamberti.ecommerce.domain.custommer;
+package com.arthurlamberti.ecommerce.domain.customer;
 
 import com.arthurlamberti.ecommerce.domain.Identifier;
 import com.arthurlamberti.ecommerce.domain.utils.IdUtils;
