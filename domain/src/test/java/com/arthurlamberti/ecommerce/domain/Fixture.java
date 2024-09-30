@@ -1,8 +1,12 @@
 package com.arthurlamberti.ecommerce.domain;
 
 import com.arthurlamberti.ecommerce.domain.address.Address;
+import com.arthurlamberti.ecommerce.domain.item.Item;
+import com.arthurlamberti.ecommerce.domain.seller.SellerID;
 import com.arthurlamberti.ecommerce.domain.utils.IdUtils;
 import com.github.javafaker.Faker;
+
+import java.util.UUID;
 
 
 public final class Fixture {
@@ -57,7 +61,7 @@ public final class Fixture {
         return FAKER.number().numberBetween(Integer.MIN_VALUE, -1);
     }
 
-    public static final class Item {
+    public static final class ItemFixture {
 
         public static String name() {
             return characters(11, 99);
@@ -65,6 +69,22 @@ public final class Fixture {
 
         public static String description() {
             return characters(51, 999);
+        }
+
+        public static Double price () {
+            return FAKER.number().randomDouble(2, 1, 5000);
+        }
+
+        public static Item validItem(String sellerId){
+            if (sellerId.isBlank()){
+                sellerId = SellerID.unique().getValue();
+            }
+            return Item.newItem(
+                    sellerId,
+                    name(),
+                    description(),
+                    imageUrl()
+            );
         }
     }
 
