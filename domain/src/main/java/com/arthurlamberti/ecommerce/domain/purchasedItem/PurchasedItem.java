@@ -22,7 +22,7 @@ public class PurchasedItem extends AggregateRoot<PurchasedItemID> {
     private Instant updatedAt;
     private Instant deletedAt;
 
-    public PurchasedItem(final PurchasedItemID purchasedItemID,
+    protected PurchasedItem(final PurchasedItemID purchasedItemID,
                          final String sellerId,
                          final Item item,
                          final Integer qty,
