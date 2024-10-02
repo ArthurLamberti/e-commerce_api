@@ -1,8 +1,12 @@
 package com.arthurlamberti.ecommerce.domain;
 
 import com.arthurlamberti.ecommerce.domain.address.Address;
+import com.arthurlamberti.ecommerce.domain.customer.Customer;
 import com.arthurlamberti.ecommerce.domain.item.Item;
+import com.arthurlamberti.ecommerce.domain.purchasedItem.PurchasedItem;
+import com.arthurlamberti.ecommerce.domain.seller.Seller;
 import com.arthurlamberti.ecommerce.domain.seller.SellerID;
+import com.arthurlamberti.ecommerce.domain.shipping.Shipping;
 import com.arthurlamberti.ecommerce.domain.utils.IdUtils;
 import com.github.javafaker.Faker;
 
@@ -59,6 +63,41 @@ public final class Fixture {
 
     public static Integer negativeNumber() {
         return FAKER.number().numberBetween(Integer.MIN_VALUE, -1);
+    }
+
+    public static final class SellerFixture {
+        public static String name() {
+            return FAKER.name().firstName();
+        }
+
+        public static String description() {
+            return FAKER.lorem().characters(0, 2999);
+        }
+
+        public static Seller validSeller(){
+            return Seller.newSeller(
+                    name(),
+                    description(),
+                    true
+            );
+        }
+    }
+
+    public static final class CustomerFixture{
+        public static Customer validCustomer(){
+            return Customer.newCustomer(
+                    name(),
+                    email(),
+                    document(),
+                    AddressFixture.validAddress()
+            );
+        }
+    }
+
+    public static final class ShippingFixture {
+        public static Shipping validShipping(){
+            return Shipping.newShipping(AddressFixture.validAddress(), characters(10), ItemFixture.price());
+        }
     }
 
     public static final class ItemFixture {
@@ -122,6 +161,17 @@ public final class Fixture {
                     zipCode(),
                     number(),
                     null
+            );
+        }
+    }
+
+    public static final class PurchaseItemFixture{
+        public static PurchasedItem validPurchaseItem(String sellerId, Item item){
+            return PurchasedItem.newPurchasedItem(
+                    sellerId,
+                    item,
+                    positiveNumber(),
+                    positiveNumber().doubleValue()
             );
         }
     }
