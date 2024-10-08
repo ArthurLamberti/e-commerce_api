@@ -490,7 +490,7 @@ public class ItemTest extends UnitTest {
         final var expectedQtyAvailable = 30;
         final var qtySold = 4;
         final var expectedStatus = ItemStatus.ACTIVE;
-        final var expectedQtySold = 0;
+        final var expectedQtySold = 4;
         final var expectedQtyReview = 0;
         final var expectedScore = 0;
 
@@ -638,4 +638,98 @@ public class ItemTest extends UnitTest {
         assertEquals(expectedErrorCount, actualError.getErrors().size());
         assertEquals(expectedErrorMessage, actualError.getFirstError().get().message());
     }
+
+    @Test
+    public void givenValidItem_whenCallRemoveStock_shouldDecrementQtyAvailable(){
+        final var expectedName = Fixture.ItemFixture.name();
+        final var expectedDescription = Fixture.ItemFixture.description();
+        final var expectedImageUrl = Fixture.imageUrl();
+        final var expectedSellerId = Fixture.uuid();
+        final var expectedQtyAvailable = 90;
+
+        final var actualItem = Item.newItem(expectedSellerId, expectedName, expectedDescription, expectedImageUrl);
+        final var actualUpdatedAt = actualItem.getUpdatedAt();
+        final var actualCreatedAt = actualItem.getCreatedAt();
+
+        actualItem.activate();
+        actualItem.addStock(100);
+        assertEquals(100, actualItem.getQtyAvailable());
+        actualItem.removeStock(10);
+        assertEquals(expectedName, actualItem.getName());
+        assertEquals(expectedDescription, actualItem.getDescription());
+        assertEquals(expectedImageUrl, actualItem.getImageUrl());
+        assertEquals(expectedQtyAvailable, actualItem.getQtyAvailable());
+        assertEquals(actualCreatedAt, actualItem.getCreatedAt());
+        assertTrue(actualItem.getUpdatedAt().isAfter(actualUpdatedAt));
+        assertNull(actualItem.getDeletedAt());
+    }
+
+    @Test
+    public void givenInvalidNegativeParam_whenCallRemoveStock_shouldReceiveAnError(){
+        final var expectedName = Fixture.ItemFixture.name();
+        final var expectedDescription = Fixture.ItemFixture.description();
+        final var expectedImageUrl = Fixture.imageUrl();
+        final var expectedSellerId = Fixture.uuid();
+
+        final var expectedErrorCount = 1;
+        final var expectedErrorMessage = "Quantity should be positive";
+
+        final var actualItem = Item.newItem(expectedSellerId, expectedName, expectedDescription, expectedImageUrl);
+        actualItem.activate();
+        actualItem.addStock(20);
+
+        final var actualError = assertThrows(
+                NotificationException.class,
+                () -> actualItem.removeStock(Fixture.negativeNumber())
+        );
+
+        assertEquals(expectedErrorCount, actualError.getErrors().size());
+        assertEquals(expectedErrorMessage, actualError.getFirstError().get().message());
+    }
+
+    @Test
+    public void givenInvalidQtyGreatherThanQtyAvailable_whenCallRemoveStock_shouldReceiveAnError(){
+        final var expectedName = Fixture.ItemFixture.name();
+        final var expectedDescription = Fixture.ItemFixture.description();
+        final var expectedImageUrl = Fixture.imageUrl();
+        final var expectedSellerId = Fixture.uuid();
+
+        final var expectedErrorCount = 1;
+        final var expectedErrorMessage = "Quantity should be less or equals than qty available";
+
+        final var actualItem = Item.newItem(expectedSellerId, expectedName, expectedDescription, expectedImageUrl);
+        actualItem.activate();
+        actualItem.addStock(20);
+
+        final var actualError = assertThrows(
+                NotificationException.class,
+                () -> actualItem.removeStock(30)
+        );
+
+        assertEquals(expectedErrorCount, actualError.getErrors().size());
+        assertEquals(expectedErrorMessage, actualError.getFirstError().get().message());
+    }
+
+    @Test
+    public void givenInvalidItem_whenCallRemoveStock_shouldReceiveAnError(){
+        final var expectedName = Fixture.ItemFixture.name();
+        final var expectedDescription = Fixture.ItemFixture.description();
+        final var expectedImageUrl = Fixture.imageUrl();
+        final var expectedSellerId = Fixture.uuid();
+
+        final var expectedErrorCount = 1;
+        final var expectedErrorMessage = "Item should be activate to remove stock";
+
+        final var actualItem = Item.newItem(expectedSellerId, expectedName, expectedDescription, expectedImageUrl);
+        actualItem.activate();
+        actualItem.addStock(20);
+        actualItem.deactivate();
+
+        final var actualError = assertThrows(
+                NotificationException.class,
+                () -> actualItem.removeStock(10)
+        );
+
+        assertEquals(expectedErrorCount, actualError.getErrors().size());
+        assertEquals(expectedErrorMessage, actualError.getFirstError().get().message());}
 }
