@@ -108,6 +108,26 @@ public class Item extends AggregateRoot<ItemID> {
         this.updatedAt = InstantUtils.now();
     }
 
+    public void removeStock(Integer qtyToRemove) {
+        final var notification = Notification.create();
+        if (qtyToRemove <= 0) {
+            notification.append(new Error("Quantity should be positive"));
+        }
+        if (qtyToRemove > qtyAvailable) {
+            notification.append(new Error("Quantity should be less or equals than qty available"));
+        }
+        if (this.status == ItemStatus.INACTIVE) {
+            notification.append(new Error("Item should be activate to remove stock"));
+        }
+
+        if (notification.hasError()) {
+            throw new NotificationException("Failed to add stock", notification);
+        }
+
+        this.qtyAvailable -= qtyToRemove;
+        this.updatedAt = InstantUtils.now();
+    }
+
     public void soldItem(Integer qtySold) {
         final var notification = Notification.create();
         if (qtySold <= 0) {
@@ -124,6 +144,7 @@ public class Item extends AggregateRoot<ItemID> {
             throw new NotificationException("Failed to sold item", notification);
         }
 
+        this.qtySold += qtySold;
         this.qtyAvailable -= qtySold;
     }
 
@@ -153,8 +174,5 @@ public class Item extends AggregateRoot<ItemID> {
         validate(notification);
         if (notification.hasError())
             throw new NotificationException("Failed to create an Item", notification);
-    }
-
-    private void updateValidate(final String message) {
     }
 }
