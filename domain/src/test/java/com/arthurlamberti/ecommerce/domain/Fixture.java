@@ -78,7 +78,9 @@ public final class Fixture {
             return Seller.newSeller(
                     name(),
                     description(),
-                    true
+                    true,
+                    document(),
+                    AddressFixture.validAddress()
             );
         }
     }
