@@ -200,4 +200,100 @@ public class SellerTest extends UnitTest {
         assertEquals(expectedErrorCount, actualException.getErrors().size());
         assertEquals(expectedErrorMessage, actualException.getFirstError().get().message());
     }
+
+    @Test
+    public void givenAValidSeller_WhenCallDeactivate_shouldReturnOK(){
+        final var expectedName = Fixture.sellerName();
+        final var expectedDescription = Fixture.sellerDescription();
+        final var expedtedDocument = Fixture.document();
+        final var expectedAddress = Fixture.AddressFixture.validAddress();
+
+        final var actualSeller = Seller.newSeller(expectedName, expectedDescription, true, expedtedDocument, expectedAddress);
+        assertNotNull(actualSeller);
+        assertNotNull(actualSeller.getId());
+        assertTrue(actualSeller.isActive());
+
+        actualSeller.deactivate();
+
+        assertFalse(actualSeller.isActive());
+        assertEquals(expectedName, actualSeller.getName());
+        assertEquals(expedtedDocument, actualSeller.getDocument());
+        assertEquals(expectedAddress, actualSeller.getAddress());
+        assertNotNull(actualSeller.getCreatedAt());
+        assertNotNull(actualSeller.getUpdatedAt());
+        assertNotNull(actualSeller.getDeletedAt());
+        assertTrue(actualSeller.getUpdatedAt().isAfter(actualSeller.getCreatedAt()));
+    }
+
+    @Test
+    public void givenAnInactiveSeller_WhenCallActivate_shouldReturnOK(){
+        final var expectedName = Fixture.sellerName();
+        final var expectedDescription = Fixture.sellerDescription();
+        final var expedtedDocument = Fixture.document();
+        final var expectedAddress = Fixture.AddressFixture.validAddress();
+
+        final var actualSeller = Seller.newSeller(expectedName, expectedDescription, true, expedtedDocument, expectedAddress);
+        assertNotNull(actualSeller);
+        assertNotNull(actualSeller.getId());
+        assertTrue(actualSeller.isActive());
+
+        actualSeller.deactivate();
+        final var actualUpdatedAt = actualSeller.getUpdatedAt();
+        assertFalse(actualSeller.isActive());
+        assertTrue(actualUpdatedAt.isAfter(actualSeller.getCreatedAt()));
+        actualSeller.activate();
+        assertTrue(actualSeller.isActive());
+        assertTrue(actualSeller.getUpdatedAt().isAfter(actualUpdatedAt));
+        assertEquals(expectedName, actualSeller.getName());
+        assertEquals(expedtedDocument, actualSeller.getDocument());
+        assertEquals(expectedAddress, actualSeller.getAddress());
+        assertNotNull(actualSeller.getCreatedAt());
+        assertNotNull(actualSeller.getUpdatedAt());
+        assertNull(actualSeller.getDeletedAt());
+    }
+
+    @Test
+    public void givenAValidAddress_WhenCallChangeAddress_shouldReturnOK(){
+        final var expectedName = Fixture.sellerName();
+        final var expectedDescription = Fixture.sellerDescription();
+        final var expectedIsActive = Boolean.TRUE;
+        final var expedtedDocument = Fixture.document();
+        final var expectedAddress = Fixture.AddressFixture.validAddress();
+
+        final var actualSeller = Seller.newSeller(expectedName, expectedDescription, expectedIsActive, expedtedDocument, Fixture.AddressFixture.validAddress());
+        assertNotNull(actualSeller);
+        assertNotNull(actualSeller.getId());
+
+        final var actualAddress = actualSeller.getAddress();
+        actualSeller.changeAddress(expectedAddress);
+        assertEquals(expectedAddress, actualSeller.getAddress());
+        assertNotEquals(actualAddress, actualSeller.getAddress());
+
+        assertEquals(expectedName, actualSeller.getName());
+        assertEquals(expectedIsActive, actualSeller.isActive());
+        assertEquals(expedtedDocument, actualSeller.getDocument());
+        assertNotNull(actualSeller.getCreatedAt());
+        assertNotNull(actualSeller.getUpdatedAt());
+        assertNull(actualSeller.getDeletedAt());
+    }
+
+    @Test
+    public void givenANullAddress_WhenCallChangeAddress_shouldReturnAnError(){
+        final var name = Fixture.sellerName();
+        final var expectedErrorCount = 1;
+        final var expectedDescription = Fixture.SellerFixture.description();
+        final var expedtedDocument = Fixture.document();
+        final Address expectedAddress = Fixture.AddressFixture.validAddress();
+        final var expectedErrorMessage = "'address' should not be null";
+
+        final var actualSeller = Seller.newSeller(name, expectedDescription, Fixture.isActive(), expedtedDocument, expectedAddress);
+
+        final var actualException = assertThrows(
+                NotificationException.class,
+                () -> actualSeller.changeAddress(null)
+        );
+        assertEquals(expectedErrorCount, actualException.getErrors().size());
+        assertEquals(expectedErrorMessage, actualException.getFirstError().get().message());
+
+    }
 }
