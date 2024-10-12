@@ -3,12 +3,16 @@ package com.arthurlamberti.ecommerce.domain.customer;
 import com.arthurlamberti.ecommerce.domain.AggregateRoot;
 import com.arthurlamberti.ecommerce.domain.address.Address;
 import com.arthurlamberti.ecommerce.domain.exceptions.NotificationException;
+import com.arthurlamberti.ecommerce.domain.seller.Seller;
 import com.arthurlamberti.ecommerce.domain.utils.InstantUtils;
+import com.arthurlamberti.ecommerce.domain.validation.Error;
 import com.arthurlamberti.ecommerce.domain.validation.ValidationHandler;
 import com.arthurlamberti.ecommerce.domain.validation.handler.Notification;
 import lombok.Getter;
 
 import java.time.Instant;
+
+import static java.util.Objects.isNull;
 
 @Getter
 public class Customer extends AggregateRoot<CustomerID> {
@@ -16,8 +20,8 @@ public class Customer extends AggregateRoot<CustomerID> {
     private final String name;
     private final String email;
     private final String document;
-    private final Address address; //opcional
-    private final boolean active;
+    private Address address; //opcional
+    private boolean active;
     private Instant createdAt;
     private Instant updatedAt;
     private Instant deletedAt;
@@ -64,5 +68,36 @@ public class Customer extends AggregateRoot<CustomerID> {
         validate(notification);
         if (notification.hasError())
             throw new NotificationException("Failed to create a Customer", notification);
+    }
+
+
+    public Customer activate() {
+        this.deletedAt = null;
+        this.active = true;
+        this.updatedAt = InstantUtils.now();
+        return this;
+    }
+
+    public Customer deactivate() {
+        var now = InstantUtils.now();
+        if (isNull(this.deletedAt))
+            this.deletedAt = now;
+        this.active = false;
+        this.updatedAt = now;
+        return this;
+    }
+
+    public Customer changeAddress(final Address address) {
+        final var notification = Notification.create();
+        if (isNull(address)) {
+            notification.append(new Error("'address' should not be null"));
+        }
+
+        if (notification.hasError()) {
+            throw new NotificationException("Failed to sold item", notification);
+        }
+        this.address = address;
+        this.updatedAt = InstantUtils.now();
+        return this;
     }
 }
