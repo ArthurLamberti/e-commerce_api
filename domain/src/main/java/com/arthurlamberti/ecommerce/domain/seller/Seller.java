@@ -71,7 +71,6 @@ public class Seller extends AggregateRoot<SellerID> {
             throw new NotificationException("Failed to create a Seller", notification);
     }
 
-
     public Seller activate() {
         this.deletedAt = null;
         this.active = true;

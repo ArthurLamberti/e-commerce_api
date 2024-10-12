@@ -294,6 +294,5 @@ public class SellerTest extends UnitTest {
         );
         assertEquals(expectedErrorCount, actualException.getErrors().size());
         assertEquals(expectedErrorMessage, actualException.getFirstError().get().message());
-
     }
 }
