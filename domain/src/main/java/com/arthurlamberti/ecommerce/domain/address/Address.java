@@ -12,14 +12,14 @@ import java.time.Instant;
 import static java.util.Objects.isNull;
 
 @Getter
-public class Address extends AggregateRoot<AddressID> {
-    private final String country;
-    private final String state;
-    private final String city;
-    private final String street;
-    private final String zipCode;
-    private final String number;
-    private final String complement;
+public class Address extends AggregateRoot<AddressID> implements Cloneable {
+    private String country;
+    private String state;
+    private String city;
+    private String street;
+    private String zipCode;
+    private String number;
+    private String complement;
     private boolean active;
     private final Instant createdAt;
     private Instant updatedAt;
@@ -95,5 +95,29 @@ public class Address extends AggregateRoot<AddressID> {
         this.updatedAt = now;
         this.active = false;
         return this;
+    }
+
+    public Address updateAddress(final Address anAddress) {
+        this.country = anAddress.getCountry();
+        this.state = anAddress.getState();
+        this.city = anAddress.getCity();
+        this.street = anAddress.getStreet();
+        this.zipCode = anAddress.getZipCode();
+        this.number = anAddress.getNumber();
+        this.complement = anAddress.getComplement();
+        this.active = anAddress.isActive();
+        this.updatedAt = InstantUtils.now();
+
+        selfValidate();
+        return this;
+    }
+
+    @Override
+    protected Address clone() {
+        try {
+            return (Address) super.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError(e);
+        }
     }
 }
