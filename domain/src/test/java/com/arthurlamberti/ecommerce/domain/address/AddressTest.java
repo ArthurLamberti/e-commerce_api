@@ -5,6 +5,8 @@ import com.arthurlamberti.ecommerce.domain.UnitTest;
 import com.arthurlamberti.ecommerce.domain.exceptions.NotificationException;
 import org.junit.jupiter.api.Test;
 
+import java.util.Objects;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class AddressTest extends UnitTest {
@@ -536,4 +538,61 @@ public class AddressTest extends UnitTest {
         assertNull(actualAddress.getDeletedAt());
     }
 
+    @Test
+    public void givenAValidAddress_whenCallUpdateAddress_shouldReceiveOK(){
+        final var initialAddress = Fixture.AddressFixture.validAddress();
+
+        final var expectedCountry = Fixture.AddressFixture.country();
+        final var expectedState = Fixture.AddressFixture.state();
+        final var expectedCity = Fixture.AddressFixture.city();
+        final var expectedStreet = Fixture.AddressFixture.street();
+        final var expectedZipCode = Fixture.AddressFixture.zipCode();
+        final var expectedNumber = Fixture.AddressFixture.number();
+        final var expectedComplement = Fixture.characters(1, 100);
+        final var expectedIsActive = Boolean.TRUE;
+
+        final var initialAddressCopy = initialAddress.clone();
+
+        final var updatedAddress = Address.newAddress(
+                expectedCountry,
+                expectedState,
+                expectedCity,
+                expectedStreet,
+                expectedZipCode,
+                expectedNumber,
+                expectedComplement);
+
+        assertNotNull(initialAddress);
+        assertNotNull(initialAddress.getId());
+        assertEquals(initialAddressCopy.getCountry(), initialAddress.getCountry());
+        assertEquals(initialAddressCopy.getState(), initialAddress.getState());
+        assertEquals(initialAddressCopy.getCity(), initialAddress.getCity());
+        assertEquals(initialAddressCopy.getStreet(), initialAddress.getStreet());
+        assertEquals(initialAddressCopy.getZipCode(), initialAddress.getZipCode());
+        assertEquals(initialAddressCopy.getNumber(), initialAddress.getNumber());
+        assertEquals(initialAddressCopy.getComplement(), initialAddress.getComplement());
+        assertEquals(initialAddressCopy.isActive(), initialAddress.isActive());
+        assertEquals(initialAddress.getCreatedAt(),initialAddress.getUpdatedAt());
+
+        initialAddress.updateAddress(updatedAddress);
+
+        assertNotEquals(initialAddressCopy.getCountry(), initialAddress.getCountry());
+        assertNotEquals(initialAddressCopy.getState(), initialAddress.getState());
+        assertNotEquals(initialAddressCopy.getCountry(), initialAddress.getCity());
+        assertNotEquals(initialAddressCopy.getStreet(), initialAddress.getStreet());
+        assertNotEquals(initialAddressCopy.getZipCode(), initialAddress.getZipCode());
+        assertNotEquals(initialAddressCopy.getNumber(), initialAddress.getNumber());
+        assertNotEquals(initialAddressCopy.getComplement(), initialAddress.getComplement());
+        assertEquals(initialAddressCopy.isActive(), initialAddress.isActive());
+
+        assertEquals(expectedCountry, initialAddress.getCountry());
+        assertEquals(expectedState, initialAddress.getState());
+        assertEquals(expectedCity, initialAddress.getCity());
+        assertEquals(expectedStreet, initialAddress.getStreet());
+        assertEquals(expectedZipCode, initialAddress.getZipCode());
+        assertEquals(expectedNumber, initialAddress.getNumber());
+        assertEquals(expectedComplement, initialAddress.getComplement());
+        assertEquals(expectedIsActive, initialAddress.isActive());
+        assertTrue(initialAddress.getCreatedAt().isBefore(initialAddress.getUpdatedAt()));
+    }
 }
