@@ -34,7 +34,7 @@ jobs:
 
       - name: Build
 #        if: github.event_name == 'pull_request'
-        run: ./gradlew build
+        run: ./gradlew build -x test
 
       - name: Run tests
         run: ./gradlew test

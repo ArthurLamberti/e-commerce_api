@@ -65,4 +65,10 @@ public class Shipping extends AggregateRoot<ShippingID> {
     public void validate(ValidationHandler handler) {
         new ShippingValidator(this,handler).validate();
     }
+
+    public Shipping changeStatus(final ShippingStatus aStatus){
+        this.status = aStatus;
+        this.updatedAt = InstantUtils.now();
+        return this;
+    }
 }

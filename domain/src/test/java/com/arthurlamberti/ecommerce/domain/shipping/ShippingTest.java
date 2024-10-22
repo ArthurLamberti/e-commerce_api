@@ -123,6 +123,31 @@ public class ShippingTest extends UnitTest {
 
         assertEquals(expectedErrorCount, actualException.getErrors().size());
         assertEquals(expectedErrorMessage, actualException.getFirstError().get().message());
+    }
 
+    @Test
+    public void givenAValidShipping_whenCallUpdateStatus_ShouldReturnOK(){
+        final var expectedAddress = Fixture.AddressFixture.validAddress();
+        final var expectedCode = Fixture.characters(1,19);
+        final var expectedPrice = Fixture.ItemFixture.price();
+        final var expectedInitialStatus = ShippingStatus.CREATED;
+        final var expectedStatus = ShippingStatus.DELIVERED;
+
+        final var actualShipping = Shipping.newShipping(expectedAddress, expectedCode, expectedPrice);
+
+        assertNotNull(actualShipping);
+        assertNotNull(actualShipping.getId());
+        assertEquals(expectedInitialStatus, actualShipping.getStatus());
+
+        actualShipping.changeStatus(expectedStatus);
+
+        assertEquals(expectedAddress, actualShipping.getAddress());
+        assertEquals(expectedCode, actualShipping.getCode());
+        assertEquals(expectedPrice, actualShipping.getPrice());
+        assertEquals(expectedStatus, actualShipping.getStatus());
+        assertNotNull(actualShipping.getCreatedAt());
+        assertNotNull(actualShipping.getUpdatedAt());
+        assertTrue(actualShipping.getCreatedAt().isBefore(actualShipping.getUpdatedAt()));
+        assertNull(actualShipping.getDeletedAt());
     }
 }
