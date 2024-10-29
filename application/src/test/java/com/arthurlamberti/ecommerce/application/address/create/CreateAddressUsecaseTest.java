@@ -3,6 +3,7 @@ package com.arthurlamberti.ecommerce.application.address.create;
 import com.arthurlamberti.ecommerce.application.UseCaseTest;
 import com.arthurlamberti.ecommerce.domain.Fixture;
 import com.arthurlamberti.ecommerce.domain.address.AddressGateway;
+import com.arthurlamberti.ecommerce.domain.exceptions.NotificationException;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -65,5 +66,278 @@ public class CreateAddressUsecaseTest extends UseCaseTest {
         );
     }
 
-    //TODO: complete with more tests
+    @Test
+    public void givenAnInvalidNullCountryCommand_whenCallsCreateAddres_shouldReturnAnError(){
+        final var expectedAddress = Fixture.AddressFixture.validAddress();
+        final var expectedErrorCount = 1;
+        final var expectedErrorMessage = "'country' should not be null";
+
+        final var aCommand = CreateAddressCommand.with(
+                null,
+                expectedAddress.getState(),
+                expectedAddress.getCity(),
+                expectedAddress.getStreet(),
+                expectedAddress.getZipCode(),
+                expectedAddress.getNumber(),
+                expectedAddress.getComplement()
+        );
+
+        final var actualOutput = assertThrows(NotificationException.class, () -> usecase.execute(aCommand));
+        assertNotNull(actualOutput);
+        assertEquals(expectedErrorCount, actualOutput.getErrors().size());
+        assertEquals(expectedErrorMessage, actualOutput.getFirstError().get().message());
+        verifyNoInteractions(addressGateway);
+    }
+
+    @Test
+    public void givenAnInvalidEmptyCountryCommand_whenCallsCreateAddres_shouldReturnAnError(){
+        final var expectedAddress = Fixture.AddressFixture.validAddress();
+        final var expectedErrorCount = 1;
+        final var expectedErrorMessage = "'country' should not be empty";
+
+        final var aCommand = CreateAddressCommand.with(
+                " ",
+                expectedAddress.getState(),
+                expectedAddress.getCity(),
+                expectedAddress.getStreet(),
+                expectedAddress.getZipCode(),
+                expectedAddress.getNumber(),
+                expectedAddress.getComplement()
+        );
+
+        final var actualOutput = assertThrows(NotificationException.class, () -> usecase.execute(aCommand));
+        assertNotNull(actualOutput);
+        assertEquals(expectedErrorCount, actualOutput.getErrors().size());
+        assertEquals(expectedErrorMessage, actualOutput.getFirstError().get().message());
+        verifyNoInteractions(addressGateway);
+    }
+
+    @Test
+    public void givenAnInvalidNullStateCommand_whenCallsCreateAddres_shouldReturnAnError(){
+        final var expectedAddress = Fixture.AddressFixture.validAddress();
+        final var expectedErrorCount = 1;
+        final var expectedErrorMessage = "'state' should not be null";
+
+        final var aCommand = CreateAddressCommand.with(
+                expectedAddress.getCountry(),
+                null,
+                expectedAddress.getCity(),
+                expectedAddress.getStreet(),
+                expectedAddress.getZipCode(),
+                expectedAddress.getNumber(),
+                expectedAddress.getComplement()
+        );
+
+        final var actualOutput = assertThrows(NotificationException.class, () -> usecase.execute(aCommand));
+        assertNotNull(actualOutput);
+        assertEquals(expectedErrorCount, actualOutput.getErrors().size());
+        assertEquals(expectedErrorMessage, actualOutput.getFirstError().get().message());
+        verifyNoInteractions(addressGateway);
+    }
+
+    @Test
+    public void givenAnInvalidEmptyStateCommand_whenCallsCreateAddres_shouldReturnAnError(){
+        final var expectedAddress = Fixture.AddressFixture.validAddress();
+        final var expectedErrorCount = 1;
+        final var expectedErrorMessage = "'state' should not be empty";
+
+        final var aCommand = CreateAddressCommand.with(
+                expectedAddress.getCountry(),
+                " ",
+                expectedAddress.getCity(),
+                expectedAddress.getStreet(),
+                expectedAddress.getZipCode(),
+                expectedAddress.getNumber(),
+                expectedAddress.getComplement()
+        );
+
+        final var actualOutput = assertThrows(NotificationException.class, () -> usecase.execute(aCommand));
+        assertNotNull(actualOutput);
+        assertEquals(expectedErrorCount, actualOutput.getErrors().size());
+        assertEquals(expectedErrorMessage, actualOutput.getFirstError().get().message());
+        verifyNoInteractions(addressGateway);
+    }
+
+    @Test
+    public void givenAnInvalidNullCityCommand_whenCallsCreateAddres_shouldReturnAnError(){
+        final var expectedAddress = Fixture.AddressFixture.validAddress();
+        final var expectedErrorCount = 1;
+        final var expectedErrorMessage = "'city' should not be null";
+
+        final var aCommand = CreateAddressCommand.with(
+                expectedAddress.getCountry(),
+                expectedAddress.getState(),
+                null,
+                expectedAddress.getStreet(),
+                expectedAddress.getZipCode(),
+                expectedAddress.getNumber(),
+                expectedAddress.getComplement()
+        );
+
+        final var actualOutput = assertThrows(NotificationException.class, () -> usecase.execute(aCommand));
+        assertNotNull(actualOutput);
+        assertEquals(expectedErrorCount, actualOutput.getErrors().size());
+        assertEquals(expectedErrorMessage, actualOutput.getFirstError().get().message());
+        verifyNoInteractions(addressGateway);
+    }
+
+    @Test
+    public void givenAnInvalidEmptyCityCommand_whenCallsCreateAddres_shouldReturnAnError(){
+        final var expectedAddress = Fixture.AddressFixture.validAddress();
+        final var expectedErrorCount = 1;
+        final var expectedErrorMessage = "'city' should not be empty";
+
+        final var aCommand = CreateAddressCommand.with(
+                expectedAddress.getCountry(),
+                expectedAddress.getState(),
+                " ",
+                expectedAddress.getStreet(),
+                expectedAddress.getZipCode(),
+                expectedAddress.getNumber(),
+                expectedAddress.getComplement()
+        );
+
+        final var actualOutput = assertThrows(NotificationException.class, () -> usecase.execute(aCommand));
+        assertNotNull(actualOutput);
+        assertEquals(expectedErrorCount, actualOutput.getErrors().size());
+        assertEquals(expectedErrorMessage, actualOutput.getFirstError().get().message());
+        verifyNoInteractions(addressGateway);
+    }
+
+    @Test
+    public void givenAnInvalidNullStreetCommand_whenCallsCreateAddres_shouldReturnAnError(){
+        final var expectedAddress = Fixture.AddressFixture.validAddress();
+        final var expectedErrorCount = 1;
+        final var expectedErrorMessage = "'street' should not be null";
+
+        final var aCommand = CreateAddressCommand.with(
+                expectedAddress.getCountry(),
+                expectedAddress.getState(),
+                expectedAddress.getCity(),
+                null,
+                expectedAddress.getZipCode(),
+                expectedAddress.getNumber(),
+                expectedAddress.getComplement()
+        );
+
+        final var actualOutput = assertThrows(NotificationException.class, () -> usecase.execute(aCommand));
+        assertNotNull(actualOutput);
+        assertEquals(expectedErrorCount, actualOutput.getErrors().size());
+        assertEquals(expectedErrorMessage, actualOutput.getFirstError().get().message());
+        verifyNoInteractions(addressGateway);
+    }
+
+    @Test
+    public void givenAnInvalidEmptyStreetCommand_whenCallsCreateAddres_shouldReturnAnError(){
+        final var expectedAddress = Fixture.AddressFixture.validAddress();
+        final var expectedErrorCount = 1;
+        final var expectedErrorMessage = "'street' should not be null";
+
+        final var aCommand = CreateAddressCommand.with(
+                expectedAddress.getCountry(),
+                expectedAddress.getState(),
+                expectedAddress.getCity(),
+                null,
+                expectedAddress.getZipCode(),
+                expectedAddress.getNumber(),
+                expectedAddress.getComplement()
+        );
+
+        final var actualOutput = assertThrows(NotificationException.class, () -> usecase.execute(aCommand));
+        assertNotNull(actualOutput);
+        assertEquals(expectedErrorCount, actualOutput.getErrors().size());
+        assertEquals(expectedErrorMessage, actualOutput.getFirstError().get().message());
+        verifyNoInteractions(addressGateway);
+    }
+    @Test
+    public void givenAnInvalidNullZipcodeCommand_whenCallsCreateAddres_shouldReturnAnError(){
+        final var expectedAddress = Fixture.AddressFixture.validAddress();
+        final var expectedErrorCount = 1;
+        final var expectedErrorMessage = "'zipcode' should not be null";
+
+        final var aCommand = CreateAddressCommand.with(
+                expectedAddress.getCountry(),
+                expectedAddress.getState(),
+                expectedAddress.getCity(),
+                expectedAddress.getStreet(),
+                null,
+                expectedAddress.getNumber(),
+                expectedAddress.getComplement()
+        );
+
+        final var actualOutput = assertThrows(NotificationException.class, () -> usecase.execute(aCommand));
+        assertNotNull(actualOutput);
+        assertEquals(expectedErrorCount, actualOutput.getErrors().size());
+        assertEquals(expectedErrorMessage, actualOutput.getFirstError().get().message());
+        verifyNoInteractions(addressGateway);
+    }
+
+    @Test
+    public void givenAnInvalidEmptyZipcodeCommand_whenCallsCreateAddres_shouldReturnAnError(){
+        final var expectedAddress = Fixture.AddressFixture.validAddress();
+        final var expectedErrorCount = 1;
+        final var expectedErrorMessage = "'zipcode' should not be empty";
+
+        final var aCommand = CreateAddressCommand.with(
+                expectedAddress.getCountry(),
+                expectedAddress.getState(),
+                expectedAddress.getCity(),
+                expectedAddress.getStreet(),
+                " ",
+                expectedAddress.getNumber(),
+                expectedAddress.getComplement()
+        );
+
+        final var actualOutput = assertThrows(NotificationException.class, () -> usecase.execute(aCommand));
+        assertNotNull(actualOutput);
+        assertEquals(expectedErrorCount, actualOutput.getErrors().size());
+        assertEquals(expectedErrorMessage, actualOutput.getFirstError().get().message());
+        verifyNoInteractions(addressGateway);
+    }
+
+    @Test
+    public void givenAnInvalidNullNumberCommand_whenCallsCreateAddres_shouldReturnAnError(){
+        final var expectedAddress = Fixture.AddressFixture.validAddress();
+        final var expectedErrorCount = 1;
+        final var expectedErrorMessage = "'number' should not be null";
+
+        final var aCommand = CreateAddressCommand.with(
+                expectedAddress.getCountry(),
+                expectedAddress.getState(),
+                expectedAddress.getCity(),
+                expectedAddress.getStreet(),
+                expectedAddress.getZipCode(),
+                null,
+                expectedAddress.getComplement()
+        );
+
+        final var actualOutput = assertThrows(NotificationException.class, () -> usecase.execute(aCommand));
+        assertNotNull(actualOutput);
+        assertEquals(expectedErrorCount, actualOutput.getErrors().size());
+        assertEquals(expectedErrorMessage, actualOutput.getFirstError().get().message());
+        verifyNoInteractions(addressGateway);
+    }
+
+    @Test
+    public void givenAnInvalidEmptyNumberCommand_whenCallsCreateAddres_shouldReturnAnError(){
+        final var expectedAddress = Fixture.AddressFixture.validAddress();
+        final var expectedErrorCount = 1;
+        final var expectedErrorMessage = "'number' should not be empty";
+
+        final var aCommand = CreateAddressCommand.with(
+                expectedAddress.getCountry(),
+                expectedAddress.getState(),
+                expectedAddress.getCity(),
+                expectedAddress.getStreet(),
+                expectedAddress.getZipCode(),
+                "",
+                expectedAddress.getComplement()
+        );
+
+        final var actualOutput = assertThrows(NotificationException.class, () -> usecase.execute(aCommand));
+        assertNotNull(actualOutput);
+        assertEquals(expectedErrorCount, actualOutput.getErrors().size());
+        assertEquals(expectedErrorMessage, actualOutput.getFirstError().get().message());
+        verifyNoInteractions(addressGateway);
+    }
 }
