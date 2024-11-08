@@ -5,4 +5,6 @@ import java.util.Optional;
 public interface AddressGateway {
     Address create(final Address anAddress);
     Optional<Address> findById(AddressID anId);
+    Address update(Address address);
+
 }

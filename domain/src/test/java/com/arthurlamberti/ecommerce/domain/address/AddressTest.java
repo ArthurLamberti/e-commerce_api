@@ -574,7 +574,15 @@ public class AddressTest extends UnitTest {
         assertEquals(initialAddressCopy.isActive(), initialAddress.isActive());
         assertEquals(initialAddress.getCreatedAt(),initialAddress.getUpdatedAt());
 
-        initialAddress.updateAddress(updatedAddress);
+        initialAddress.updateAddress(
+                updatedAddress.getCountry(),
+                updatedAddress.getState(),
+                updatedAddress.getCity(),
+                updatedAddress.getStreet(),
+                updatedAddress.getZipCode(),
+                updatedAddress.getNumber(),
+                updatedAddress.getComplement()
+        );
 
         assertNotEquals(initialAddressCopy.getCountry(), initialAddress.getCountry());
         assertNotEquals(initialAddressCopy.getState(), initialAddress.getState());

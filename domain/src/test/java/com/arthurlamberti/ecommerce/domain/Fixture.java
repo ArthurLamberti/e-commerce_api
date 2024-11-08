@@ -165,18 +165,6 @@ public final class Fixture {
                     null
             );
         }
-
-        public static Address invalidAddress(final String field){
-            return Address.newAddress(
-                    field.equals("country") ? null : country(),
-                    field.equals("state") ? null : state(),
-                    field.equals("city") ? null : city(),
-                    field.equals("street") ? null : street(),
-                    field.equals("zipCode") ? null : zipCode(),
-                    field.equals("number") ? null : number(),
-                    null
-            );
-        }
     }
 
     public static final class PurchaseItemFixture{

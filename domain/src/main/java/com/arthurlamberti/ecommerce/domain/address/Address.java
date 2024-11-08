@@ -69,6 +69,23 @@ public class Address extends AggregateRoot<AddressID> implements Cloneable {
         return new Address(anId,aCountry,aState,aCity,aStreet,aZipCode,aNumber,aComplement,true,now,now,null);
     }
 
+    public static Address with(Address anAddress) {
+        return new Address(
+                anAddress.getId(),
+                anAddress.getCountry(),
+                anAddress.getState(),
+                anAddress.getCity(),
+                anAddress.getStreet(),
+                anAddress.getZipCode(),
+                anAddress.getNumber(),
+                anAddress.getComplement(),
+                anAddress.isActive(),
+                anAddress.createdAt,
+                anAddress.updatedAt,
+                anAddress.deletedAt
+        );
+    }
+
     @Override
     public void validate(ValidationHandler handler) {
         new AddressValidator(this, handler).validate();
@@ -97,15 +114,22 @@ public class Address extends AggregateRoot<AddressID> implements Cloneable {
         return this;
     }
 
-    public Address updateAddress(final Address anAddress) {
-        this.country = anAddress.getCountry();
-        this.state = anAddress.getState();
-        this.city = anAddress.getCity();
-        this.street = anAddress.getStreet();
-        this.zipCode = anAddress.getZipCode();
-        this.number = anAddress.getNumber();
-        this.complement = anAddress.getComplement();
-        this.active = anAddress.isActive();
+    public Address updateAddress(
+            final String country,
+            final String state,
+            final String city,
+            final String street,
+            final String zipCode,
+            final String number,
+            final String complement
+    ) {
+        this.country = country;
+        this.state = state;
+        this.city = city;
+        this.street = street;
+        this.zipCode = zipCode;
+        this.number = number;
+        this.complement = complement;
         this.updatedAt = InstantUtils.now();
 
         selfValidate();
