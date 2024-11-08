@@ -7,4 +7,5 @@ public interface AddressGateway {
     Optional<Address> findById(AddressID anId);
     Address update(Address address);
 
+    void deleteById(AddressID from);
 }
