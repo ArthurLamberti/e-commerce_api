@@ -5,7 +5,6 @@ plugins {
 
 group 'com.arthurlamberti.ecommerce.application'
 
-
 dependencies {
     implementation(project(":domain"))
     testImplementation(project(path: ':domain', configuration: 'testClasses'))
