@@ -165,6 +165,17 @@ public final class Fixture {
                     null
             );
         }
+        public static Address validAddressWithZipcode(final String zipcode) {
+            return Address.newAddress(
+                    country(),
+                    state(),
+                    city(),
+                    street(),
+                    zipcode,
+                    number(),
+                    null
+            );
+        }
     }
 
     public static final class PurchaseItemFixture{

@@ -1,5 +1,8 @@
 package com.arthurlamberti.ecommerce.domain.address;
 
+import com.arthurlamberti.ecommerce.domain.pagination.Pagination;
+import com.arthurlamberti.ecommerce.domain.pagination.SearchQuery;
+
 import java.util.Optional;
 
 public interface AddressGateway {
@@ -8,4 +11,6 @@ public interface AddressGateway {
     Address update(Address address);
 
     void deleteById(AddressID from);
+
+    Pagination<Address> findAll(SearchQuery aQuery);
 }
