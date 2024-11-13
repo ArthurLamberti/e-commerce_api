@@ -47,7 +47,7 @@ public class ListAddressUsecaseTest extends UseCaseTest {
                 .stream()
                 .map(ListAddressOutput::from)
                 .toList();
-        
+
         final var expectedPagination = new Pagination<>(
                 expectedPage,
                 expectedPerPage,

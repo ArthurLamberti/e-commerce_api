@@ -86,6 +86,35 @@ public class Address extends AggregateRoot<AddressID> implements Cloneable {
         );
     }
 
+    public static Address with(
+            final AddressID id,
+            final String country,
+            final String state,
+            final String city,
+            final String street,
+            final String zipCode,
+            final String number,
+            final String complement,
+            final boolean active,
+            final Instant createdAt,
+            final Instant updatedAt,
+            final Instant deletedAt) {
+        return new Address(
+                id,
+                country,
+                state,
+                city,
+                street,
+                zipCode,
+                number,
+                complement,
+                active,
+                createdAt,
+                updatedAt,
+                deletedAt
+        );
+    }
+
     @Override
     public void validate(ValidationHandler handler) {
         new AddressValidator(this, handler).validate();
