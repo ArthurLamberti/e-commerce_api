@@ -2,10 +2,7 @@ package com.arthurlamberti.ecommerce.infrastructure.address.persistence;
 
 import com.arthurlamberti.ecommerce.domain.address.Address;
 import com.arthurlamberti.ecommerce.domain.address.AddressID;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,8 +11,9 @@ import javax.persistence.Table;
 import java.time.Instant;
 
 @Entity(name = "addresses")
-@Table(name = "address")
+@Table(name = "addresses")
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
+@Data
 public class AddressJPAEntity {
 
     @Id
@@ -33,7 +31,7 @@ public class AddressJPAEntity {
     @Column(name = "street", nullable = false)
     private String street;
 
-    @Column(name = "zipCode", nullable = false)
+    @Column(name = "zip_code", nullable = false)
     private String zipCode;
 
     @Column(name = "number", nullable = false)
@@ -42,7 +40,7 @@ public class AddressJPAEntity {
     @Column(name = "complement")
     private String complement;
 
-    @Column(name = "is_active")
+    @Column(name = "active")
     private boolean active;
 
     @Column(name = "created_at", nullable = false, columnDefinition = "DATETIME(6)")
@@ -51,7 +49,7 @@ public class AddressJPAEntity {
     @Column(name = "updated_at", nullable = false, columnDefinition = "DATETIME(6)")
     private Instant updatedAt;
 
-    @Column(name = "deleted_at", nullable = false, columnDefinition = "DATETIME(6)")
+    @Column(name = "deleted_at", nullable = true, columnDefinition = "DATETIME(6)")
     private Instant deletedAt;
 
     public AddressJPAEntity() {

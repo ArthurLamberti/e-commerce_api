@@ -13,8 +13,10 @@ public record ListAddressOutput(
         String zipcode,
         String number,
         String complement,
+        Boolean active,
         Instant createdAt,
-        Instant updatedAt
+        Instant updatedAt,
+        Instant deletedAt
 ) {
     public static ListAddressOutput from(Address anAddress) {
         return new ListAddressOutput(
@@ -26,8 +28,10 @@ public record ListAddressOutput(
                 anAddress.getZipCode(),
                 anAddress.getNumber(),
                 anAddress.getComplement(),
+                anAddress.isActive(),
                 anAddress.getCreatedAt(),
-                anAddress.getUpdatedAt()
+                anAddress.getUpdatedAt(),
+                anAddress.getDeletedAt()
         );
     }
 }

@@ -8,9 +8,9 @@ import java.util.Objects;
 
 import static java.util.Objects.requireNonNull;
 
-public non-sealed class DefaultDeleteAddressUsecase extends DeleteAddressUsecase {
+public class DefaultDeleteAddressUsecase extends DeleteAddressUsecase {
 
-    private AddressGateway addressGateway;
+    private final AddressGateway addressGateway;
 
     public DefaultDeleteAddressUsecase(final AddressGateway addressGateway) {
         this.addressGateway = requireNonNull(addressGateway);

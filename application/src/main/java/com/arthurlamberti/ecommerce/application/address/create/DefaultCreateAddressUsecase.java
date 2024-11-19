@@ -8,7 +8,7 @@ import com.arthurlamberti.ecommerce.domain.validation.handler.Notification;
 
 import java.util.Objects;
 
-public non-sealed class DefaultCreateAddressUsecase extends CreateAddressUsecase{
+public class DefaultCreateAddressUsecase extends CreateAddressUsecase{
 
     private final AddressGateway addressGateway;
 

@@ -9,7 +9,7 @@ import com.arthurlamberti.ecommerce.domain.validation.handler.Notification;
 
 import static java.util.Objects.requireNonNull;
 
-public non-sealed class DefaultUpdateAddressUsecase
+public class DefaultUpdateAddressUsecase
         extends UpdateAddressUsecase {
 
     private final AddressGateway addressGateway;
@@ -43,8 +43,8 @@ public non-sealed class DefaultUpdateAddressUsecase
                 aComplement
         ));
 
-        if (notification.hasError()){
-            throw new NotificationException("Could not update Aggregate Address %s".formatted(anId.getValue()),notification);
+        if (notification.hasError()) {
+            throw new NotificationException("Could not update Aggregate Address %s".formatted(anId.getValue()), notification);
         }
 
         return UpdateAddressOutput.from(this.addressGateway.update(address));
