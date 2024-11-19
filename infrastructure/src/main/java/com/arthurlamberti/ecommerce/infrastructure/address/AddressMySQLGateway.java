@@ -11,12 +11,15 @@ import com.arthurlamberti.ecommerce.infrastructure.utils.SpecificationUtils;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.stereotype.Component;
 
 import java.util.Optional;
 
+import static com.arthurlamberti.ecommerce.infrastructure.utils.SpecificationUtils.like;
 import static java.util.Objects.requireNonNull;
 import static org.springframework.data.jpa.domain.Specification.where;
 
+@Component
 public class AddressMySQLGateway implements AddressGateway {
 
     private final AddressRepository addressRepository;
@@ -78,6 +81,9 @@ public class AddressMySQLGateway implements AddressGateway {
     }
 
     private Specification<AddressJPAEntity> assembleSpecification(final String terms) {
-        return SpecificationUtils.like("name", terms);
+        final Specification<AddressJPAEntity> countryLike = like("country", terms);
+        final Specification<AddressJPAEntity> cityLike = like("city", terms);
+        final Specification<AddressJPAEntity> streetLike = like("street", terms);
+        return countryLike.or(cityLike).or(streetLike);
     }
 }
