@@ -1,6 +1,6 @@
 package com.arthurlamberti.ecommerce;
 
-import com.arthurlamberti.ecommerce.infrastructure.ObjectMapperConfig;
+import com.arthurlamberti.ecommerce.infrastructure.config.ObjectMapperConfig;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.core.annotation.AliasFor;

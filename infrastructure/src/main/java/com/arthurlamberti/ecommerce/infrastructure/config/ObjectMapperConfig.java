@@ -1,4 +1,4 @@
-package com.arthurlamberti.ecommerce.infrastructure;
+package com.arthurlamberti.ecommerce.infrastructure.config;
 
 import com.arthurlamberti.ecommerce.infrastructure.config.json.Json;
 import com.fasterxml.jackson.databind.ObjectMapper;
