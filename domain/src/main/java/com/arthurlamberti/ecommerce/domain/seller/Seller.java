@@ -19,29 +19,29 @@ import static java.util.Objects.isNull;
 public class Seller extends AggregateRoot<SellerID> {
 
     private String name;
+    private String email;
     private String description;
-    private boolean active;
     private String document;
-    private Address address;
+    private boolean active;
     private Instant createdAt;
     private Instant updatedAt;
     private Instant deletedAt;
 
     protected Seller(final SellerID sellerID,
                      final String name,
+                     final String email,
                      final String description,
                      final boolean active,
                      final String document,
-                     final Address anAddres,
                      final Instant createdAt,
                      final Instant updatedAt,
                      final Instant deletedAt) {
         super(sellerID);
         this.name = name;
+        this.email = email;
         this.description = description;
         this.active = active;
         this.document = document;
-        this.address = anAddres;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
         this.deletedAt = deletedAt;
@@ -49,14 +49,25 @@ public class Seller extends AggregateRoot<SellerID> {
     }
 
     public static Seller newSeller(final String name,
+                                   final String email,
                                    final String description,
-                                   final Boolean active,
-                                   final String aDocument,
-                                   final Address anAddress) {
+                                   final String aDocument) {
         final var anId = SellerID.unique();
         final var now = InstantUtils.now();
-        final var deletedAt = active ? null : now;
-        return new Seller(anId, name, description, active, aDocument, anAddress,now, now, deletedAt);
+
+        return new Seller(anId, name, email, description, true, aDocument, now, now, null);
+    }
+
+    public static Seller with(final SellerID id,
+                              String name,
+                              String email,
+                              String document,
+                              String description,
+                              Boolean active,
+                              Instant createdAt,
+                              Instant updatedAt,
+                              Instant deletedAt) {
+        return new Seller(id, name, email, description, active, document, createdAt, updatedAt, deletedAt);
     }
 
     @Override
@@ -96,7 +107,6 @@ public class Seller extends AggregateRoot<SellerID> {
         if (notification.hasError()) {
             throw new NotificationException("Failed to sold item", notification);
         }
-        this.address = address;
         this.updatedAt = InstantUtils.now();
         return this;
     }

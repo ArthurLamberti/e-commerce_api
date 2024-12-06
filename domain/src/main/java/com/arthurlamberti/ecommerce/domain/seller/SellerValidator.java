@@ -12,9 +12,9 @@ public class SellerValidator extends Validator {
     public static final int NAME_MIN_LENGTH = 3;
 
     public static final int DESCRIPTION_MAX_LENGTH = 3000;
-    
+
     private final Seller seller;
-    
+
     protected SellerValidator(final Seller aSeller, final ValidationHandler aHandler) {
         super(aHandler);
         this.seller = aSeller;
@@ -31,7 +31,7 @@ public class SellerValidator extends Validator {
     private void checkNameConstraints() {
         final var name = this.seller.getName();
 
-        if(name == null) {
+        if (name == null) {
             this.validationHandler().append(new Error("'name' should not be null"));
             return;
         }
@@ -71,10 +71,10 @@ public class SellerValidator extends Validator {
     }
 
     private void checkAddress() {
-        final var address = this.seller.getAddress();
-
-        if (isNull(address)) {
-            this.validationHandler().append(new Error("'address' should not be null"));
-        }
+//        final var address = this.seller.getAddress();
+//
+//        if (isNull(address)) {
+//            this.validationHandler().append(new Error("'address' should not be null"));
+//        }
     }
 }

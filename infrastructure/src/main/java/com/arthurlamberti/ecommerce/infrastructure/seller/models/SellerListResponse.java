@@ -1,11 +1,12 @@
-package com.arthurlamberti.ecommerce.infrastructure.customer.models;
+package com.arthurlamberti.ecommerce.infrastructure.seller.models;
 
 import java.time.Instant;
 
-public record CustomerListResponse(
+public record SellerListResponse(
         String name,
         String email,
         String document,
+        String description,
         boolean active,
         Instant createdAt,
         Instant deletedAt
