@@ -20,7 +20,6 @@ public class Customer extends AggregateRoot<CustomerID> {
     private final String name;
     private final String email;
     private final String document;
-    private Address address; //opcional
     private boolean active;
     private Instant createdAt;
     private Instant updatedAt;
@@ -30,7 +29,6 @@ public class Customer extends AggregateRoot<CustomerID> {
                        final String aName,
                        final String anEmail,
                        final String aDocument,
-                       final Address anAddress,
                        final boolean active,
                        final Instant createdAt,
                        final Instant updatedAt,
@@ -39,7 +37,6 @@ public class Customer extends AggregateRoot<CustomerID> {
         this.name = aName;
         this.email = anEmail;
         this.document = aDocument;
-        this.address = anAddress;
         this.active = active;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
@@ -50,12 +47,33 @@ public class Customer extends AggregateRoot<CustomerID> {
     public static Customer newCustomer(
             final String aName,
             final String anEmail,
-            final String aDocument,
-            final Address anAddress
+            final String aDocument
     ) {
         final var anId = CustomerID.unique();
         final var now = InstantUtils.now();
-        return new Customer(anId,aName,anEmail,aDocument,anAddress,true,now,now,null);
+        return new Customer(anId, aName, anEmail, aDocument, true, now, now, null);
+    }
+
+    public static Customer with(
+            final CustomerID id,
+            final String name,
+            final String email,
+            final String document,
+            final boolean active,
+            final Instant createdAt,
+            final Instant updatedAt,
+            final Instant deletedAt
+    ) {
+        return new Customer(
+                id,
+                name,
+                email,
+                document,
+                active,
+                createdAt,
+                updatedAt,
+                deletedAt
+        );
     }
 
     @Override
@@ -96,7 +114,6 @@ public class Customer extends AggregateRoot<CustomerID> {
         if (notification.hasError()) {
             throw new NotificationException("Failed to sold item", notification);
         }
-        this.address = address;
         this.updatedAt = InstantUtils.now();
         return this;
     }

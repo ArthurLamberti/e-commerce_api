@@ -26,7 +26,7 @@ public record AddressOutput(
                 anAddress.getCity(),
                 anAddress.getStreet(),
                 anAddress.getZipCode(),
-                anAddress.getNumber(),
+                anAddress.getNumeral(),
                 anAddress.getComplement(),
                 anAddress.isActive(),
                 anAddress.getCreatedAt(),

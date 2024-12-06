@@ -2,12 +2,10 @@ package com.arthurlamberti.ecommerce.infrastructure.address.persistence;
 
 import com.arthurlamberti.ecommerce.domain.address.Address;
 import com.arthurlamberti.ecommerce.domain.address.AddressID;
+import com.arthurlamberti.ecommerce.infrastructure.customer.persistence.CustomerJPAEntity;
 import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.time.Instant;
 
 @Entity(name = "addresses")
@@ -34,7 +32,7 @@ public class AddressJPAEntity {
     @Column(name = "zip_code", nullable = false)
     private String zipCode;
 
-    @Column(name = "number", nullable = false)
+    @Column(name = "numeral", nullable = false)
     private String number;
 
     @Column(name = "complement")
@@ -42,6 +40,10 @@ public class AddressJPAEntity {
 
     @Column(name = "active")
     private boolean active;
+
+    @ManyToOne
+    @JoinColumn(name = "customer_id")
+    private CustomerJPAEntity customer;
 
     @Column(name = "created_at", nullable = false, columnDefinition = "DATETIME(6)")
     private Instant createdAt;
@@ -63,9 +65,10 @@ public class AddressJPAEntity {
                 anAddress.getCity(),
                 anAddress.getStreet(),
                 anAddress.getZipCode(),
-                anAddress.getNumber(),
+                anAddress.getNumeral(),
                 anAddress.getComplement(),
                 anAddress.isActive(),
+                null,
                 anAddress.getCreatedAt(),
                 anAddress.getUpdatedAt(),
                 anAddress.getDeletedAt()

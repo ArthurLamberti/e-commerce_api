@@ -18,7 +18,7 @@ public class Address extends AggregateRoot<AddressID> implements Cloneable {
     private String city;
     private String street;
     private String zipCode;
-    private String number;
+    private String numeral;
     private String complement;
     private boolean active;
     private final Instant createdAt;
@@ -45,7 +45,7 @@ public class Address extends AggregateRoot<AddressID> implements Cloneable {
         this.city = aCity;
         this.street = aStreet;
         this.zipCode = aZipCode;
-        this.number = aNumber;
+        this.numeral = aNumber;
         this.complement = aComplement;
         this.active = active;
         this.createdAt = createdAt;
@@ -66,7 +66,7 @@ public class Address extends AggregateRoot<AddressID> implements Cloneable {
     ) {
         final var anId = AddressID.unique();
         final var now = InstantUtils.now();
-        return new Address(anId,aCountry,aState,aCity,aStreet,aZipCode,aNumber,aComplement,true,now,now,null);
+        return new Address(anId, aCountry, aState, aCity, aStreet, aZipCode, aNumber, aComplement, true, now, now, null);
     }
 
     public static Address with(Address anAddress) {
@@ -77,7 +77,7 @@ public class Address extends AggregateRoot<AddressID> implements Cloneable {
                 anAddress.getCity(),
                 anAddress.getStreet(),
                 anAddress.getZipCode(),
-                anAddress.getNumber(),
+                anAddress.getNumeral(),
                 anAddress.getComplement(),
                 anAddress.isActive(),
                 anAddress.createdAt,
@@ -157,7 +157,7 @@ public class Address extends AggregateRoot<AddressID> implements Cloneable {
         this.city = city;
         this.street = street;
         this.zipCode = zipCode;
-        this.number = number;
+        this.numeral = number;
         this.complement = complement;
         this.updatedAt = InstantUtils.now();
 

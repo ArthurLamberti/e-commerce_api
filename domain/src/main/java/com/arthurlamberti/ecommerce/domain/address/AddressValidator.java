@@ -88,7 +88,7 @@ public class AddressValidator extends Validator {
     }
 
     private void checkNumberConstraints() {
-        final var number = anAddress.getNumber();
+        final var number = anAddress.getNumeral();
         if (isNull(number)) {
             this.validationHandler().append(new Error("'number' should not be null"));
             return;

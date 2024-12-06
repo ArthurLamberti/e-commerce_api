@@ -72,10 +72,10 @@ public class CustomerValidator extends Validator {
     }
 
     private void checkAddress() {
-        final var address = this.aCustommer.getAddress();
-
-        if (isNull(address)) {
-            this.validationHandler().append(new Error("'address' should not be null"));
-        }
+//        final var address = this.aCustommer.get();
+//
+//        if (isNull(address)) {
+//            this.validationHandler().append(new Error("'address' should not be null"));
+//        }
     }
 }
