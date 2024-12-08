@@ -44,7 +44,8 @@ public class CustomerJPAEntity {
     @Column(name = "deleted_at", nullable = true, columnDefinition = "DATETIME(6)")
     private Instant deletedAt;
 
-    public CustomerJPAEntity(){}
+    public CustomerJPAEntity() {
+    }
 
     public static CustomerJPAEntity from(final Customer customer) {
         return new CustomerJPAEntity(
@@ -62,12 +63,17 @@ public class CustomerJPAEntity {
     }
 
     public Customer toAggregate() {
+        final var addressList = this.addresses
+                .stream()
+                .map(AddressJPAEntity::toAggregate)
+                .toList();
         return Customer.with(
                 CustomerID.from(this.id),
                 this.name,
                 this.email,
                 this.document,
                 this.active,
+                addressList,
                 this.createdAt,
                 this.updatedAt,
                 this.deletedAt

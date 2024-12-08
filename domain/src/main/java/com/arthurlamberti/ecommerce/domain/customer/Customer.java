@@ -11,6 +11,7 @@ import com.arthurlamberti.ecommerce.domain.validation.handler.Notification;
 import lombok.Getter;
 
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.List;
 
 import static java.util.Objects.isNull;
@@ -32,6 +33,7 @@ public class Customer extends AggregateRoot<CustomerID> {
                        final String anEmail,
                        final String aDocument,
                        final boolean active,
+                       final List<Address> address,
                        final Instant createdAt,
                        final Instant updatedAt,
                        final Instant deletedAt) {
@@ -40,6 +42,7 @@ public class Customer extends AggregateRoot<CustomerID> {
         this.email = anEmail;
         this.document = aDocument;
         this.active = active;
+        this.addressList = address;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
         this.deletedAt = deletedAt;
@@ -53,7 +56,7 @@ public class Customer extends AggregateRoot<CustomerID> {
     ) {
         final var anId = CustomerID.unique();
         final var now = InstantUtils.now();
-        return new Customer(anId, aName, anEmail, aDocument, true, now, now, null);
+        return new Customer(anId, aName, anEmail, aDocument, true, new ArrayList<>(), now, now, null);
     }
 
     public static Customer with(
@@ -62,6 +65,7 @@ public class Customer extends AggregateRoot<CustomerID> {
             final String email,
             final String document,
             final boolean active,
+            final List<Address> addressList,
             final Instant createdAt,
             final Instant updatedAt,
             final Instant deletedAt
@@ -72,6 +76,7 @@ public class Customer extends AggregateRoot<CustomerID> {
                 email,
                 document,
                 active,
+                addressList,
                 createdAt,
                 updatedAt,
                 deletedAt

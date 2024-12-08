@@ -2,11 +2,13 @@ package com.arthurlamberti.ecommerce.infrastructure.customer;
 
 import com.arthurlamberti.ecommerce.domain.customer.Customer;
 import com.arthurlamberti.ecommerce.domain.customer.CustomerGateway;
+import com.arthurlamberti.ecommerce.domain.customer.CustomerID;
 import com.arthurlamberti.ecommerce.infrastructure.customer.persistence.CustomerJPAEntity;
 import com.arthurlamberti.ecommerce.infrastructure.customer.persistence.CustomerRepository;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Optional;
 
 @Component
 public class CustomerMySQLGateway implements CustomerGateway {
@@ -29,5 +31,11 @@ public class CustomerMySQLGateway implements CustomerGateway {
                 .stream()
                 .map(CustomerJPAEntity::toAggregate)
                 .toList();
+    }
+
+    @Override
+    public Optional<Customer> findById(CustomerID from) {
+        return this.customerRepository.findById(from.getValue())
+                .map(CustomerJPAEntity::toAggregate);
     }
 }
