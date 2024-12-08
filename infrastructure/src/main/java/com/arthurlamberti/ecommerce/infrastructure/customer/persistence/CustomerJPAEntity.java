@@ -32,7 +32,7 @@ public class CustomerJPAEntity {
     @Column(name = "active")
     private Boolean active;
 
-    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "customer", fetch = FetchType.EAGER)
     private List<AddressJPAEntity> addresses;
 
     @Column(name = "created_at", nullable = false, columnDefinition = "DATETIME(6)")

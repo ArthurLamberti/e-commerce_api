@@ -21,6 +21,8 @@ public class Address extends AggregateRoot<AddressID> implements Cloneable {
     private String numeral;
     private String complement;
     private boolean active;
+    private String customerId;
+    private String sellerId;
     private final Instant createdAt;
     private Instant updatedAt;
     private Instant deletedAt;
@@ -35,6 +37,8 @@ public class Address extends AggregateRoot<AddressID> implements Cloneable {
             final String aNumber,
             final String aComplement,
             final boolean active,
+            final String aCustomerId,
+            final String aSellerId,
             final Instant createdAt,
             final Instant updatedAt,
             final Instant deletedAt
@@ -48,6 +52,8 @@ public class Address extends AggregateRoot<AddressID> implements Cloneable {
         this.numeral = aNumber;
         this.complement = aComplement;
         this.active = active;
+        this.customerId = aCustomerId;
+        this.sellerId = aSellerId;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
         this.deletedAt = deletedAt;
@@ -62,11 +68,13 @@ public class Address extends AggregateRoot<AddressID> implements Cloneable {
             final String aStreet,
             final String aZipCode,
             final String aNumber,
-            final String aComplement
+            final String aComplement,
+            final String aCustomerId,
+            final String aSellerId
     ) {
         final var anId = AddressID.unique();
         final var now = InstantUtils.now();
-        return new Address(anId, aCountry, aState, aCity, aStreet, aZipCode, aNumber, aComplement, true, now, now, null);
+        return new Address(anId, aCountry, aState, aCity, aStreet, aZipCode, aNumber, aComplement, true, aCustomerId, aSellerId, now, now, null);
     }
 
     public static Address with(Address anAddress) {
@@ -80,6 +88,8 @@ public class Address extends AggregateRoot<AddressID> implements Cloneable {
                 anAddress.getNumeral(),
                 anAddress.getComplement(),
                 anAddress.isActive(),
+                anAddress.getCustomerId(),
+                anAddress.getSellerId(),
                 anAddress.createdAt,
                 anAddress.updatedAt,
                 anAddress.deletedAt
@@ -96,6 +106,8 @@ public class Address extends AggregateRoot<AddressID> implements Cloneable {
             final String number,
             final String complement,
             final boolean active,
+            final String customerId,
+            final String sellerId,
             final Instant createdAt,
             final Instant updatedAt,
             final Instant deletedAt) {
@@ -109,6 +121,8 @@ public class Address extends AggregateRoot<AddressID> implements Cloneable {
                 number,
                 complement,
                 active,
+                customerId,
+                sellerId,
                 createdAt,
                 updatedAt,
                 deletedAt

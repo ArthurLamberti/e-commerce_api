@@ -49,7 +49,9 @@ public class AddressController implements AddressAPI {
                 input.street(),
                 input.zipCode(),
                 input.number(),
-                input.complement()
+                input.complement(),
+                input.customerId(),
+                input.sellerId()
         );
 
         final var output = this.createAddressUsecase.execute(aCommand);

@@ -25,6 +25,8 @@ public class DefaultCreateAddressUsecase extends CreateAddressUsecase{
         final var aZipcode = aCommand.zipcode();
         final var aNumber = aCommand.number();
         final var aComplement = aCommand.complement();
+        final var aCustomerId = aCommand.customerId();
+        final var aSellerId = aCommand.sellerId();
 
         final var notification = Notification.create();
         final var anAddress = notification.validate(
@@ -35,7 +37,9 @@ public class DefaultCreateAddressUsecase extends CreateAddressUsecase{
                         aStreet,
                         aZipcode,
                         aNumber,
-                        aComplement
+                        aComplement,
+                        aCustomerId,
+                        aSellerId
                 )
         );
 

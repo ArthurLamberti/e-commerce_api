@@ -11,6 +11,7 @@ import com.arthurlamberti.ecommerce.domain.validation.handler.Notification;
 import lombok.Getter;
 
 import java.time.Instant;
+import java.util.List;
 
 import static java.util.Objects.isNull;
 
@@ -21,6 +22,7 @@ public class Customer extends AggregateRoot<CustomerID> {
     private final String email;
     private final String document;
     private boolean active;
+    private List<Address> addressList;
     private Instant createdAt;
     private Instant updatedAt;
     private Instant deletedAt;

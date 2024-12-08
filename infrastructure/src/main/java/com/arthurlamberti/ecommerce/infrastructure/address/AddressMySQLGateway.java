@@ -7,6 +7,8 @@ import com.arthurlamberti.ecommerce.domain.pagination.Pagination;
 import com.arthurlamberti.ecommerce.domain.pagination.SearchQuery;
 import com.arthurlamberti.ecommerce.infrastructure.address.persistence.AddressJPAEntity;
 import com.arthurlamberti.ecommerce.infrastructure.address.persistence.AddressRepository;
+import com.arthurlamberti.ecommerce.infrastructure.customer.persistence.CustomerRepository;
+import com.arthurlamberti.ecommerce.infrastructure.seller.persistence.SellerRepository;
 import com.arthurlamberti.ecommerce.infrastructure.utils.SpecificationUtils;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -23,9 +25,16 @@ import static org.springframework.data.jpa.domain.Specification.where;
 public class AddressMySQLGateway implements AddressGateway {
 
     private final AddressRepository addressRepository;
+    private final CustomerRepository customerRepository;
+    private final SellerRepository sellerRepository;
 
-    public AddressMySQLGateway(final AddressRepository addressRepository) {
+    public AddressMySQLGateway(
+            final AddressRepository addressRepository,
+            final CustomerRepository customerRepository,
+            final SellerRepository sellerRepository) {
         this.addressRepository = requireNonNull(addressRepository);
+        this.customerRepository = customerRepository;
+        this.sellerRepository = sellerRepository;
     }
 
     @Override
@@ -76,7 +85,9 @@ public class AddressMySQLGateway implements AddressGateway {
     }
 
     private Address save(Address anAddress) {
-        return this.addressRepository.save(AddressJPAEntity.from(anAddress))
+        final var customer = customerRepository.findById(anAddress.getCustomerId()).orElse(null);
+        final var seller = sellerRepository.findById(anAddress.getSellerId()).orElse(null);
+        return this.addressRepository.save(AddressJPAEntity.from(anAddress, customer, seller))
                 .toAggregate();
     }
 

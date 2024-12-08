@@ -3,6 +3,7 @@ package com.arthurlamberti.ecommerce.infrastructure.address.persistence;
 import com.arthurlamberti.ecommerce.domain.address.Address;
 import com.arthurlamberti.ecommerce.domain.address.AddressID;
 import com.arthurlamberti.ecommerce.infrastructure.customer.persistence.CustomerJPAEntity;
+import com.arthurlamberti.ecommerce.infrastructure.seller.persistence.SellerJPAEntity;
 import lombok.*;
 
 import javax.persistence.*;
@@ -45,6 +46,10 @@ public class AddressJPAEntity {
     @JoinColumn(name = "customer_id")
     private CustomerJPAEntity customer;
 
+    @ManyToOne
+    @JoinColumn(name = "seller_id")
+    private SellerJPAEntity seller;
+
     @Column(name = "created_at", nullable = false, columnDefinition = "DATETIME(6)")
     private Instant createdAt;
 
@@ -68,7 +73,26 @@ public class AddressJPAEntity {
                 anAddress.getNumeral(),
                 anAddress.getComplement(),
                 anAddress.isActive(),
-                null,
+                null, null,
+                anAddress.getCreatedAt(),
+                anAddress.getUpdatedAt(),
+                anAddress.getDeletedAt()
+        );
+    }
+
+    public static AddressJPAEntity from(Address anAddress, CustomerJPAEntity customer, SellerJPAEntity seller) {
+        return new AddressJPAEntity(
+                anAddress.getId().getValue(),
+                anAddress.getCountry(),
+                anAddress.getState(),
+                anAddress.getCity(),
+                anAddress.getStreet(),
+                anAddress.getZipCode(),
+                anAddress.getNumeral(),
+                anAddress.getComplement(),
+                anAddress.isActive(),
+                customer,
+                seller,
                 anAddress.getCreatedAt(),
                 anAddress.getUpdatedAt(),
                 anAddress.getDeletedAt()
@@ -86,6 +110,8 @@ public class AddressJPAEntity {
                 this.number,
                 this.complement,
                 this.active,
+                this.customer != null ? this.customer.getId() : null,
+                this.seller != null ? this.seller.getId() : null,
                 this.createdAt,
                 this.updatedAt,
                 this.deletedAt

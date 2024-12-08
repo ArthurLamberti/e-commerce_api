@@ -7,6 +7,8 @@ public record CreateAddressRequest(
         String street,
         String zipCode,
         String number,
-        String complement
+        String complement,
+        String customerId,
+        String sellerId
 ) {
 }
