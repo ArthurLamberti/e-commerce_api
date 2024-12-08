@@ -11,6 +11,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity(name = "sellers")
@@ -37,7 +38,7 @@ public class SellerJPAEntity {
     @Column(name = "active")
     private Boolean active;
 
-    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "seller", fetch = FetchType.EAGER)
     private List<AddressJPAEntity> addresses;
 
     @Column(name = "created_at", nullable = false, columnDefinition = "DATETIME(6)")
@@ -49,7 +50,8 @@ public class SellerJPAEntity {
     @Column(name = "deleted_at", nullable = true, columnDefinition = "DATETIME(6)")
     private Instant deletedAt;
 
-    public SellerJPAEntity(){}
+    public SellerJPAEntity() {
+    }
 
     public static SellerJPAEntity from(final Seller seller) {
         return new SellerJPAEntity(
@@ -60,7 +62,7 @@ public class SellerJPAEntity {
                 seller.getDescription(),
                 seller.isActive(),
 //                List.copyOf(customer.getAddress())
-                null,
+                new ArrayList<>(),
                 seller.getCreatedAt(),
                 seller.getUpdatedAt(),
                 seller.getDeletedAt()
@@ -68,6 +70,11 @@ public class SellerJPAEntity {
     }
 
     public Seller toAggregate() {
+        final var addressList = this.addresses
+                .stream()
+                .map(AddressJPAEntity::toAggregate)
+                .toList();
+
         return Seller.with(
                 SellerID.from(this.id),
                 this.name,
@@ -75,6 +82,7 @@ public class SellerJPAEntity {
                 this.document,
                 this.description,
                 this.active,
+                addressList,
                 this.createdAt,
                 this.updatedAt,
                 this.deletedAt

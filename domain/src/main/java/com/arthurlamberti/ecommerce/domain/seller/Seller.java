@@ -12,6 +12,8 @@ import com.arthurlamberti.ecommerce.domain.validation.handler.Notification;
 import lombok.Getter;
 
 import java.time.Instant;
+import java.util.ArrayList;
+import java.util.List;
 
 import static java.util.Objects.isNull;
 
@@ -23,6 +25,7 @@ public class Seller extends AggregateRoot<SellerID> {
     private String description;
     private String document;
     private boolean active;
+    private List<Address> addressList;
     private Instant createdAt;
     private Instant updatedAt;
     private Instant deletedAt;
@@ -32,6 +35,7 @@ public class Seller extends AggregateRoot<SellerID> {
                      final String email,
                      final String description,
                      final boolean active,
+                     final List<Address> addressList,
                      final String document,
                      final Instant createdAt,
                      final Instant updatedAt,
@@ -41,6 +45,7 @@ public class Seller extends AggregateRoot<SellerID> {
         this.email = email;
         this.description = description;
         this.active = active;
+        this.addressList = addressList;
         this.document = document;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
@@ -55,7 +60,7 @@ public class Seller extends AggregateRoot<SellerID> {
         final var anId = SellerID.unique();
         final var now = InstantUtils.now();
 
-        return new Seller(anId, name, email, description, true, aDocument, now, now, null);
+        return new Seller(anId, name, email, description, true, new ArrayList<>(), aDocument, now, now, null);
     }
 
     public static Seller with(final SellerID id,
@@ -64,10 +69,11 @@ public class Seller extends AggregateRoot<SellerID> {
                               String document,
                               String description,
                               Boolean active,
+                              final List<Address> addressList,
                               Instant createdAt,
                               Instant updatedAt,
                               Instant deletedAt) {
-        return new Seller(id, name, email, description, active, document, createdAt, updatedAt, deletedAt);
+        return new Seller(id, name, email, description, active, addressList, document, createdAt, updatedAt, deletedAt);
     }
 
     @Override

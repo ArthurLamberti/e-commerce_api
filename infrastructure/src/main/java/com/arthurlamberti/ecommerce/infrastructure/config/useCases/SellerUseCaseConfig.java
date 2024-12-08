@@ -2,6 +2,8 @@ package com.arthurlamberti.ecommerce.infrastructure.config.useCases;
 
 import com.arthurlamberti.ecommerce.application.seller.create.CreateSellerUseCase;
 import com.arthurlamberti.ecommerce.application.seller.create.DefaultCreateSellerUseCase;
+import com.arthurlamberti.ecommerce.application.seller.retrieve.get.DefaultGetSellerUseCase;
+import com.arthurlamberti.ecommerce.application.seller.retrieve.get.GetSellerUseCase;
 import com.arthurlamberti.ecommerce.application.seller.retrieve.list.DefaultListSellerUseCase;
 import com.arthurlamberti.ecommerce.application.seller.retrieve.list.ListSellerUseCase;
 import com.arthurlamberti.ecommerce.domain.seller.SellerGateway;
@@ -29,4 +31,8 @@ public class SellerUseCaseConfig {
         return new DefaultListSellerUseCase(sellerGateway);
     }
 
+    @Bean
+    public GetSellerUseCase getSellerUseCase() {
+        return new DefaultGetSellerUseCase(sellerGateway);
+    }
 }
