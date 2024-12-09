@@ -5,10 +5,11 @@ import com.arthurlamberti.ecommerce.domain.validation.Error;
 import com.arthurlamberti.ecommerce.domain.validation.ValidationHandler;
 import com.arthurlamberti.ecommerce.domain.validation.Validator;
 
+import static java.util.Objects.isNull;
+
 public class ItemValidator extends Validator {
     public static final int NAME_MAX_LENGTH = 100;
     public static final int NAME_MIN_LENGTH = 10;
-
     public static final int DESCRIPTION_MAX_LENGTH = 1000;
     public static final int DESCRIPTION_MIN_LENGTH = 50;
 
@@ -24,13 +25,13 @@ public class ItemValidator extends Validator {
         checkNameConstraints();
         checkDescriptionConstraints();
         checkImageUrlConstraints();
-        checkSellerIdConstraints();
+        checkSellerConstraints();
     }
 
     private void checkNameConstraints() {
         final var name = this.item.getName();
 
-        if(name == null) {
+        if (name == null) {
             this.validationHandler().append(new Error("'name' should not be null"));
             return;
         }
@@ -74,15 +75,10 @@ public class ItemValidator extends Validator {
         }
     }
 
-    private void checkSellerIdConstraints() {
-        final var sellerId = this.item.getSellerId();
-        if (sellerId == null) {
-            this.validationHandler().append(new Error("'sellerId' should not be null"));
-            return;
-        }
-
-        if (sellerId.isBlank()) {
-            this.validationHandler().append(new Error("'sellerId' should not be empty"));
-        }
+    private void checkSellerConstraints() {
+//        final var seller = this.item.getSeller();
+//        if (isNull(seller)) {
+//            this.validationHandler().append(new Error("'seller' should not be null"));
+//        }
     }
 }

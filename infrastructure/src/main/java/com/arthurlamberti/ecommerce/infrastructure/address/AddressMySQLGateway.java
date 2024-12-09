@@ -3,6 +3,7 @@ package com.arthurlamberti.ecommerce.infrastructure.address;
 import com.arthurlamberti.ecommerce.domain.address.Address;
 import com.arthurlamberti.ecommerce.domain.address.AddressGateway;
 import com.arthurlamberti.ecommerce.domain.address.AddressID;
+import com.arthurlamberti.ecommerce.domain.exceptions.NotificationException;
 import com.arthurlamberti.ecommerce.domain.pagination.Pagination;
 import com.arthurlamberti.ecommerce.domain.pagination.SearchQuery;
 import com.arthurlamberti.ecommerce.infrastructure.address.persistence.AddressJPAEntity;
@@ -18,6 +19,7 @@ import org.springframework.stereotype.Component;
 import java.util.Optional;
 
 import static com.arthurlamberti.ecommerce.infrastructure.utils.SpecificationUtils.like;
+import static java.util.Objects.isNull;
 import static java.util.Objects.requireNonNull;
 import static org.springframework.data.jpa.domain.Specification.where;
 
@@ -87,6 +89,7 @@ public class AddressMySQLGateway implements AddressGateway {
     private Address save(Address anAddress) {
         final var customer = customerRepository.findById(anAddress.getCustomerId()).orElse(null);
         final var seller = sellerRepository.findById(anAddress.getSellerId()).orElse(null);
+
         return this.addressRepository.save(AddressJPAEntity.from(anAddress, customer, seller))
                 .toAggregate();
     }

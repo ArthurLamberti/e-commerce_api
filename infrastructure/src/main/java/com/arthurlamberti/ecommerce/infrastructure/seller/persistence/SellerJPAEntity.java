@@ -5,6 +5,7 @@ import com.arthurlamberti.ecommerce.domain.customer.CustomerID;
 import com.arthurlamberti.ecommerce.domain.seller.Seller;
 import com.arthurlamberti.ecommerce.domain.seller.SellerID;
 import com.arthurlamberti.ecommerce.infrastructure.address.persistence.AddressJPAEntity;
+import com.arthurlamberti.ecommerce.infrastructure.item.persistence.ItemJpaEntity;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -41,6 +42,9 @@ public class SellerJPAEntity {
     @OneToMany(mappedBy = "seller", fetch = FetchType.EAGER)
     private List<AddressJPAEntity> addresses;
 
+    @OneToMany(mappedBy = "seller")
+    private List<ItemJpaEntity> items;
+
     @Column(name = "created_at", nullable = false, columnDefinition = "DATETIME(6)")
     private Instant createdAt;
 
@@ -62,6 +66,7 @@ public class SellerJPAEntity {
                 seller.getDescription(),
                 seller.isActive(),
 //                List.copyOf(customer.getAddress())
+                new ArrayList<>(),
                 new ArrayList<>(),
                 seller.getCreatedAt(),
                 seller.getUpdatedAt(),

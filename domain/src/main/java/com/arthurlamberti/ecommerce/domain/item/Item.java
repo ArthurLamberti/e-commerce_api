@@ -3,6 +3,7 @@ package com.arthurlamberti.ecommerce.domain.item;
 import com.arthurlamberti.ecommerce.domain.AggregateRoot;
 import com.arthurlamberti.ecommerce.domain.enums.ItemStatus;
 import com.arthurlamberti.ecommerce.domain.exceptions.NotificationException;
+import com.arthurlamberti.ecommerce.domain.reviews.Review;
 import com.arthurlamberti.ecommerce.domain.utils.InstantUtils;
 import com.arthurlamberti.ecommerce.domain.validation.Error;
 import com.arthurlamberti.ecommerce.domain.validation.ValidationHandler;
@@ -10,64 +11,83 @@ import com.arthurlamberti.ecommerce.domain.validation.handler.Notification;
 import lombok.Getter;
 
 import java.time.Instant;
+import java.util.ArrayList;
+import java.util.List;
 
 import static java.util.Objects.isNull;
 
 @Getter
 public class Item extends AggregateRoot<ItemID> {
 
-    private String sellerId;
     private String name;
     private String description;
     private String imageUrl;
-    private ItemStatus status;
     private Integer qtyAvailable;
-    private Integer qtySold;
-    private Integer scoreReview;
-    private Integer qtyReviews;
+    List<Review> reviews;
+    private String sellerId;
+//    private Seller seller;
+    private ItemStatus status;
     private Instant createdAt;
     private Instant updatedAt;
     private Instant deletedAt;
 
     protected Item(final ItemID itemID,
+//                   final Seller seller,
                    final String sellerId,
                    final String name,
                    final String description,
                    final String imageUrl,
                    final ItemStatus status,
                    final Integer qtyAvailable,
-                   final Integer qtySold,
-                   final Integer scoreReview,
-                   final Integer qtyReviews,
+                   final List<Review> reviews,
                    final Instant createdAt,
                    final Instant updatedAt,
                    final Instant deletedAt) {
         super(itemID);
         this.sellerId = sellerId;
+//        this.seller = seller;
         this.name = name;
         this.description = description;
         this.imageUrl = imageUrl;
         this.status = status;
         this.qtyAvailable = qtyAvailable;
-        this.qtySold = qtySold;
-        this.scoreReview = scoreReview;
-        this.qtyReviews = qtyReviews;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
         this.deletedAt = deletedAt;
+        this.reviews = reviews;
 
         selfValidate();
     }
 
     public static Item newItem(
+//            final Seller seller,
             final String sellerId,
             final String name,
             final String description,
-            final String imageUrl
+            final String imageUrl,
+            final Integer stock
     ) {
         final var anId = ItemID.unique();
         final var now = InstantUtils.now();
-        return new Item(anId, sellerId, name, description, imageUrl, ItemStatus.INACTIVE, 0, 0, 0, 0, now, now, null);
+
+//        return new Item(anId, seller, name, description, imageUrl, ItemStatus.ACTIVE, stock, new ArrayList<>(), now, now, null);
+        return new Item(anId, sellerId, name, description, imageUrl, ItemStatus.ACTIVE, stock, new ArrayList<>(), now, now, null);
+    }
+
+    public static Item with(ItemID id, String name, String description, String imageUrl, Integer qtyAvailable, String seller, Instant createdAt, Instant updatedAt, Instant deletedAt) {
+        return new Item(
+                id,
+                seller,
+                name,
+                description,
+                imageUrl,
+                ItemStatus.ACTIVE,
+                qtyAvailable,
+                new ArrayList<>(),
+                createdAt,
+                updatedAt,
+                deletedAt
+        );
     }
 
     @Override
@@ -144,7 +164,6 @@ public class Item extends AggregateRoot<ItemID> {
             throw new NotificationException("Failed to sold item", notification);
         }
 
-        this.qtySold += qtySold;
         this.qtyAvailable -= qtySold;
     }
 
@@ -152,6 +171,7 @@ public class Item extends AggregateRoot<ItemID> {
         final var notification = Notification.create();
         if (scoreReview <= 0 || scoreReview > 5)
             notification.append(new Error("Review score must be between 1 and 5"));
+
         if (this.status == ItemStatus.INACTIVE) {
             notification.append(new Error("Item should be activate to add review"));
         }
@@ -160,13 +180,11 @@ public class Item extends AggregateRoot<ItemID> {
             throw new NotificationException("Failed to add review item", notification);
         }
 
-        this.scoreReview += scoreReview;
-        this.qtyReviews++;
         this.updatedAt = InstantUtils.now();
     }
 
-    public double getReviewScore(){
-        return scoreReview/Double.valueOf(qtyReviews);
+    public double getReviewScore() {
+        return -1;
     }
 
     private void selfValidate() {

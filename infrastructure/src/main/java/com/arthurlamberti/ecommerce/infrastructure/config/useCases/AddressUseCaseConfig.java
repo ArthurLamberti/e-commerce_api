@@ -11,6 +11,8 @@ import com.arthurlamberti.ecommerce.application.address.retrieve.list.ListAddres
 import com.arthurlamberti.ecommerce.application.address.update.DefaultUpdateAddressUsecase;
 import com.arthurlamberti.ecommerce.application.address.update.UpdateAddressUsecase;
 import com.arthurlamberti.ecommerce.domain.address.AddressGateway;
+import com.arthurlamberti.ecommerce.domain.customer.CustomerGateway;
+import com.arthurlamberti.ecommerce.domain.seller.SellerGateway;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -18,14 +20,21 @@ import org.springframework.context.annotation.Configuration;
 public class AddressUseCaseConfig {
 
     private final AddressGateway addressGateway;
+    private final CustomerGateway customerGateway;
+    private final SellerGateway sellerGateway;
 
-    public AddressUseCaseConfig(final AddressGateway addressGateway) {
+    public AddressUseCaseConfig(
+            final AddressGateway addressGateway,
+            final CustomerGateway customerGateway,
+            final SellerGateway sellerGateway) {
         this.addressGateway = addressGateway;
+        this.customerGateway = customerGateway;
+        this.sellerGateway = sellerGateway;
     }
 
     @Bean
     public CreateAddressUsecase createAddressUsecase() {
-        return new DefaultCreateAddressUsecase(addressGateway);
+        return new DefaultCreateAddressUsecase(addressGateway, customerGateway, sellerGateway);
     }
 
     @Bean

@@ -25,6 +25,16 @@ public class AddressValidator extends Validator {
         checkZipCodeConstraints();
         checkNumberConstraints();
         checkComplementConstraints();
+        checkOwnerConstraints();
+    }
+
+    private void checkOwnerConstraints() {
+        final var customerId = anAddress.getCustomerId();
+        final var selledId = anAddress.getSellerId();
+
+        if ((isNull(customerId) || customerId.isBlank()) && (isNull(selledId) || selledId.isBlank())) {
+            this.validationHandler().append(new Error("'customerId' or 'sellerId' should not be null"));
+        }
     }
 
     private void checkCountryConstraints() {

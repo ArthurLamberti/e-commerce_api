@@ -7,4 +7,8 @@
 - Seller
   - [ ] alterar banco para deixar seller.email e seller.document unicos
   - [ ] validar no usecase se email ou document já estao cadastrados
-  - [ ] implementar testes customers
+  - [ ] implementar testes sellers
+
+- Items
+  - [ ] validar no usecase se ja possui um item com o nome cadastrado pro seller
+  - [ ] implementar testes items
