@@ -23,7 +23,7 @@ public class ReviewID extends Identifier {
 
     @Override
     public String getValue() {
-        return null;
+        return this.uuid;
     }
 
     @Override

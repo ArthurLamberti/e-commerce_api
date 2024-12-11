@@ -3,6 +3,7 @@ package com.arthurlamberti.ecommerce.infrastructure.item.persistence;
 
 import com.arthurlamberti.ecommerce.domain.item.Item;
 import com.arthurlamberti.ecommerce.domain.item.ItemID;
+import com.arthurlamberti.ecommerce.infrastructure.review.persistence.ReviewJpaEntity;
 import com.arthurlamberti.ecommerce.infrastructure.seller.persistence.SellerJPAEntity;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -10,6 +11,8 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.time.Instant;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity(name = "items")
 @Table(name = "items")
@@ -37,8 +40,8 @@ public class ItemJpaEntity {
     @Column(name = "qty_available", nullable = false)
     private Integer qtyAvailable;
 
-//    @OneToMany(mappedBy = "item")
-//    private List<ReviewJpaEntity> reviews;
+    @OneToMany(mappedBy = "item")
+    private List<ReviewJpaEntity> reviews;
 
     @Column(name = "created_at", nullable = false, columnDefinition = "DATETIME(6)")
     private Instant createdAt;
@@ -60,6 +63,7 @@ public class ItemJpaEntity {
                 item.getDescription(),
                 item.getImageUrl(),
                 item.getQtyAvailable(),
+                new ArrayList<>(),
                 item.getCreatedAt(),
                 item.getUpdatedAt(),
                 item.getDeletedAt()

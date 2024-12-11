@@ -32,7 +32,8 @@ public class ItemMySQLGateway implements ItemGateway {
 
     @Override
     public Optional<Item> findById(ItemID anId) {
-        return Optional.empty();
+        return this.itemRepository.findById(anId.getValue())
+                .map(ItemJpaEntity::toAggregate);
     }
 
     @Override

@@ -9,6 +9,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity(name = "customers")
@@ -55,7 +56,7 @@ public class CustomerJPAEntity {
                 customer.getDocument(),
                 customer.isActive(),
 //                List.copyOf(customer.getAddress())
-                null,
+                new ArrayList<>(),
                 customer.getCreatedAt(),
                 customer.getUpdatedAt(),
                 customer.getDeletedAt()

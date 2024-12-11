@@ -3,6 +3,7 @@ package com.arthurlamberti.ecommerce.domain.reviews;
 import com.arthurlamberti.ecommerce.domain.AggregateRoot;
 import com.arthurlamberti.ecommerce.domain.customer.Customer;
 import com.arthurlamberti.ecommerce.domain.exceptions.NotificationException;
+import com.arthurlamberti.ecommerce.domain.utils.InstantUtils;
 import com.arthurlamberti.ecommerce.domain.validation.ValidationHandler;
 import com.arthurlamberti.ecommerce.domain.validation.handler.Notification;
 import lombok.Getter;
@@ -12,7 +13,8 @@ import java.time.Instant;
 @Getter
 public class Review extends AggregateRoot<ReviewID> {
 
-    private Customer customer;
+    private String customerId;
+    private String itemId;
     private String description;
     private Double rating;
     private Instant createdAt;
@@ -21,7 +23,8 @@ public class Review extends AggregateRoot<ReviewID> {
 
     protected Review(
             final ReviewID reviewID,
-            final Customer aCustomer,
+            final String aCustomerId,
+            final String itemId,
             final String aDescription,
             final Double aRating,
             final Instant createdAt,
@@ -29,7 +32,8 @@ public class Review extends AggregateRoot<ReviewID> {
             final Instant deletedAt
     ) {
         super(reviewID);
-        this.customer = aCustomer;
+        this.customerId = aCustomerId;
+        this.itemId = itemId;
         this.description = aDescription;
         this.rating = aRating;
         this.createdAt = createdAt;
@@ -39,9 +43,34 @@ public class Review extends AggregateRoot<ReviewID> {
         selfValidate();
     }
 
+    public static Review with(ReviewID id, String customerId, String itemID, String description, Double rating, Instant createdAt, Instant updatedAt, Instant deletedAt) {
+        return new Review(
+                id,
+                customerId,
+                itemID,
+                description,
+                rating,
+                createdAt,
+                updatedAt,
+                deletedAt
+        );
+    }
+
     @Override
     public void validate(ValidationHandler handler) {
+        new ReviewValidator(this, handler).validate();
+    }
 
+    public static Review newReview(
+            final String customerId,
+            final String itemId,
+            final String description,
+            final Double rating
+    ) {
+        final var anId = ReviewID.unique();
+        final var now = InstantUtils.now();
+
+        return new Review(anId, customerId, itemId, description, rating, now, now, null);
     }
 
     private void selfValidate() {
