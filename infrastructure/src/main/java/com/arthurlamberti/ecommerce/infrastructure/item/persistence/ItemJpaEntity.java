@@ -3,6 +3,8 @@ package com.arthurlamberti.ecommerce.infrastructure.item.persistence;
 
 import com.arthurlamberti.ecommerce.domain.item.Item;
 import com.arthurlamberti.ecommerce.domain.item.ItemID;
+import com.arthurlamberti.ecommerce.infrastructure.purchase.persistence.PurchaseJpaEntity;
+import com.arthurlamberti.ecommerce.infrastructure.purchase_item.persistence.PurchasedItemJpaEntity;
 import com.arthurlamberti.ecommerce.infrastructure.review.persistence.ReviewJpaEntity;
 import com.arthurlamberti.ecommerce.infrastructure.seller.persistence.SellerJPAEntity;
 import lombok.AccessLevel;
@@ -43,6 +45,9 @@ public class ItemJpaEntity {
     @OneToMany(mappedBy = "item")
     private List<ReviewJpaEntity> reviews;
 
+    @OneToMany(mappedBy = "item")
+    private List<PurchasedItemJpaEntity> purchase;
+
     @Column(name = "created_at", nullable = false, columnDefinition = "DATETIME(6)")
     private Instant createdAt;
 
@@ -63,6 +68,7 @@ public class ItemJpaEntity {
                 item.getDescription(),
                 item.getImageUrl(),
                 item.getQtyAvailable(),
+                new ArrayList<>(),
                 new ArrayList<>(),
                 item.getCreatedAt(),
                 item.getUpdatedAt(),

@@ -6,6 +6,8 @@ import com.arthurlamberti.ecommerce.infrastructure.address.persistence.AddressJP
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 import java.time.Instant;
@@ -33,7 +35,8 @@ public class CustomerJPAEntity {
     @Column(name = "active")
     private Boolean active;
 
-    @OneToMany(mappedBy = "customer", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "customer")
+    @LazyCollection(LazyCollectionOption.FALSE)
     private List<AddressJPAEntity> addresses;
 
     @Column(name = "created_at", nullable = false, columnDefinition = "DATETIME(6)")

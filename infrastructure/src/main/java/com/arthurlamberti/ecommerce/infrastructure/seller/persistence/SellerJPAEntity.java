@@ -9,6 +9,8 @@ import com.arthurlamberti.ecommerce.infrastructure.item.persistence.ItemJpaEntit
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 import java.time.Instant;
@@ -39,7 +41,8 @@ public class SellerJPAEntity {
     @Column(name = "active")
     private Boolean active;
 
-    @OneToMany(mappedBy = "seller", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "seller")
+    @LazyCollection(LazyCollectionOption.FALSE)
     private List<AddressJPAEntity> addresses;
 
     @OneToMany(mappedBy = "seller")

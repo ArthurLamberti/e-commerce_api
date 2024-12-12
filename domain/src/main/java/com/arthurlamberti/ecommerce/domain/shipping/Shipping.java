@@ -14,7 +14,8 @@ import java.time.Instant;
 @Getter
 public class Shipping extends AggregateRoot<ShippingID> {
 
-    private Address address;
+    private String addressId;
+    private String purchaseId;
     private String code;
     private Double price;
     private ShippingStatus status;
@@ -25,16 +26,18 @@ public class Shipping extends AggregateRoot<ShippingID> {
 
     protected Shipping(
             final ShippingID shippingID,
-            final Address anAddress,
+            final String anAddressId,
+            final String purchaseId,
             final String aCode,
             final Double aPrice,
             final ShippingStatus status,
             final Instant createdAt,
             final Instant updatedAt,
             final Instant deletedAt
-            ) {
+    ) {
         super(shippingID);
-        this.address = anAddress;
+        this.addressId = anAddressId;
+        this.purchaseId = purchaseId;
         this.code = aCode;
         this.price = aPrice;
         this.status = status;
@@ -45,16 +48,31 @@ public class Shipping extends AggregateRoot<ShippingID> {
     }
 
     public static Shipping newShipping(
-            final Address anAddress,
+            final String anAddressId,
+            final String purchaseId,
             final String code,
             final Double price
-    ){
+    ) {
         final var anId = ShippingID.unique();
         final var now = InstantUtils.now();
-        return new Shipping(anId,anAddress,code,price,ShippingStatus.CREATED,now,now,null);
+        return new Shipping(anId, anAddressId, purchaseId, code, price, ShippingStatus.CREATED, now, now, null);
     }
 
-    private void selfValidate(){
+    public static Shipping with(ShippingID anId, String addressId, String otherId, String code, Double price, ShippingStatus status, Instant createdAt, Instant updatedAt, Instant deletedAt) {
+        return new Shipping(
+                anId,
+                addressId,
+                otherId,
+                code,
+                price,
+                status,
+                createdAt,
+                updatedAt,
+                deletedAt
+        );
+    }
+
+    private void selfValidate() {
         final var notification = Notification.create();
         validate(notification);
         if (notification.hasError())
@@ -63,10 +81,10 @@ public class Shipping extends AggregateRoot<ShippingID> {
 
     @Override
     public void validate(ValidationHandler handler) {
-        new ShippingValidator(this,handler).validate();
+        new ShippingValidator(this, handler).validate();
     }
 
-    public Shipping changeStatus(final ShippingStatus aStatus){
+    public Shipping changeStatus(final ShippingStatus aStatus) {
         this.status = aStatus;
         this.updatedAt = InstantUtils.now();
         return this;

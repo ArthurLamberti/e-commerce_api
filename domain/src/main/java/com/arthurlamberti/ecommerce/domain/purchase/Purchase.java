@@ -20,38 +20,35 @@ import java.util.List;
 @Getter
 public class Purchase extends AggregateRoot<PurchaseID> {
 
-    private Seller seller;
-    private Customer customer;
-    private List<PurchasedItem> items;
+    private String sellerId;
+    private String customerId;
+    private List<String> items;
     private Double totalValue;
     private Integer totalQty;
-    private Shipping shipping;
+    private String shipping;
     private PurchaseStatus status;
-    private Address address;
     private Instant createdAt;
     private Instant updatedAt;
     private Instant deletedAt;
 
     protected Purchase(final PurchaseID purchaseID,
-                       final Seller aSeller,
-                       final Customer aCustomer,
-                       final List<PurchasedItem> listItems,
+                       final String aSeller,
+                       final String aCustomer,
+                       final List<String> listItems,
                        final Double aTotalValue,
                        final Integer totalQty,
-                       final Shipping aShipping,
-                       final Address anAddress,
+                       final String aShipping,
                        final PurchaseStatus aStatus,
                        final Instant createdAt,
                        final Instant updatedAt,
                        final Instant deletedAt) {
         super(purchaseID);
-        this.seller = aSeller;
-        this.customer = aCustomer;
+        this.sellerId = aSeller;
+        this.customerId = aCustomer;
         this.items = listItems;
         this.totalQty = totalQty;
         this.totalValue = aTotalValue;
         this.shipping = aShipping;
-        this.address = anAddress;
         this.status = aStatus;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
@@ -60,29 +57,44 @@ public class Purchase extends AggregateRoot<PurchaseID> {
     }
 
     public static Purchase newPurchase(
-            final Seller aSeller,
-            final Customer aCustomer,
-            final List<PurchasedItem> listItems,
+            final String aSellerId,
+            final String aCustomerId,
+            final List<String> listItems,
             final Double aTotalValue,
             final Integer totalQty,
-            final Shipping aShipping,
-            final Address anAddress
-    ){
+            final String aShipping,
+            final String anAddress
+    ) {
         final var anId = PurchaseID.unique();
         final var now = InstantUtils.now();
         return new Purchase(
                 anId,
-                aSeller,
-                aCustomer,
+                aSellerId,
+                aCustomerId,
                 listItems,
                 aTotalValue,
                 totalQty,
                 aShipping,
-                anAddress,
                 PurchaseStatus.NEW,
                 now,
                 now,
                 null
+        );
+    }
+
+    public static Purchase with(PurchaseID from, String customerId, String sellerId, List<String> items, String shippingId, Double totalValue, PurchaseStatus status, Instant createdAt, Instant updatedAt, Instant deletedAt) {
+        return new Purchase(
+                from,
+                customerId,
+                sellerId,
+                items,
+                totalValue,
+                items.size(),
+                shippingId,
+                status,
+                createdAt,
+                updatedAt,
+                deletedAt
         );
     }
 

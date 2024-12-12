@@ -22,7 +22,7 @@ public class ShippingValidator extends Validator {
     }
 
     private void checkAddress() {
-        if (isNull(this.shipping.getAddress())) {
+        if (isNull(this.shipping.getAddressId())) {
             this.validationHandler().append(new Error("'item' should not be null"));
             return;
         }

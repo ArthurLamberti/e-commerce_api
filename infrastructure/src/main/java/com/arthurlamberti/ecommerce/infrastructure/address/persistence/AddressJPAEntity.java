@@ -4,10 +4,12 @@ import com.arthurlamberti.ecommerce.domain.address.Address;
 import com.arthurlamberti.ecommerce.domain.address.AddressID;
 import com.arthurlamberti.ecommerce.infrastructure.customer.persistence.CustomerJPAEntity;
 import com.arthurlamberti.ecommerce.infrastructure.seller.persistence.SellerJPAEntity;
+import com.arthurlamberti.ecommerce.infrastructure.shipping.persistence.ShippingJpaEntity;
 import lombok.*;
 
 import javax.persistence.*;
 import java.time.Instant;
+import java.util.List;
 
 @Entity(name = "addresses")
 @Table(name = "addresses")
@@ -50,6 +52,9 @@ public class AddressJPAEntity {
     @JoinColumn(name = "seller_id")
     private SellerJPAEntity seller;
 
+    @OneToMany(mappedBy = "address", fetch = FetchType.LAZY)
+    private List<ShippingJpaEntity> shipping;
+
     @Column(name = "created_at", nullable = false, columnDefinition = "DATETIME(6)")
     private Instant createdAt;
 
@@ -74,6 +79,7 @@ public class AddressJPAEntity {
                 anAddress.getComplement(),
                 anAddress.isActive(),
                 null, null,
+                null,
                 anAddress.getCreatedAt(),
                 anAddress.getUpdatedAt(),
                 anAddress.getDeletedAt()
@@ -93,6 +99,7 @@ public class AddressJPAEntity {
                 anAddress.isActive(),
                 customer,
                 seller,
+                null,
                 anAddress.getCreatedAt(),
                 anAddress.getUpdatedAt(),
                 anAddress.getDeletedAt()

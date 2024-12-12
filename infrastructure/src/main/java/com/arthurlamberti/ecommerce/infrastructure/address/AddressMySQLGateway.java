@@ -15,6 +15,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -24,6 +25,7 @@ import static java.util.Objects.requireNonNull;
 import static org.springframework.data.jpa.domain.Specification.where;
 
 @Component
+@Transactional
 public class AddressMySQLGateway implements AddressGateway {
 
     private final AddressRepository addressRepository;

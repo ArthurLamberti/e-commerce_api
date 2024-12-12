@@ -92,7 +92,7 @@ CREATE TABLE Purchases
     FOREIGN KEY (shipping_id) REFERENCES Shippings (id)
 );
 
-CREATE TABLE PurchaseItems
+CREATE TABLE purchase_items
 (
     id          VARCHAR(32) NOT NULL PRIMARY KEY,
     purchase_id VARCHAR(32) NOT NULL,
