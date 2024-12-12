@@ -22,6 +22,7 @@ public class Item extends AggregateRoot<ItemID> {
     private String name;
     private String description;
     private String imageUrl;
+    private Double price;
     private Integer qtyAvailable;
     List<Review> reviews;
     private String sellerId;
@@ -37,6 +38,7 @@ public class Item extends AggregateRoot<ItemID> {
                    final String name,
                    final String description,
                    final String imageUrl,
+                   final Double price,
                    final ItemStatus status,
                    final Integer qtyAvailable,
                    final List<Review> reviews,
@@ -49,6 +51,7 @@ public class Item extends AggregateRoot<ItemID> {
         this.name = name;
         this.description = description;
         this.imageUrl = imageUrl;
+        this.price = price;
         this.status = status;
         this.qtyAvailable = qtyAvailable;
         this.createdAt = createdAt;
@@ -65,22 +68,24 @@ public class Item extends AggregateRoot<ItemID> {
             final String name,
             final String description,
             final String imageUrl,
+            final Double price,
             final Integer stock
     ) {
         final var anId = ItemID.unique();
         final var now = InstantUtils.now();
 
 //        return new Item(anId, seller, name, description, imageUrl, ItemStatus.ACTIVE, stock, new ArrayList<>(), now, now, null);
-        return new Item(anId, sellerId, name, description, imageUrl, ItemStatus.ACTIVE, stock, new ArrayList<>(), now, now, null);
+        return new Item(anId, sellerId, name, description, imageUrl, price, ItemStatus.ACTIVE, stock, new ArrayList<>(), now, now, null);
     }
 
-    public static Item with(ItemID id, String name, String description, String imageUrl, Integer qtyAvailable, String seller, Instant createdAt, Instant updatedAt, Instant deletedAt) {
+    public static Item with(ItemID id, String name, String description, String imageUrl, Double price, Integer qtyAvailable, String seller, Instant createdAt, Instant updatedAt, Instant deletedAt) {
         return new Item(
                 id,
                 seller,
                 name,
                 description,
                 imageUrl,
+                price,
                 ItemStatus.ACTIVE,
                 qtyAvailable,
                 new ArrayList<>(),

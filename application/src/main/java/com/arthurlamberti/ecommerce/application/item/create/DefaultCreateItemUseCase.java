@@ -30,6 +30,7 @@ public class DefaultCreateItemUseCase extends CreateItemUseCase {
                         aCommand.name(),
                         aCommand.description(),
                         aCommand.imageUrl(),
+                        10D,
                         aCommand.stock()
                 )
         );

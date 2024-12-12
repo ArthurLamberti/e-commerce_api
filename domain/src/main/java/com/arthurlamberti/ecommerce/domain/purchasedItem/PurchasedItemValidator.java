@@ -17,17 +17,17 @@ public class PurchasedItemValidator extends Validator {
 
     @Override
     public void validate() {
-        checkItem();
-        checkValue();
-        checkSeller();
-        checkQty();
+//        checkItem();
+//        checkValue();
+//        checkSeller();
+//        checkQty();
     }
 
     private void checkItem() {
-        if (isNull(this.purchasedItem.getItem())) {
-            this.validationHandler().append(new Error("'item' should not be null"));
-            return;
-        }
+//        if (isNull(this.purchasedItem.getItem())) {
+//            this.validationHandler().append(new Error("'item' should not be null"));
+//            return;
+//        }
     }
 
     private void checkValue() {
@@ -38,14 +38,14 @@ public class PurchasedItemValidator extends Validator {
     }
 
     private void checkSeller() {
-        if (isNull(this.purchasedItem.getSellerId())) {
-            this.validationHandler().append(new Error("'sellerId' should not be null"));
-            return;
-        }
-
-        if (this.purchasedItem.getSellerId().isBlank()) {
-            this.validationHandler().append(new Error("'sellerId' should not be empty"));
-        }
+//        if (isNull(this.purchasedItem.getSellerId())) {
+//            this.validationHandler().append(new Error("'sellerId' should not be null"));
+//            return;
+//        }
+//
+//        if (this.purchasedItem.getSellerId().isBlank()) {
+//            this.validationHandler().append(new Error("'sellerId' should not be empty"));
+//        }
     }
 
     private void checkQty() {

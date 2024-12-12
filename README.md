@@ -12,6 +12,7 @@
 - Items
   - [ ] validar no usecase se ja possui um item com o nome cadastrado pro seller
   - [ ] implementar testes items
+  - [ ] passar preco no request (ta fixo em 10)
 
 - Reviews
   - [ ] implementar testes items

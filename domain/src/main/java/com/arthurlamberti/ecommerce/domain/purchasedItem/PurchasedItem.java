@@ -14,8 +14,9 @@ import java.time.Instant;
 @Getter
 public class PurchasedItem extends AggregateRoot<PurchasedItemID> {
 
-    private String sellerId;
-    private Item item;
+    private String purchaseId;
+    private String itemId;
+    //    private Item item;
     private Integer qty;
     private Double value;
     private Instant createdAt;
@@ -23,16 +24,16 @@ public class PurchasedItem extends AggregateRoot<PurchasedItemID> {
     private Instant deletedAt;
 
     protected PurchasedItem(final PurchasedItemID purchasedItemID,
-                         final String sellerId,
-                         final Item item,
-                         final Integer qty,
-                         final Double value,
-                         final Instant createdAt,
-                         final Instant updatedAt,
-                         final Instant deletedAt) {
+                            final String purchaseId,
+                            final String itemId,
+                            final Integer qty,
+                            final Double value,
+                            final Instant createdAt,
+                            final Instant updatedAt,
+                            final Instant deletedAt) {
         super(purchasedItemID);
-        this.sellerId = sellerId;
-        this.item = item;
+        this.purchaseId = purchaseId;
+        this.itemId = itemId;
         this.qty = qty;
         this.value = value;
         this.createdAt = createdAt;
@@ -48,13 +49,13 @@ public class PurchasedItem extends AggregateRoot<PurchasedItemID> {
             throw new NotificationException("Failed to create a purchasedItem", notification);
     }
 
-    public static PurchasedItem newPurchasedItem(final String sellerId,
-                                                 final Item item,
+    public static PurchasedItem newPurchasedItem(final String purchaseId,
+                                                 final String itemId,
                                                  final Integer qty,
                                                  final Double value) {
         final var anId = PurchasedItemID.unique();
         final var now = InstantUtils.now();
-        return new PurchasedItem(anId, sellerId, item,qty,value,now,now,null);
+        return new PurchasedItem(anId, purchaseId, itemId, qty, value, now, now, null);
     }
 
     @Override

@@ -38,6 +38,8 @@ public class ItemJpaEntity {
     @Column(name = "image_url")
     private String imageUrl;
 
+    @Column
+    private Double price;
 
     @Column(name = "qty_available", nullable = false)
     private Integer qtyAvailable;
@@ -67,6 +69,7 @@ public class ItemJpaEntity {
                 item.getName(),
                 item.getDescription(),
                 item.getImageUrl(),
+                item.getPrice(),
                 item.getQtyAvailable(),
                 new ArrayList<>(),
                 new ArrayList<>(),
@@ -82,6 +85,7 @@ public class ItemJpaEntity {
                 this.name,
                 this.description,
                 this.imageUrl,
+                this.price,
                 this.qtyAvailable,
                 this.seller.getId(),
                 this.createdAt,

@@ -1,9 +1,10 @@
 package com.arthurlamberti.ecommerce.application.purchase.create;
 
+import com.arthurlamberti.ecommerce.application.purchased_item.create.CreatePurchasedItemCommand;
+import com.arthurlamberti.ecommerce.application.purchased_item.create.CreatePurchasedItemUseCase;
 import com.arthurlamberti.ecommerce.application.shipping.create_by_purchase.CreateShippingByPurchaseCommand;
 import com.arthurlamberti.ecommerce.application.shipping.create_by_purchase.CreateShippingUseCase;
 import com.arthurlamberti.ecommerce.domain.address.AddressGateway;
-import com.arthurlamberti.ecommerce.domain.address.AddressID;
 import com.arthurlamberti.ecommerce.domain.customer.CustomerGateway;
 import com.arthurlamberti.ecommerce.domain.customer.CustomerID;
 import com.arthurlamberti.ecommerce.domain.exceptions.NotificationException;
@@ -27,14 +28,16 @@ public class DefaultCreatePurchaseUseCase extends CreatePurchaseUseCase {
     private final ItemGateway itemGateway;
 
     private final CreateShippingUseCase createShippingUseCase;
+    private final CreatePurchasedItemUseCase createPurchasedItemUseCase;
 
-    public DefaultCreatePurchaseUseCase(final PurchaseGateway purchaseGateway, SellerGateway sellerGateway, CustomerGateway customerGateway, AddressGateway addressGateway, ItemGateway itemGateway, CreateShippingUseCase createShippingUseCase) {
+    public DefaultCreatePurchaseUseCase(final PurchaseGateway purchaseGateway, SellerGateway sellerGateway, CustomerGateway customerGateway, AddressGateway addressGateway, ItemGateway itemGateway, CreateShippingUseCase createShippingUseCase, CreatePurchasedItemUseCase createPurchasedItemUseCase) {
         this.purchaseGateway = purchaseGateway;
         this.sellerGateway = sellerGateway;
         this.customerGateway = customerGateway;
         this.addressGateway = addressGateway;
         this.itemGateway = itemGateway;
         this.createShippingUseCase = createShippingUseCase;
+        this.createPurchasedItemUseCase = createPurchasedItemUseCase;
     }
 
     @Override
@@ -70,7 +73,10 @@ public class DefaultCreatePurchaseUseCase extends CreatePurchaseUseCase {
                         .or(() -> {
                             notification.append(new Error("Item %s not found".formatted(id)));
                             return Optional.empty();
-                        }));
+                        }))
+                .filter(Optional::isPresent)
+                .map(Optional::get)
+                .toList();
 
         if (notification.hasError()) {
             throw new NotificationException("Could not create Aggregate Purchase", notification);
@@ -80,9 +86,10 @@ public class DefaultCreatePurchaseUseCase extends CreatePurchaseUseCase {
         final var shipping = createShippingUseCase.execute(shippingCommand);
 
         //TODO create purchasedItems and send to purchaseGateway
+        final var createPurchasedItemsCommand = new CreatePurchasedItemCommand(items, aPurchase);
+        final var output = this.purchaseGateway.create(aPurchase, shipping);
+        final var res = createPurchasedItemUseCase.execute(createPurchasedItemsCommand);
 
-
-
-        return CreatePurchaseOutput.from(this.purchaseGateway.create(aPurchase, shipping));
+        return CreatePurchaseOutput.from(output);
     }
 }

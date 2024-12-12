@@ -1,5 +1,6 @@
 package com.arthurlamberti.ecommerce.infrastructure.purchase_item.persistence;
 
+import com.arthurlamberti.ecommerce.domain.purchasedItem.PurchasedItem;
 import com.arthurlamberti.ecommerce.infrastructure.item.persistence.ItemJpaEntity;
 import com.arthurlamberti.ecommerce.infrastructure.purchase.persistence.PurchaseJpaEntity;
 import lombok.AccessLevel;
@@ -39,4 +40,17 @@ public class PurchasedItemJpaEntity {
 
     @Column(name = "deleted_at", nullable = true, columnDefinition = "DATETIME(6)")
     private Instant deletedAt;
+
+    public static PurchasedItemJpaEntity from(PurchasedItem item, PurchaseJpaEntity purchase, ItemJpaEntity itemJpaEntity) {
+        return new PurchasedItemJpaEntity(
+                item.getItemId(),
+                purchase,
+                itemJpaEntity,
+                item.getQty(),
+                item.getValue(),
+                item.getCreatedAt(),
+                item.getUpdatedAt(),
+                item.getDeletedAt()
+        );
+    }
 }
