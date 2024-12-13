@@ -32,12 +32,6 @@ public class DefaultCreatePurchasedItemUseCase extends CreatePurchasedItemUseCas
                 .toList();
 
         final var output = purchasedItemGateway.create(items);
-//        final var output = items
-//                .stream()
-//                .map( item -> purchasedItemGateway.create()
-//                )
-//                .map(PurchasedItem::getItemId)
-//                .toList();
 
         return CreatePurchasedItemOutput.ok(null);
     }

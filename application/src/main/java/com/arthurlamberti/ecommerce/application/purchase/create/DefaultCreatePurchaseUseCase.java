@@ -85,7 +85,6 @@ public class DefaultCreatePurchaseUseCase extends CreatePurchaseUseCase {
         final var shippingCommand = new CreateShippingByPurchaseCommand(customer.get().getAddressList().get(0), aPurchase);
         final var shipping = createShippingUseCase.execute(shippingCommand);
 
-        //TODO create purchasedItems and send to purchaseGateway
         final var createPurchasedItemsCommand = new CreatePurchasedItemCommand(items, aPurchase);
         final var output = this.purchaseGateway.create(aPurchase, shipping);
         final var res = createPurchasedItemUseCase.execute(createPurchasedItemsCommand);
