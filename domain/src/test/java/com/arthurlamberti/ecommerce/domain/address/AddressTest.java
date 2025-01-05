@@ -21,6 +21,8 @@ public class AddressTest extends UnitTest {
         final var expectedNumber = Fixture.AddressFixture.number();
         final var expectedComplement = Fixture.characters(1, 100);
         final var expectedIsActive = Boolean.TRUE;
+        final var expectedCustomerId = Fixture.uuid();
+        final var expectedSellerId = Fixture.uuid();
 
         final var actualAddress = Address.newAddress(
                 expectedCountry,
@@ -29,7 +31,9 @@ public class AddressTest extends UnitTest {
                 expectedStreet,
                 expectedZipCode,
                 expectedNumber,
-                expectedComplement);
+                expectedComplement,
+                expectedCustomerId,
+                expectedSellerId);
 
         assertNotNull(actualAddress);
         assertNotNull(actualAddress.getId());
@@ -38,9 +42,11 @@ public class AddressTest extends UnitTest {
         assertEquals(expectedCity, actualAddress.getCity());
         assertEquals(expectedStreet, actualAddress.getStreet());
         assertEquals(expectedZipCode, actualAddress.getZipCode());
-        assertEquals(expectedNumber, actualAddress.getNumber());
+        assertEquals(expectedNumber, actualAddress.getNumeral());
         assertEquals(expectedComplement, actualAddress.getComplement());
         assertEquals(expectedIsActive, actualAddress.isActive());
+        assertEquals(expectedCustomerId, actualAddress.getCustomerId());
+        assertEquals(expectedSellerId, actualAddress.getSellerId());
         assertEquals(actualAddress.getCreatedAt(), actualAddress.getUpdatedAt());
         assertNull(actualAddress.getDeletedAt());
     }
@@ -54,6 +60,8 @@ public class AddressTest extends UnitTest {
         final var expectedZipCode = Fixture.AddressFixture.zipCode();
         final var expectedNumber = Fixture.AddressFixture.number();
         final var expectedComplement = Fixture.characters(1, 100);
+        final var expectedCustomerId = Fixture.uuid();
+        final var expectedSellerId = Fixture.uuid();
 
         final var expectedErrorCount = 1;
         final var expectedErrorMessage = "'country' should not be null";
@@ -67,7 +75,9 @@ public class AddressTest extends UnitTest {
                         expectedStreet,
                         expectedZipCode,
                         expectedNumber,
-                        expectedComplement)
+                        expectedComplement,
+                        expectedCustomerId,
+                        expectedSellerId)
         );
 
         assertEquals(expectedErrorCount, actualError.getErrors().size());
@@ -83,6 +93,8 @@ public class AddressTest extends UnitTest {
         final var expectedZipCode = Fixture.AddressFixture.zipCode();
         final var expectedNumber = Fixture.AddressFixture.number();
         final var expectedComplement = Fixture.characters(1, 100);
+        final var expectedCustomerId = Fixture.uuid();
+        final var expectedSellerId = Fixture.uuid();
 
         final var expectedErrorCount = 1;
         final var expectedErrorMessage = "'country' should not be empty";
@@ -96,7 +108,9 @@ public class AddressTest extends UnitTest {
                         expectedStreet,
                         expectedZipCode,
                         expectedNumber,
-                        expectedComplement)
+                        expectedComplement,
+                        expectedCustomerId,
+                        expectedSellerId)
         );
 
         assertEquals(expectedErrorCount, actualError.getErrors().size());
@@ -112,6 +126,8 @@ public class AddressTest extends UnitTest {
         final var expectedZipCode = Fixture.AddressFixture.zipCode();
         final var expectedNumber = Fixture.AddressFixture.number();
         final var expectedComplement = Fixture.characters(1, 100);
+        final var expectedCustomerId = Fixture.uuid();
+        final var expectedSellerId = Fixture.uuid();
 
         final var expectedErrorCount = 1;
         final var expectedErrorMessage = "'state' should not be null";
@@ -125,7 +141,9 @@ public class AddressTest extends UnitTest {
                         expectedStreet,
                         expectedZipCode,
                         expectedNumber,
-                        expectedComplement)
+                        expectedComplement,
+                        expectedCustomerId,
+                        expectedSellerId)
         );
 
         assertEquals(expectedErrorCount, actualError.getErrors().size());
@@ -141,6 +159,8 @@ public class AddressTest extends UnitTest {
         final var expectedZipCode = Fixture.AddressFixture.zipCode();
         final var expectedNumber = Fixture.AddressFixture.number();
         final var expectedComplement = Fixture.characters(1, 100);
+        final var expectedCustomerId = Fixture.uuid();
+        final var expectedSellerId = Fixture.uuid();
 
         final var expectedErrorCount = 1;
         final var expectedErrorMessage = "'state' should not be empty";
@@ -154,7 +174,9 @@ public class AddressTest extends UnitTest {
                         expectedStreet,
                         expectedZipCode,
                         expectedNumber,
-                        expectedComplement)
+                        expectedComplement,
+                        expectedCustomerId,
+                        expectedSellerId)
         );
 
         assertEquals(expectedErrorCount, actualError.getErrors().size());
@@ -170,6 +192,8 @@ public class AddressTest extends UnitTest {
         final var expectedZipCode = Fixture.AddressFixture.zipCode();
         final var expectedNumber = Fixture.AddressFixture.number();
         final var expectedComplement = Fixture.characters(1, 100);
+        final var expectedCustomerId = Fixture.uuid();
+        final var expectedSellerId = Fixture.uuid();
 
         final var expectedErrorCount = 1;
         final var expectedErrorMessage = "'city' should not be null";
@@ -183,7 +207,9 @@ public class AddressTest extends UnitTest {
                         expectedStreet,
                         expectedZipCode,
                         expectedNumber,
-                        expectedComplement)
+                        expectedComplement,
+                        expectedCustomerId,
+                        expectedSellerId)
         );
 
         assertEquals(expectedErrorCount, actualError.getErrors().size());
@@ -199,6 +225,8 @@ public class AddressTest extends UnitTest {
         final var expectedZipCode = Fixture.AddressFixture.zipCode();
         final var expectedNumber = Fixture.AddressFixture.number();
         final var expectedComplement = Fixture.characters(1, 100);
+        final var expectedCustomerId = Fixture.uuid();
+        final var expectedSellerId = Fixture.uuid();
 
         final var expectedErrorCount = 1;
         final var expectedErrorMessage = "'city' should not be empty";
@@ -212,7 +240,9 @@ public class AddressTest extends UnitTest {
                         expectedStreet,
                         expectedZipCode,
                         expectedNumber,
-                        expectedComplement)
+                        expectedComplement,
+                        expectedCustomerId,
+                        expectedSellerId)
         );
 
         assertEquals(expectedErrorCount, actualError.getErrors().size());
@@ -228,6 +258,8 @@ public class AddressTest extends UnitTest {
         final var expectedZipCode = Fixture.AddressFixture.zipCode();
         final var expectedNumber = Fixture.AddressFixture.number();
         final var expectedComplement = Fixture.characters(1, 100);
+        final var expectedCustomerId = Fixture.uuid();
+        final var expectedSellerId = Fixture.uuid();
 
         final var expectedErrorCount = 1;
         final var expectedErrorMessage = "'street' should not be null";
@@ -241,7 +273,9 @@ public class AddressTest extends UnitTest {
                         expectedStreet,
                         expectedZipCode,
                         expectedNumber,
-                        expectedComplement)
+                        expectedComplement,
+                        expectedCustomerId,
+                        expectedSellerId)
         );
 
         assertEquals(expectedErrorCount, actualError.getErrors().size());
@@ -257,6 +291,8 @@ public class AddressTest extends UnitTest {
         final var expectedZipCode = Fixture.AddressFixture.zipCode();
         final var expectedNumber = Fixture.AddressFixture.number();
         final var expectedComplement = Fixture.characters(1, 100);
+        final var expectedCustomerId = Fixture.uuid();
+        final var expectedSellerId = Fixture.uuid();
 
         final var expectedErrorCount = 1;
         final var expectedErrorMessage = "'street' should not be empty";
@@ -270,7 +306,9 @@ public class AddressTest extends UnitTest {
                         expectedStreet,
                         expectedZipCode,
                         expectedNumber,
-                        expectedComplement)
+                        expectedComplement,
+                        expectedCustomerId,
+                        expectedSellerId)
         );
 
         assertEquals(expectedErrorCount, actualError.getErrors().size());
@@ -286,6 +324,8 @@ public class AddressTest extends UnitTest {
         final String expectedZipCode = null;
         final var expectedNumber = Fixture.AddressFixture.number();
         final var expectedComplement = Fixture.characters(1, 100);
+        final var expectedCustomerId = Fixture.uuid();
+        final var expectedSellerId = Fixture.uuid();
 
         final var expectedErrorCount = 1;
         final var expectedErrorMessage = "'zipcode' should not be null";
@@ -299,7 +339,9 @@ public class AddressTest extends UnitTest {
                         expectedStreet,
                         expectedZipCode,
                         expectedNumber,
-                        expectedComplement)
+                        expectedComplement,
+                        expectedCustomerId,
+                        expectedSellerId)
         );
 
         assertEquals(expectedErrorCount, actualError.getErrors().size());
@@ -315,6 +357,8 @@ public class AddressTest extends UnitTest {
         final var expectedZipCode = "";
         final var expectedNumber = Fixture.AddressFixture.number();
         final var expectedComplement = Fixture.characters(1, 100);
+        final var expectedCustomerId = Fixture.uuid();
+        final var expectedSellerId = Fixture.uuid();
 
         final var expectedErrorCount = 1;
         final var expectedErrorMessage = "'zipcode' should not be empty";
@@ -328,7 +372,9 @@ public class AddressTest extends UnitTest {
                         expectedStreet,
                         expectedZipCode,
                         expectedNumber,
-                        expectedComplement)
+                        expectedComplement,
+                        expectedCustomerId,
+                        expectedSellerId)
         );
 
         assertEquals(expectedErrorCount, actualError.getErrors().size());
@@ -345,6 +391,8 @@ public class AddressTest extends UnitTest {
         final var expectedZipCode = Fixture.AddressFixture.zipCode();
         final String expectedNumber = null;
         final var expectedComplement = Fixture.characters(1,99);
+        final var expectedCustomerId = Fixture.uuid();
+        final var expectedSellerId = Fixture.uuid();
 
         final var expectedErrorCount = 1;
         final var expectedErrorMessage = "'number' should not be null";
@@ -358,7 +406,9 @@ public class AddressTest extends UnitTest {
                         expectedStreet,
                         expectedZipCode,
                         expectedNumber,
-                        expectedComplement)
+                        expectedComplement,
+                        expectedCustomerId,
+                        expectedSellerId)
         );
 
         assertEquals(expectedErrorCount, actualError.getErrors().size());
@@ -374,6 +424,8 @@ public class AddressTest extends UnitTest {
         final var expectedZipCode = Fixture.AddressFixture.zipCode();
         final var expectedNumber = "";
         final var expectedComplement = Fixture.characters(1,99);
+        final var expectedCustomerId = Fixture.uuid();
+        final var expectedSellerId = Fixture.uuid();
 
         final var expectedErrorCount = 1;
         final var expectedErrorMessage = "'number' should not be empty";
@@ -387,7 +439,9 @@ public class AddressTest extends UnitTest {
                         expectedStreet,
                         expectedZipCode,
                         expectedNumber,
-                        expectedComplement)
+                        expectedComplement,
+                        expectedCustomerId,
+                        expectedSellerId)
         );
 
         assertEquals(expectedErrorCount, actualError.getErrors().size());
@@ -396,7 +450,6 @@ public class AddressTest extends UnitTest {
 
     @Test
     public void givenValidNullComplement_whenCallNewAddress_shouldInstantiateAnAddress(){
-
         final var expectedCountry = Fixture.AddressFixture.country();
         final var expectedState = Fixture.AddressFixture.state();
         final var expectedCity = Fixture.AddressFixture.city();
@@ -405,6 +458,8 @@ public class AddressTest extends UnitTest {
         final var expectedNumber = Fixture.AddressFixture.number();
         final String expectedComplement = null;
         final var expectedIsActive = Boolean.TRUE;
+        final var expectedCustomerId = Fixture.uuid();
+        final var expectedSellerId = Fixture.uuid();
 
         final var actualAddress = Address.newAddress(
                 expectedCountry,
@@ -413,7 +468,9 @@ public class AddressTest extends UnitTest {
                 expectedStreet,
                 expectedZipCode,
                 expectedNumber,
-                expectedComplement);
+                expectedComplement,
+                expectedCustomerId,
+                expectedSellerId);
 
         assertNotNull(actualAddress);
         assertNotNull(actualAddress.getId());
@@ -422,7 +479,7 @@ public class AddressTest extends UnitTest {
         assertEquals(expectedCity, actualAddress.getCity());
         assertEquals(expectedStreet, actualAddress.getStreet());
         assertEquals(expectedZipCode, actualAddress.getZipCode());
-        assertEquals(expectedNumber, actualAddress.getNumber());
+        assertEquals(expectedNumber, actualAddress.getNumeral());
         assertNull(expectedComplement, actualAddress.getComplement());
         assertEquals(expectedIsActive, actualAddress.isActive());
         assertEquals(actualAddress.getCreatedAt(), actualAddress.getUpdatedAt());
@@ -431,7 +488,6 @@ public class AddressTest extends UnitTest {
 
     @Test
     public void givenInvalidComplementGreaterThan100_whenCallNewAddress_shouldReceiveAnException(){
-
         final var expectedCountry = Fixture.AddressFixture.country();
         final var expectedState = Fixture.AddressFixture.state();
         final var expectedCity = Fixture.AddressFixture.city();
@@ -439,6 +495,8 @@ public class AddressTest extends UnitTest {
         final var expectedZipCode = Fixture.AddressFixture.zipCode();
         final var expectedNumber = Fixture.AddressFixture.number();
         final var expectedComplement = Fixture.characters(101,300);
+        final var expectedCustomerId = Fixture.uuid();
+        final var expectedSellerId = Fixture.uuid();
 
         final var expectedErrorCount = 1;
         final var expectedErrorMessage = "'complement' should contains max of 100 characters";
@@ -452,7 +510,9 @@ public class AddressTest extends UnitTest {
                         expectedStreet,
                         expectedZipCode,
                         expectedNumber,
-                        expectedComplement)
+                        expectedComplement,
+                        expectedCustomerId,
+                        expectedSellerId)
         );
 
         assertEquals(expectedErrorCount, actualError.getErrors().size());
@@ -470,6 +530,8 @@ public class AddressTest extends UnitTest {
         final var expectedNumber = Fixture.AddressFixture.number();
         final var expectedComplement = Fixture.characters(1, 100);
         final var expectedIsActive = Boolean.FALSE;
+        final var expectedCustomerId = Fixture.uuid();
+        final var expectedSellerId = Fixture.uuid();
 
         final var actualAddress = Address.newAddress(
                 expectedCountry,
@@ -478,7 +540,9 @@ public class AddressTest extends UnitTest {
                 expectedStreet,
                 expectedZipCode,
                 expectedNumber,
-                expectedComplement);
+                expectedComplement,
+                expectedCustomerId,
+                expectedSellerId);
 
         final var actualUpdatedAt = actualAddress.getUpdatedAt();
 
@@ -491,7 +555,7 @@ public class AddressTest extends UnitTest {
         assertEquals(expectedCity, actualAddress.getCity());
         assertEquals(expectedStreet, actualAddress.getStreet());
         assertEquals(expectedZipCode, actualAddress.getZipCode());
-        assertEquals(expectedNumber, actualAddress.getNumber());
+        assertEquals(expectedNumber, actualAddress.getNumeral());
         assertEquals(expectedComplement, actualAddress.getComplement());
         assertEquals(expectedIsActive, actualAddress.isActive());
         assertTrue(actualAddress.getCreatedAt().isBefore(actualAddress.getUpdatedAt()));
@@ -508,6 +572,8 @@ public class AddressTest extends UnitTest {
         final var expectedNumber = Fixture.AddressFixture.number();
         final var expectedComplement = Fixture.characters(1, 100);
         final var expectedIsActive = Boolean.TRUE;
+        final var expectedCustomerId = Fixture.uuid();
+        final var expectedSellerId = Fixture.uuid();
 
         final var actualAddress = Address.newAddress(
                 expectedCountry,
@@ -516,7 +582,9 @@ public class AddressTest extends UnitTest {
                 expectedStreet,
                 expectedZipCode,
                 expectedNumber,
-                expectedComplement);
+                expectedComplement,
+                expectedCustomerId,
+                expectedSellerId);
         actualAddress.deactivate();
 
         assertFalse(actualAddress.isActive());
@@ -531,7 +599,7 @@ public class AddressTest extends UnitTest {
         assertEquals(expectedCity, actualAddress.getCity());
         assertEquals(expectedStreet, actualAddress.getStreet());
         assertEquals(expectedZipCode, actualAddress.getZipCode());
-        assertEquals(expectedNumber, actualAddress.getNumber());
+        assertEquals(expectedNumber, actualAddress.getNumeral());
         assertEquals(expectedComplement, actualAddress.getComplement());
         assertEquals(expectedIsActive, actualAddress.isActive());
         assertTrue(actualAddress.getCreatedAt().isBefore(actualAddress.getUpdatedAt()));
@@ -550,6 +618,8 @@ public class AddressTest extends UnitTest {
         final var expectedNumber = Fixture.AddressFixture.number();
         final var expectedComplement = Fixture.characters(1, 100);
         final var expectedIsActive = Boolean.TRUE;
+        final var expectedCustomerId = Fixture.uuid();
+        final var expectedSellerId = Fixture.uuid();
 
         final var initialAddressCopy = initialAddress.clone();
 
@@ -560,7 +630,9 @@ public class AddressTest extends UnitTest {
                 expectedStreet,
                 expectedZipCode,
                 expectedNumber,
-                expectedComplement);
+                expectedComplement,
+                expectedCustomerId,
+                expectedSellerId);
 
         assertNotNull(initialAddress);
         assertNotNull(initialAddress.getId());
@@ -569,7 +641,7 @@ public class AddressTest extends UnitTest {
         assertEquals(initialAddressCopy.getCity(), initialAddress.getCity());
         assertEquals(initialAddressCopy.getStreet(), initialAddress.getStreet());
         assertEquals(initialAddressCopy.getZipCode(), initialAddress.getZipCode());
-        assertEquals(initialAddressCopy.getNumber(), initialAddress.getNumber());
+        assertEquals(initialAddressCopy.getNumeral(), initialAddress.getNumeral());
         assertEquals(initialAddressCopy.getComplement(), initialAddress.getComplement());
         assertEquals(initialAddressCopy.isActive(), initialAddress.isActive());
         assertEquals(initialAddress.getCreatedAt(),initialAddress.getUpdatedAt());
@@ -580,7 +652,7 @@ public class AddressTest extends UnitTest {
                 updatedAddress.getCity(),
                 updatedAddress.getStreet(),
                 updatedAddress.getZipCode(),
-                updatedAddress.getNumber(),
+                updatedAddress.getNumeral(),
                 updatedAddress.getComplement()
         );
 
@@ -589,7 +661,7 @@ public class AddressTest extends UnitTest {
         assertNotEquals(initialAddressCopy.getCountry(), initialAddress.getCity());
         assertNotEquals(initialAddressCopy.getStreet(), initialAddress.getStreet());
         assertNotEquals(initialAddressCopy.getZipCode(), initialAddress.getZipCode());
-        assertNotEquals(initialAddressCopy.getNumber(), initialAddress.getNumber());
+        assertNotEquals(initialAddressCopy.getNumeral(), initialAddress.getNumeral());
         assertNotEquals(initialAddressCopy.getComplement(), initialAddress.getComplement());
         assertEquals(initialAddressCopy.isActive(), initialAddress.isActive());
 
@@ -598,7 +670,7 @@ public class AddressTest extends UnitTest {
         assertEquals(expectedCity, initialAddress.getCity());
         assertEquals(expectedStreet, initialAddress.getStreet());
         assertEquals(expectedZipCode, initialAddress.getZipCode());
-        assertEquals(expectedNumber, initialAddress.getNumber());
+        assertEquals(expectedNumber, initialAddress.getNumeral());
         assertEquals(expectedComplement, initialAddress.getComplement());
         assertEquals(expectedIsActive, initialAddress.isActive());
         assertTrue(initialAddress.getCreatedAt().isBefore(initialAddress.getUpdatedAt()));

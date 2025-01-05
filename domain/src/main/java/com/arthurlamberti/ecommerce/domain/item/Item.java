@@ -26,7 +26,6 @@ public class Item extends AggregateRoot<ItemID> {
     private Integer qtyAvailable;
     List<Review> reviews;
     private String sellerId;
-//    private Seller seller;
     private ItemStatus status;
     private Instant createdAt;
     private Instant updatedAt;
@@ -75,7 +74,7 @@ public class Item extends AggregateRoot<ItemID> {
         final var now = InstantUtils.now();
 
 //        return new Item(anId, seller, name, description, imageUrl, ItemStatus.ACTIVE, stock, new ArrayList<>(), now, now, null);
-        return new Item(anId, sellerId, name, description, imageUrl, price, ItemStatus.ACTIVE, stock, new ArrayList<>(), now, now, null);
+        return new Item(anId, sellerId, name, description, imageUrl, price, ItemStatus.INACTIVE, stock, new ArrayList<>(), now, now, null);
     }
 
     public static Item with(ItemID id, String name, String description, String imageUrl, Double price, Integer qtyAvailable, String seller, Instant createdAt, Instant updatedAt, Instant deletedAt) {
@@ -170,6 +169,7 @@ public class Item extends AggregateRoot<ItemID> {
         }
 
         this.qtyAvailable -= qtySold;
+        this.updatedAt = InstantUtils.now();
     }
 
     public void addReview(Integer scoreReview) {

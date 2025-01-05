@@ -17,40 +17,38 @@ public class PurchasedItemValidator extends Validator {
 
     @Override
     public void validate() {
-//        checkItem();
-//        checkValue();
-//        checkSeller();
-//        checkQty();
+        checkItem();
+        checkValue();
+        checkQty();
+        checkPurchaseId();
     }
 
     private void checkItem() {
-//        if (isNull(this.purchasedItem.getItem())) {
-//            this.validationHandler().append(new Error("'item' should not be null"));
-//            return;
-//        }
+        if (isNull(this.purchasedItem.getItemId())) {
+            this.validationHandler().append(new Error("'item' should not be null"));
+        }
     }
 
     private void checkValue() {
         if (this.purchasedItem.getValue() <= 0) {
             this.validationHandler().append(new Error("'value' should be greater than 0"));
-            return;
         }
-    }
-
-    private void checkSeller() {
-//        if (isNull(this.purchasedItem.getSellerId())) {
-//            this.validationHandler().append(new Error("'sellerId' should not be null"));
-//            return;
-//        }
-//
-//        if (this.purchasedItem.getSellerId().isBlank()) {
-//            this.validationHandler().append(new Error("'sellerId' should not be empty"));
-//        }
     }
 
     private void checkQty() {
         if (this.purchasedItem.getQty() <= 0) {
             this.validationHandler().append(new Error("'qty' should be greater than 0"));
+        }
+    }
+
+    private void checkPurchaseId() {
+        if (isNull(this.purchasedItem.getPurchaseId())) {
+            this.validationHandler().append(new Error("'purchaseId' should not be null"));
+            return;
+        }
+
+        if (this.purchasedItem.getPurchaseId().isBlank()) {
+            this.validationHandler().append(new Error("'purchaseId' should not be empty"));
         }
     }
 

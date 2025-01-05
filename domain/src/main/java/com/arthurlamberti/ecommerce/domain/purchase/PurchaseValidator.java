@@ -19,11 +19,10 @@ public class PurchaseValidator extends Validator {
     public void validate() {
         checkSeller();
         checkCustomer();
-//        checkItems();
+        checkItems();
         checkValue();
-//        checkQty();
-//        checkShipping();
-        checkAddress();
+        checkQty();
+        checkShipping();
     }
 
     public void checkSeller() {
@@ -58,13 +57,6 @@ public class PurchaseValidator extends Validator {
 
     public void checkShipping() {
         if (isNull(this.purchase.getShipping()))
-            this.validationHandler().append(new Error("'shipping' should not be null"));
-
-    }
-
-    public void checkAddress() {
-//        if (isNull(this.purchase.getAddressId()))
-//            this.validationHandler().append(new Error("'address' should not be null"));
-
+            this.validationHandler().append(new Error("'shippingId' should not be null"));
     }
 }

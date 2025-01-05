@@ -76,9 +76,14 @@ public class ItemValidator extends Validator {
     }
 
     private void checkSellerConstraints() {
-//        final var seller = this.item.getSeller();
-//        if (isNull(seller)) {
-//            this.validationHandler().append(new Error("'seller' should not be null"));
-//        }
+        final var seller = this.item.getSellerId();
+        if (isNull(seller)) {
+            this.validationHandler().append(new Error("'sellerId' should not be null"));
+            return;
+        }
+        if (seller.isBlank()) {
+            this.validationHandler().append(new Error("'sellerId' should not be empty"));
+
+        }
     }
 }

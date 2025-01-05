@@ -54,7 +54,7 @@ public class DefaultCreatePurchaseUseCase extends CreatePurchaseUseCase {
                         input.addressId()
                 )
         );
-
+        
         final var seller = sellerGateway.findById(SellerID.from(aPurchase.getSellerId()))
                 .or(() -> {
                     notification.append(new Error("Seller %s not found".formatted(aPurchase.getSellerId())));

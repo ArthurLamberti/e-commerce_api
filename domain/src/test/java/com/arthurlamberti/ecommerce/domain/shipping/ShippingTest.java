@@ -14,15 +14,16 @@ public class ShippingTest extends UnitTest {
 
     @Test
     public void givenValidParams_whenCallNewShipping_thenShouldInstantiate(){
-        final var expectedAddress = Fixture.AddressFixture.validAddress();
+        final var expectedAddress = Fixture.uuid();
+        final var expectedPurchaseId = Fixture.uuid();
         final var expectedCode = Fixture.characters(1,19);
         final var expectedPrice = Fixture.ItemFixture.price();
         final var expectedStatus = ShippingStatus.CREATED;
 
-        final var actualShipping = Shipping.newShipping(expectedAddress, expectedCode, expectedPrice);
+        final var actualShipping = Shipping.newShipping(expectedAddress, expectedPurchaseId, expectedCode, expectedPrice);
 
         assertNotNull(actualShipping.getId());
-        assertEquals(expectedAddress, actualShipping.getAddress());
+        assertEquals(expectedAddress, actualShipping.getAddressId());
         assertEquals(expectedCode, actualShipping.getCode());
         assertEquals(expectedPrice, actualShipping.getPrice());
         assertEquals(expectedStatus, actualShipping.getStatus());
@@ -34,7 +35,8 @@ public class ShippingTest extends UnitTest {
 
     @Test
     public void givenInvalidNullAddress_whenCallNewShipping_thenShouldReceiveAnError(){
-        final Address expectedAddress = null;
+        final String expectedAddress = null;
+        final var expectedPurchaseId = Fixture.uuid();
         final var expectedCode = Fixture.characters(1,19);
         final var expectedPrice = Fixture.ItemFixture.price();
 
@@ -43,7 +45,7 @@ public class ShippingTest extends UnitTest {
 
         final var actualException = assertThrows(
                 NotificationException.class,
-                () -> Shipping.newShipping(expectedAddress, expectedCode, expectedPrice)
+                () -> Shipping.newShipping(expectedAddress, expectedPurchaseId, expectedCode, expectedPrice)
         );
 
         assertEquals(expectedErrorCount, actualException.getErrors().size());
@@ -52,8 +54,9 @@ public class ShippingTest extends UnitTest {
 
     @Test
     public void givenInvalidNullCodeParam_whenCallnewShipping_thenShouldReceiveAnError(){
-        final var expectedAddress = Fixture.AddressFixture.validAddress();
+        final var expectedAddress = Fixture.uuid();
         final String expectedCode = null;
+        final var expectedPurchaseId = Fixture.uuid();
         final var expectedPrice = Fixture.ItemFixture.price();
 
         final var expectedErrorCount = 1;
@@ -61,7 +64,7 @@ public class ShippingTest extends UnitTest {
 
         final var actualException = assertThrows(
                 NotificationException.class,
-                () -> Shipping.newShipping(expectedAddress, expectedCode, expectedPrice)
+                () -> Shipping.newShipping(expectedAddress, expectedPurchaseId, expectedCode, expectedPrice)
         );
 
         assertEquals(expectedErrorCount, actualException.getErrors().size());
@@ -71,8 +74,9 @@ public class ShippingTest extends UnitTest {
 
     @Test
     public void givenInvalidEmptyCodeParam_whenCallNewShipping_thenShouldReceiveAnError(){
-        final var expectedAddress = Fixture.AddressFixture.validAddress();
+        final var expectedAddress = Fixture.uuid();
         final var expectedCode = " ";
+        final var expectedPurchaseId = Fixture.uuid();
         final var expectedPrice = Fixture.ItemFixture.price();
 
         final var expectedErrorCount = 1;
@@ -80,7 +84,7 @@ public class ShippingTest extends UnitTest {
 
         final var actualException = assertThrows(
                 NotificationException.class,
-                () -> Shipping.newShipping(expectedAddress, expectedCode, expectedPrice)
+                () -> Shipping.newShipping(expectedAddress, expectedPurchaseId, expectedCode, expectedPrice)
         );
 
         assertEquals(expectedErrorCount, actualException.getErrors().size());
@@ -90,8 +94,9 @@ public class ShippingTest extends UnitTest {
 
     @Test
     public void givenInvalidCodeParamWithLengthGreaterThanLimit_whenCallNewShipping_thenShouldReceiveAnError(){
-        final var expectedAddress = Fixture.AddressFixture.validAddress();
+        final var expectedAddress = Fixture.uuid();
         final var expectedCode = Fixture.characters(20);
+        final var expectedPurchaseId = Fixture.uuid();
         final var expectedPrice = Fixture.ItemFixture.price();
 
         final var expectedErrorCount = 1;
@@ -99,7 +104,7 @@ public class ShippingTest extends UnitTest {
 
         final var actualException = assertThrows(
                 NotificationException.class,
-                () -> Shipping.newShipping(expectedAddress, expectedCode, expectedPrice)
+                () -> Shipping.newShipping(expectedAddress, expectedPurchaseId, expectedCode, expectedPrice)
         );
 
         assertEquals(expectedErrorCount, actualException.getErrors().size());
@@ -109,16 +114,17 @@ public class ShippingTest extends UnitTest {
 
     @Test
     public void givenInvalidPriceParam_whenCallNewShipping_thenShouldReceiveAnError(){
-        final var expectedAddress = Fixture.AddressFixture.validAddress();
+        final var expectedAddress = Fixture.uuid();
         final var expectedCode = Fixture.characters(1,19);
         final var expectedPrice = Fixture.negativeNumber().doubleValue();
+        final var expectedPurchaseId = Fixture.uuid();
 
         final var expectedErrorCount = 1;
         final var expectedErrorMessage = "'price' should be greater than 0";
 
         final var actualException = assertThrows(
                 NotificationException.class,
-                () -> Shipping.newShipping(expectedAddress, expectedCode, expectedPrice)
+                () -> Shipping.newShipping(expectedAddress, expectedPurchaseId, expectedCode, expectedPrice)
         );
 
         assertEquals(expectedErrorCount, actualException.getErrors().size());
@@ -127,13 +133,14 @@ public class ShippingTest extends UnitTest {
 
     @Test
     public void givenAValidShipping_whenCallUpdateStatus_ShouldReturnOK(){
-        final var expectedAddress = Fixture.AddressFixture.validAddress();
+        final var expectedAddress = Fixture.uuid();
         final var expectedCode = Fixture.characters(1,19);
+        final var expectedPurchaseId = Fixture.uuid();
         final var expectedPrice = Fixture.ItemFixture.price();
         final var expectedInitialStatus = ShippingStatus.CREATED;
         final var expectedStatus = ShippingStatus.DELIVERED;
 
-        final var actualShipping = Shipping.newShipping(expectedAddress, expectedCode, expectedPrice);
+        final var actualShipping = Shipping.newShipping(expectedAddress, expectedPurchaseId, expectedCode, expectedPrice);
 
         assertNotNull(actualShipping);
         assertNotNull(actualShipping.getId());
@@ -141,7 +148,7 @@ public class ShippingTest extends UnitTest {
 
         actualShipping.changeStatus(expectedStatus);
 
-        assertEquals(expectedAddress, actualShipping.getAddress());
+        assertEquals(expectedAddress, actualShipping.getAddressId());
         assertEquals(expectedCode, actualShipping.getCode());
         assertEquals(expectedPrice, actualShipping.getPrice());
         assertEquals(expectedStatus, actualShipping.getStatus());

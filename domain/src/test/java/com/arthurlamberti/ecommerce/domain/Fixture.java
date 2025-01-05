@@ -74,31 +74,33 @@ public final class Fixture {
             return FAKER.lorem().characters(0, 2999);
         }
 
-        public static Seller validSeller(){
+        public static Seller validSeller() {
             return Seller.newSeller(
                     name(),
+                    email(),
                     description(),
-                    true,
-                    document(),
-                    AddressFixture.validAddress()
+                    document()
             );
         }
     }
 
-    public static final class CustomerFixture{
-        public static Customer validCustomer(){
+    public static final class CustomerFixture {
+        public static Customer validCustomer() {
             return Customer.newCustomer(
                     name(),
                     email(),
-                    document(),
-                    AddressFixture.validAddress()
+                    document()
             );
         }
     }
 
     public static final class ShippingFixture {
-        public static Shipping validShipping(){
-            return Shipping.newShipping(AddressFixture.validAddress(), characters(10), ItemFixture.price());
+        public static Shipping validShipping() {
+            return Shipping.newShipping(
+                    AddressFixture.validAddress().getId().getValue(),
+                    uuid(),
+                    characters(10),
+                    ItemFixture.price());
         }
     }
 
@@ -112,19 +114,21 @@ public final class Fixture {
             return characters(51, 999);
         }
 
-        public static Double price () {
+        public static Double price() {
             return FAKER.number().randomDouble(2, 1, 5000);
         }
 
-        public static Item validItem(String sellerId){
-            if (sellerId.isBlank()){
+        public static Item validItem(String sellerId) {
+            if (sellerId.isBlank()) {
                 sellerId = SellerID.unique().getValue();
             }
             return Item.newItem(
                     sellerId,
                     name(),
                     description(),
-                    imageUrl()
+                    imageUrl(),
+                    price(),
+                    positiveNumber()
             );
         }
     }
@@ -162,9 +166,12 @@ public final class Fixture {
                     street(),
                     zipCode(),
                     number(),
-                    null
+                    null,
+                    uuid(),
+                    uuid()
             );
         }
+
         public static Address validAddressWithZipcode(final String zipcode) {
             return Address.newAddress(
                     country(),
@@ -173,16 +180,18 @@ public final class Fixture {
                     street(),
                     zipcode,
                     number(),
-                    null
+                    null,
+                    uuid(),
+                    uuid()
             );
         }
     }
 
-    public static final class PurchaseItemFixture{
-        public static PurchasedItem validPurchaseItem(String sellerId, Item item){
+    public static final class PurchaseItemFixture {
+        public static PurchasedItem validPurchaseItem(String sellerId, Item item) {
             return PurchasedItem.newPurchasedItem(
                     sellerId,
-                    item,
+                    item.getId().getValue(),
                     positiveNumber(),
                     positiveNumber().doubleValue()
             );

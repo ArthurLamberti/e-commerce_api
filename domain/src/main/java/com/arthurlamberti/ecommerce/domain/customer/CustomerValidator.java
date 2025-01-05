@@ -24,7 +24,6 @@ public class CustomerValidator extends Validator {
         checkNameConstraints();
         checkEmailConstraints();
         checkDocumentConstraints();
-        checkAddress();
     }
 
     private void checkNameConstraints() {
@@ -69,13 +68,5 @@ public class CustomerValidator extends Validator {
         if (document.isBlank()) {
             this.validationHandler().append(new Error("'document' should not be empty"));
         }
-    }
-
-    private void checkAddress() {
-//        final var address = this.aCustommer.get();
-//
-//        if (isNull(address)) {
-//            this.validationHandler().append(new Error("'address' should not be null"));
-//        }
     }
 }

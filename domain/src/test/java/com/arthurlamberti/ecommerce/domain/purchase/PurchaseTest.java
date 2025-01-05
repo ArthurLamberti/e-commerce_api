@@ -20,15 +20,15 @@ public class PurchaseTest extends UnitTest {
 
     @Test
     public void givenValidParams_whenCallNewPurchase_shouldInstantiate() {
-        final var expectedSeller = Fixture.SellerFixture.validSeller();
-        final var expectedCustomer = Fixture.CustomerFixture.validCustomer();
-        final var auxItem = Fixture.ItemFixture.validItem(expectedSeller.getId().getValue());
-        final var expectedListItems = List.of(Fixture.PurchaseItemFixture.validPurchaseItem(expectedSeller.getId().getValue(),auxItem));
+        final var expectedSeller = Fixture.SellerFixture.validSeller().getId().getValue();
+        final var expectedCustomer = Fixture.CustomerFixture.validCustomer().getId().getValue();
+        final var auxItem = Fixture.ItemFixture.validItem(expectedSeller);
+        final var expectedListItems = List.of(Fixture.PurchaseItemFixture.validPurchaseItem(expectedSeller,auxItem).getId().getValue());
         final var expectedTotalValue = Fixture.ItemFixture.price();
         final var expectedTotalQty = Fixture.positiveNumber();
-        final var expectedShipping = Fixture.ShippingFixture.validShipping();
+        final var expectedShipping = Fixture.ShippingFixture.validShipping().getId().getValue();
         final var expectedPurchaseStatus = PurchaseStatus.NEW;
-        final var expectedAddress = Fixture.AddressFixture.validAddress();
+        final var expectedAddress = Fixture.AddressFixture.validAddress().getId().getValue();
 
         final var actualPurchase = Purchase.newPurchase(
                 expectedSeller,
@@ -42,8 +42,8 @@ public class PurchaseTest extends UnitTest {
 
         assertNotNull(actualPurchase);
         assertNotNull(actualPurchase.getId());
-        assertEquals(expectedSeller, actualPurchase.getSeller());
-        assertEquals(expectedCustomer, actualPurchase.getCustomer());
+        assertEquals(expectedSeller, actualPurchase.getSellerId());
+        assertEquals(expectedCustomer, actualPurchase.getCustomerId());
         assertEquals(expectedListItems, actualPurchase.getItems());
         assertEquals(expectedTotalQty, actualPurchase.getTotalQty());
         assertEquals(expectedTotalValue, actualPurchase.getTotalValue());
@@ -56,14 +56,14 @@ public class PurchaseTest extends UnitTest {
 
     @Test
     public void givenInvalidNullSeller_whenCallNewPurchase_shouldReceiveAnError() {
-        final Seller expectedSeller = null;
-        final var expectedCustomer = Fixture.CustomerFixture.validCustomer();
+        final String expectedSeller = null;
+        final var expectedCustomer = Fixture.CustomerFixture.validCustomer().getId().getValue();
         final var auxItem = Fixture.ItemFixture.validItem(Fixture.uuid());
-        final var expectedListItems = List.of(Fixture.PurchaseItemFixture.validPurchaseItem(Fixture.uuid(),auxItem));
+        final var expectedListItems = List.of(Fixture.PurchaseItemFixture.validPurchaseItem(Fixture.uuid(),auxItem).getId().getValue());
         final var expectedTotalValue = Fixture.ItemFixture.price();
         final var expectedTotalQty = Fixture.positiveNumber();
-        final var expectedShipping = Fixture.ShippingFixture.validShipping();
-        final var expectedAddress = Fixture.AddressFixture.validAddress();
+        final var expectedShipping = Fixture.ShippingFixture.validShipping().getId().getValue();
+        final var expectedAddress = Fixture.AddressFixture.validAddress().getId().getValue();
 
         final var expectedErrorCount = 1;
         final var expectedErrorMessage = "'seller' should not be null";
@@ -87,14 +87,14 @@ public class PurchaseTest extends UnitTest {
 
     @Test
     public void givenInvalidNullCustomer_whenCallNewPurchase_shouldReceiveAnError() {
-        final var expectedSeller = Fixture.SellerFixture.validSeller();
-        final Customer expectedCustomer = null;
-        final var auxItem = Fixture.ItemFixture.validItem(expectedSeller.getId().getValue());
-        final var expectedListItems = List.of(Fixture.PurchaseItemFixture.validPurchaseItem(expectedSeller.getId().getValue(),auxItem));
+        final var expectedSeller = Fixture.SellerFixture.validSeller().getId().getValue();
+        final String expectedCustomer = null;
+        final var auxItem = Fixture.ItemFixture.validItem(expectedSeller);
+        final var expectedListItems = List.of(Fixture.PurchaseItemFixture.validPurchaseItem(expectedSeller,auxItem).getId().getValue());
         final var expectedTotalValue = Fixture.ItemFixture.price();
         final var expectedTotalQty = Fixture.positiveNumber();
-        final var expectedShipping = Fixture.ShippingFixture.validShipping();
-        final var expectedAddress = Fixture.AddressFixture.validAddress();
+        final var expectedShipping = Fixture.ShippingFixture.validShipping().getId().getValue();
+        final var expectedAddress = Fixture.AddressFixture.validAddress().getId().getValue();
 
         final var expectedErrorCount = 1;
         final var expectedErrorMessage = "'customer' should not be null";
@@ -118,14 +118,14 @@ public class PurchaseTest extends UnitTest {
 
     @Test
     public void givenInvalidNullItems_whenCallNewPurchase_shouldReceiveAnError() {
-        final var expectedSeller = Fixture.SellerFixture.validSeller();
-        final var expectedCustomer = Fixture.CustomerFixture.validCustomer();
-        final var auxItem = Fixture.ItemFixture.validItem(expectedSeller.getId().getValue());
-        final List<PurchasedItem> expectedListItems = null;
+        final var expectedSeller = Fixture.SellerFixture.validSeller().getId().getValue();
+        final var expectedCustomer = Fixture.CustomerFixture.validCustomer().getId().getValue();
+        final var auxItem = Fixture.ItemFixture.validItem(expectedSeller);
+        final List<String> expectedListItems = null;
         final var expectedTotalValue = Fixture.ItemFixture.price();
         final var expectedTotalQty = Fixture.positiveNumber();
-        final var expectedShipping = Fixture.ShippingFixture.validShipping();
-        final var expectedAddress = Fixture.AddressFixture.validAddress();
+        final var expectedShipping = Fixture.ShippingFixture.validShipping().getId().getValue();
+        final var expectedAddress = Fixture.AddressFixture.validAddress().getId().getValue();
 
         final var expectedErrorCount = 1;
         final var expectedErrorMessage = "'items' should not be null";
@@ -149,14 +149,14 @@ public class PurchaseTest extends UnitTest {
 
     @Test
     public void givenInvalidEmptyItemsList_whenCallNewPurchase_shouldReceiveAnError() {
-        final var expectedSeller = Fixture.SellerFixture.validSeller();
-        final var expectedCustomer = Fixture.CustomerFixture.validCustomer();
-        final var auxItem = Fixture.ItemFixture.validItem(expectedSeller.getId().getValue());
-        final List<PurchasedItem>  expectedListItems = List.of();
+        final var expectedSeller = Fixture.SellerFixture.validSeller().getId().getValue();
+        final var expectedCustomer = Fixture.CustomerFixture.validCustomer().getId().getValue();
+        final var auxItem = Fixture.ItemFixture.validItem(expectedSeller);
+        final List<String>  expectedListItems = List.of();
         final var expectedTotalValue = Fixture.ItemFixture.price();
         final var expectedTotalQty = Fixture.positiveNumber();
-        final var expectedShipping = Fixture.ShippingFixture.validShipping();
-        final var expectedAddress = Fixture.AddressFixture.validAddress();
+        final var expectedShipping = Fixture.ShippingFixture.validShipping().getId().getValue();
+        final var expectedAddress = Fixture.AddressFixture.validAddress().getId().getValue();
 
         final var expectedErrorCount = 1;
         final var expectedErrorMessage = "'items' should has at least one item";
@@ -180,14 +180,14 @@ public class PurchaseTest extends UnitTest {
 
     @Test
     public void givenInvalidTotalValueLessThan0_whenCallNewPurchase_shouldReceiveAnError() {
-        final var expectedSeller = Fixture.SellerFixture.validSeller();
-        final var expectedCustomer = Fixture.CustomerFixture.validCustomer();
-        final var auxItem = Fixture.ItemFixture.validItem(expectedSeller.getId().getValue());
-        final var expectedListItems = List.of(Fixture.PurchaseItemFixture.validPurchaseItem(expectedSeller.getId().getValue(),auxItem));
+        final var expectedSeller = Fixture.SellerFixture.validSeller().getId().getValue();
+        final var expectedCustomer = Fixture.CustomerFixture.validCustomer().getId().getValue();
+        final var auxItem = Fixture.ItemFixture.validItem(expectedSeller);
+        final var expectedListItems = List.of(Fixture.PurchaseItemFixture.validPurchaseItem(expectedSeller,auxItem).getId().getValue());
         final var expectedTotalValue = Fixture.negativeNumber().doubleValue();
         final var expectedTotalQty = Fixture.positiveNumber();
-        final var expectedShipping = Fixture.ShippingFixture.validShipping();
-        final var expectedAddress = Fixture.AddressFixture.validAddress();
+        final var expectedShipping = Fixture.ShippingFixture.validShipping().getId().getValue();
+        final var expectedAddress = Fixture.AddressFixture.validAddress().getId().getValue();
 
         final var expectedErrorCount = 1;
         final var expectedErrorMessage = "'totalValue' should be greater than 0";
@@ -211,14 +211,14 @@ public class PurchaseTest extends UnitTest {
 
     @Test
     public void givenInvalidTotalQtyLessThan0_whenCallNewPurchase_shouldReceiveAnError() {
-        final var expectedSeller = Fixture.SellerFixture.validSeller();
-        final var expectedCustomer = Fixture.CustomerFixture.validCustomer();
-        final var auxItem = Fixture.ItemFixture.validItem(expectedSeller.getId().getValue());
-        final var expectedListItems = List.of(Fixture.PurchaseItemFixture.validPurchaseItem(expectedSeller.getId().getValue(),auxItem));
+        final var expectedSeller = Fixture.SellerFixture.validSeller().getId().getValue();
+        final var expectedCustomer = Fixture.CustomerFixture.validCustomer().getId().getValue();
+        final var auxItem = Fixture.ItemFixture.validItem(expectedSeller);
+        final var expectedListItems = List.of(Fixture.PurchaseItemFixture.validPurchaseItem(expectedSeller,auxItem).getId().getValue());
         final var expectedTotalValue = Fixture.ItemFixture.price();
         final var expectedTotalQty = Fixture.negativeNumber();
-        final var expectedShipping = Fixture.ShippingFixture.validShipping();
-        final var expectedAddress = Fixture.AddressFixture.validAddress();
+        final var expectedShipping = Fixture.ShippingFixture.validShipping().getId().getValue();
+        final var expectedAddress = Fixture.AddressFixture.validAddress().getId().getValue();
 
         final var expectedErrorCount = 1;
         final var expectedErrorMessage = "'totalQty' should be greater than 0";
@@ -242,17 +242,17 @@ public class PurchaseTest extends UnitTest {
 
     @Test
     public void givenInvalidNullShipping_whenCallNewPurchase_shouldReceiveAnError() {
-        final var expectedSeller = Fixture.SellerFixture.validSeller();
-        final var expectedCustomer = Fixture.CustomerFixture.validCustomer();
-        final var auxItem = Fixture.ItemFixture.validItem(expectedSeller.getId().getValue());
-        final var expectedListItems = List.of(Fixture.PurchaseItemFixture.validPurchaseItem(expectedSeller.getId().getValue(),auxItem));
+        final var expectedSeller = Fixture.SellerFixture.validSeller().getId().getValue();
+        final var expectedCustomer = Fixture.CustomerFixture.validCustomer().getId().getValue();
+        final var auxItem = Fixture.ItemFixture.validItem(expectedSeller);
+        final var expectedListItems = List.of(Fixture.PurchaseItemFixture.validPurchaseItem(expectedSeller,auxItem).getId().getValue());
         final var expectedTotalValue = Fixture.ItemFixture.price();
         final var expectedTotalQty = Fixture.positiveNumber();
-        final Shipping expectedShipping = null;
-        final var expectedAddress = Fixture.AddressFixture.validAddress();
+        final String expectedShipping = null;
+        final var expectedAddress = Fixture.AddressFixture.validAddress().getId().getValue();
 
         final var expectedErrorCount = 1;
-        final var expectedErrorMessage = "'shipping' should not be null";
+        final var expectedErrorMessage = "'shippingId' should not be null";
 
         final var actualError = assertThrows(
                 NotificationException.class,
@@ -270,36 +270,4 @@ public class PurchaseTest extends UnitTest {
         assertEquals(expectedErrorCount, actualError.getErrors().size());
         assertEquals(expectedErrorMessage, actualError.getFirstError().get().message());
     }
-
-    @Test
-    public void givenInvalidNullAddress_whenCallNewPurchase_shouldReceiveAnError() {
-        final var expectedSeller = Fixture.SellerFixture.validSeller();
-        final var expectedCustomer = Fixture.CustomerFixture.validCustomer();
-        final var auxItem = Fixture.ItemFixture.validItem(expectedSeller.getId().getValue());
-        final var expectedListItems = List.of(Fixture.PurchaseItemFixture.validPurchaseItem(expectedSeller.getId().getValue(),auxItem));
-        final var expectedTotalValue = Fixture.ItemFixture.price();
-        final var expectedTotalQty = Fixture.positiveNumber();
-        final var expectedShipping = Fixture.ShippingFixture.validShipping();
-        final Address expectedAddress = null;
-
-        final var expectedErrorCount = 1;
-        final var expectedErrorMessage = "'address' should not be null";
-
-        final var actualError = assertThrows(
-                NotificationException.class,
-                () -> Purchase.newPurchase(
-                        expectedSeller,
-                        expectedCustomer,
-                        expectedListItems,
-                        expectedTotalValue,
-                        expectedTotalQty,
-                        expectedShipping,
-                        expectedAddress
-                )
-        );
-
-        assertEquals(expectedErrorCount, actualError.getErrors().size());
-        assertEquals(expectedErrorMessage, actualError.getFirstError().get().message());
-    }
-
 }

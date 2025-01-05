@@ -12,16 +12,13 @@ public class PurchasedItemTest extends UnitTest {
 
     @Test
     public void givenValidParams_whenCallNewPurchasedItem_shouldInstantiate() {
-        final var item = Fixture.ItemFixture.validItem("");
-        final var sellerId = item.getSellerId();
+        final var item = Fixture.uuid();
+        final var sellerId = Fixture.uuid();
         final var qty = Fixture.positiveNumber();
         final var value = Fixture.ItemFixture.price();
 
         final var actualPurchasedItem = PurchasedItem.newPurchasedItem(sellerId,item,qty,value);
         assertNotNull(actualPurchasedItem.getId());
-        assertNotNull(actualPurchasedItem.getItem());
-        assertEquals(sellerId, actualPurchasedItem.getSellerId());
-        assertEquals(sellerId, actualPurchasedItem.getItem().getSellerId());
         assertEquals(qty, actualPurchasedItem.getQty());
         assertEquals(value, actualPurchasedItem.getValue());
         assertNotNull(actualPurchasedItem.getCreatedAt());
@@ -32,8 +29,8 @@ public class PurchasedItemTest extends UnitTest {
 
     @Test
     public void givenInvalidNullItem_whenCallNewPurchasedItem_shouldReceiveAnError() {
-        final Item item = null;
-        final var sellerId = Fixture.ItemFixture.validItem("").getSellerId();
+        final String item = null;
+        final var sellerId = Fixture.uuid();
         final var qty = Fixture.positiveNumber();
         final var value = Fixture.ItemFixture.price();
         final var expectedErrorCount = 1;
@@ -50,8 +47,8 @@ public class PurchasedItemTest extends UnitTest {
 
     @Test
     public void givenInvalidValueLessThan0_whenCallNewPurchasedItem_shouldReceiveAnError() {
-        final var item = Fixture.ItemFixture.validItem("");
-        final var sellerId = item.getSellerId();
+        final var item = Fixture.uuid();
+        final var sellerId = Fixture.uuid();
         final var qty = Fixture.positiveNumber();
         final var value = Fixture.negativeNumber().doubleValue();
         final var expectedErrorCount = 1;
@@ -67,13 +64,13 @@ public class PurchasedItemTest extends UnitTest {
     }
 
     @Test
-    public void givenInvalidNullSellerId_whenCallNewPurchasedItem_shouldReceiveAnError() {
-        final var item = Fixture.ItemFixture.validItem("");
+    public void givenInvalidNullPurchaseId_whenCallNewPurchasedItem_shouldReceiveAnError() {
+        final var item = Fixture.uuid();
         final String sellerId = null;
         final var qty = Fixture.positiveNumber();
         final var value = Fixture.ItemFixture.price();
         final var expectedErrorCount = 1;
-        final var expectedErrorMessage = "'sellerId' should not be null";
+        final var expectedErrorMessage = "'purchaseId' should not be null";
 
         final var actualException = assertThrows(
                 NotificationException.class,
@@ -85,13 +82,13 @@ public class PurchasedItemTest extends UnitTest {
     }
 
     @Test
-    public void givenInvalidEmptySellerId_whenCallNewPurchasedItem_shouldReceiveAnError() {
-        final var item = Fixture.ItemFixture.validItem("");
+    public void givenInvalidEmptyPurchaseId_whenCallNewPurchasedItem_shouldReceiveAnError() {
+        final var item = Fixture.uuid();
         final var sellerId = "";
         final var qty = Fixture.positiveNumber();
         final var value = Fixture.ItemFixture.price();
         final var expectedErrorCount = 1;
-        final var expectedErrorMessage = "'sellerId' should not be empty";
+        final var expectedErrorMessage = "'purchaseId' should not be empty";
 
         final var actualException = assertThrows(
                 NotificationException.class,
@@ -104,8 +101,8 @@ public class PurchasedItemTest extends UnitTest {
 
     @Test
     public void givenInvalidQtyLessThan0_whenCallNewPurchasedItem_shouldReceiveAnError() {
-        final var item = Fixture.ItemFixture.validItem("");
-        final var sellerId = item.getSellerId();
+        final var item = Fixture.uuid();
+        final var purchaseId = Fixture.uuid();
         final var qty = Fixture.negativeNumber();
         final var value = Fixture.ItemFixture.price();
         final var expectedErrorCount = 1;
@@ -113,7 +110,7 @@ public class PurchasedItemTest extends UnitTest {
 
         final var actualException = assertThrows(
                 NotificationException.class,
-                () -> PurchasedItem.newPurchasedItem(sellerId,item,qty,value)
+                () -> PurchasedItem.newPurchasedItem(purchaseId,item,qty,value)
         );
 
         assertEquals(expectedErrorCount, actualException.getErrors().size());
