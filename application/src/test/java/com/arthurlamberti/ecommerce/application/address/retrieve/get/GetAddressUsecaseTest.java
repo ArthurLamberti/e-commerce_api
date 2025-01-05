@@ -44,7 +44,7 @@ public class GetAddressUsecaseTest extends UseCaseTest {
         assertEquals(expectedAddress.getCity(),actualAddress.city());
         assertEquals(expectedAddress.getStreet(),actualAddress.street());
         assertEquals(expectedAddress.getZipCode(),actualAddress.zipcode());
-        assertEquals(expectedAddress.getNumber(),actualAddress.number());
+        assertEquals(expectedAddress.getNumeral(),actualAddress.number());
         assertEquals(expectedAddress.isActive(),actualAddress.isActive());
         assertEquals(expectedAddress.getCreatedAt(),actualAddress.createdAt());
     }

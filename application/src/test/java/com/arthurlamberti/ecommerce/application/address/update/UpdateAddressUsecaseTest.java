@@ -43,7 +43,7 @@ public class UpdateAddressUsecaseTest extends UseCaseTest {
                 updatedAddress.getCity(),
                 updatedAddress.getStreet(),
                 updatedAddress.getZipCode(),
-                updatedAddress.getNumber(),
+                updatedAddress.getNumeral(),
                 updatedAddress.getComplement()
         );
 
@@ -55,7 +55,7 @@ public class UpdateAddressUsecaseTest extends UseCaseTest {
         assertNotEquals(anAddress.getCity(), updatedAddress.getCity());
         assertNotEquals(anAddress.getStreet(), updatedAddress.getStreet());
         assertNotEquals(anAddress.getZipCode(), updatedAddress.getZipCode());
-        assertNotEquals(anAddress.getNumber(), updatedAddress.getNumber());
+        assertNotEquals(anAddress.getNumeral(), updatedAddress.getNumeral());
 
         final var actualOutput = usecase.execute(aCommand);
         assertEquals(anAddress.getId().getValue(), actualOutput.id());
@@ -67,7 +67,7 @@ public class UpdateAddressUsecaseTest extends UseCaseTest {
                         && Objects.equals(updatedAddress.getCity(), actualAddress.getCity())
                         && Objects.equals(updatedAddress.getStreet(), actualAddress.getStreet())
                         && Objects.equals(updatedAddress.getZipCode(), actualAddress.getZipCode())
-                        && Objects.equals(updatedAddress.getNumber(), actualAddress.getNumber())
+                        && Objects.equals(updatedAddress.getNumeral(), actualAddress.getNumeral())
         ));
     }
 
@@ -85,7 +85,7 @@ public class UpdateAddressUsecaseTest extends UseCaseTest {
                 anAddress.getCity(),
                 anAddress.getStreet(),
                 anAddress.getZipCode(),
-                anAddress.getNumber(),
+                anAddress.getNumeral(),
                 anAddress.getComplement()
         );
 
@@ -112,7 +112,7 @@ public class UpdateAddressUsecaseTest extends UseCaseTest {
                 anAddress.getCity(),
                 anAddress.getStreet(),
                 anAddress.getZipCode(),
-                anAddress.getNumber(),
+                anAddress.getNumeral(),
                 anAddress.getComplement()
         );
 
@@ -139,7 +139,7 @@ public class UpdateAddressUsecaseTest extends UseCaseTest {
                 anAddress.getCity(),
                 anAddress.getStreet(),
                 anAddress.getZipCode(),
-                anAddress.getNumber(),
+                anAddress.getNumeral(),
                 anAddress.getComplement()
         );
 
@@ -166,7 +166,7 @@ public class UpdateAddressUsecaseTest extends UseCaseTest {
                 anAddress.getCity(),
                 anAddress.getStreet(),
                 anAddress.getZipCode(),
-                anAddress.getNumber(),
+                anAddress.getNumeral(),
                 anAddress.getComplement()
         );
 
@@ -193,7 +193,7 @@ public class UpdateAddressUsecaseTest extends UseCaseTest {
                 null,
                 anAddress.getStreet(),
                 anAddress.getZipCode(),
-                anAddress.getNumber(),
+                anAddress.getNumeral(),
                 anAddress.getComplement()
         );
 
@@ -220,7 +220,7 @@ public class UpdateAddressUsecaseTest extends UseCaseTest {
                 " ",
                 anAddress.getStreet(),
                 anAddress.getZipCode(),
-                anAddress.getNumber(),
+                anAddress.getNumeral(),
                 anAddress.getComplement()
         );
 
@@ -247,7 +247,7 @@ public class UpdateAddressUsecaseTest extends UseCaseTest {
                 anAddress.getCity(),
                 null,
                 anAddress.getZipCode(),
-                anAddress.getNumber(),
+                anAddress.getNumeral(),
                 anAddress.getComplement()
         );
 
@@ -274,7 +274,7 @@ public class UpdateAddressUsecaseTest extends UseCaseTest {
                 anAddress.getCity(),
                 " ",
                 anAddress.getZipCode(),
-                anAddress.getNumber(),
+                anAddress.getNumeral(),
                 anAddress.getComplement()
         );
 
@@ -301,7 +301,7 @@ public class UpdateAddressUsecaseTest extends UseCaseTest {
                 anAddress.getCity(),
                 anAddress.getStreet(),
                 null,
-                anAddress.getNumber(),
+                anAddress.getNumeral(),
                 anAddress.getComplement()
         );
 
@@ -329,7 +329,7 @@ public class UpdateAddressUsecaseTest extends UseCaseTest {
                 anAddress.getCity(),
                 anAddress.getStreet(),
                 " ",
-                anAddress.getNumber(),
+                anAddress.getNumeral(),
                 anAddress.getComplement()
         );
 

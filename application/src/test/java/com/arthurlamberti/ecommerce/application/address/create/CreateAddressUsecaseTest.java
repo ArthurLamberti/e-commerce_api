@@ -3,13 +3,16 @@ package com.arthurlamberti.ecommerce.application.address.create;
 import com.arthurlamberti.ecommerce.application.UseCaseTest;
 import com.arthurlamberti.ecommerce.domain.Fixture;
 import com.arthurlamberti.ecommerce.domain.address.AddressGateway;
+import com.arthurlamberti.ecommerce.domain.customer.CustomerGateway;
 import com.arthurlamberti.ecommerce.domain.exceptions.NotificationException;
+import com.arthurlamberti.ecommerce.domain.seller.SellerGateway;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.AdditionalAnswers.returnsFirstArg;
@@ -23,6 +26,12 @@ public class CreateAddressUsecaseTest extends UseCaseTest {
 
     @Mock
     private AddressGateway addressGateway;
+
+    @Mock
+    private CustomerGateway customerGateway;
+
+    @Mock
+    private SellerGateway sellerGateway;
 
     @Override
     protected List<Object> getMocks() {
@@ -38,11 +47,15 @@ public class CreateAddressUsecaseTest extends UseCaseTest {
                 expectedAddress.getCity(),
                 expectedAddress.getStreet(),
                 expectedAddress.getZipCode(),
-                expectedAddress.getNumber(),
-                expectedAddress.getComplement()
+                expectedAddress.getNumeral(),
+                expectedAddress.getComplement(),
+                expectedAddress.getCustomerId(),
+                expectedAddress.getSellerId()
         );
 
         when(addressGateway.create(any())).thenAnswer(returnsFirstArg());
+        when(customerGateway.findById(any())).thenReturn(Optional.of(Fixture.CustomerFixture.validCustomer()));
+        when(sellerGateway.findById(any())).thenReturn(Optional.of(Fixture.SellerFixture.validSeller()));
 
         final var actualResult = usecase.execute(aCommand);
 
@@ -56,7 +69,7 @@ public class CreateAddressUsecaseTest extends UseCaseTest {
                         && Objects.equals(expectedAddress.getCity(), address.getCity())
                         && Objects.equals(expectedAddress.getStreet(), address.getStreet())
                         && Objects.equals(expectedAddress.getZipCode(), address.getZipCode())
-                        && Objects.equals(expectedAddress.getNumber(), address.getNumber())
+                        && Objects.equals(expectedAddress.getNumeral(), address.getNumeral())
                         && Objects.equals(expectedAddress.getComplement(), address.getComplement())
                         && Objects.equals(expectedAddress.isActive(), address.isActive())
                         && Objects.nonNull(address.getCreatedAt())
@@ -78,9 +91,13 @@ public class CreateAddressUsecaseTest extends UseCaseTest {
                 expectedAddress.getCity(),
                 expectedAddress.getStreet(),
                 expectedAddress.getZipCode(),
-                expectedAddress.getNumber(),
-                expectedAddress.getComplement()
+                expectedAddress.getNumeral(),
+                expectedAddress.getComplement(),
+                expectedAddress.getCustomerId(),
+                expectedAddress.getSellerId()
         );
+        when(customerGateway.findById(any())).thenReturn(Optional.of(Fixture.CustomerFixture.validCustomer()));
+        when(sellerGateway.findById(any())).thenReturn(Optional.of(Fixture.SellerFixture.validSeller()));
 
         final var actualOutput = assertThrows(NotificationException.class, () -> usecase.execute(aCommand));
         assertNotNull(actualOutput);
@@ -101,9 +118,14 @@ public class CreateAddressUsecaseTest extends UseCaseTest {
                 expectedAddress.getCity(),
                 expectedAddress.getStreet(),
                 expectedAddress.getZipCode(),
-                expectedAddress.getNumber(),
-                expectedAddress.getComplement()
+                expectedAddress.getNumeral(),
+                expectedAddress.getComplement(),
+                expectedAddress.getCustomerId(),
+                expectedAddress.getSellerId()
         );
+
+        when(customerGateway.findById(any())).thenReturn(Optional.of(Fixture.CustomerFixture.validCustomer()));
+        when(sellerGateway.findById(any())).thenReturn(Optional.of(Fixture.SellerFixture.validSeller()));
 
         final var actualOutput = assertThrows(NotificationException.class, () -> usecase.execute(aCommand));
         assertNotNull(actualOutput);
@@ -124,9 +146,13 @@ public class CreateAddressUsecaseTest extends UseCaseTest {
                 expectedAddress.getCity(),
                 expectedAddress.getStreet(),
                 expectedAddress.getZipCode(),
-                expectedAddress.getNumber(),
-                expectedAddress.getComplement()
+                expectedAddress.getNumeral(),
+                expectedAddress.getComplement(),
+                expectedAddress.getCustomerId(),
+                expectedAddress.getSellerId()
         );
+        when(customerGateway.findById(any())).thenReturn(Optional.of(Fixture.CustomerFixture.validCustomer()));
+        when(sellerGateway.findById(any())).thenReturn(Optional.of(Fixture.SellerFixture.validSeller()));
 
         final var actualOutput = assertThrows(NotificationException.class, () -> usecase.execute(aCommand));
         assertNotNull(actualOutput);
@@ -147,9 +173,13 @@ public class CreateAddressUsecaseTest extends UseCaseTest {
                 expectedAddress.getCity(),
                 expectedAddress.getStreet(),
                 expectedAddress.getZipCode(),
-                expectedAddress.getNumber(),
-                expectedAddress.getComplement()
+                expectedAddress.getNumeral(),
+                expectedAddress.getComplement(),
+                expectedAddress.getCustomerId(),
+                expectedAddress.getSellerId()
         );
+        when(customerGateway.findById(any())).thenReturn(Optional.of(Fixture.CustomerFixture.validCustomer()));
+        when(sellerGateway.findById(any())).thenReturn(Optional.of(Fixture.SellerFixture.validSeller()));
 
         final var actualOutput = assertThrows(NotificationException.class, () -> usecase.execute(aCommand));
         assertNotNull(actualOutput);
@@ -170,9 +200,14 @@ public class CreateAddressUsecaseTest extends UseCaseTest {
                 null,
                 expectedAddress.getStreet(),
                 expectedAddress.getZipCode(),
-                expectedAddress.getNumber(),
-                expectedAddress.getComplement()
+                expectedAddress.getNumeral(),
+                expectedAddress.getComplement(),
+                expectedAddress.getCustomerId(),
+                expectedAddress.getSellerId()
         );
+
+        when(customerGateway.findById(any())).thenReturn(Optional.of(Fixture.CustomerFixture.validCustomer()));
+        when(sellerGateway.findById(any())).thenReturn(Optional.of(Fixture.SellerFixture.validSeller()));
 
         final var actualOutput = assertThrows(NotificationException.class, () -> usecase.execute(aCommand));
         assertNotNull(actualOutput);
@@ -193,9 +228,13 @@ public class CreateAddressUsecaseTest extends UseCaseTest {
                 " ",
                 expectedAddress.getStreet(),
                 expectedAddress.getZipCode(),
-                expectedAddress.getNumber(),
-                expectedAddress.getComplement()
+                expectedAddress.getNumeral(),
+                expectedAddress.getComplement(),
+                expectedAddress.getCustomerId(),
+                expectedAddress.getSellerId()
         );
+        when(customerGateway.findById(any())).thenReturn(Optional.of(Fixture.CustomerFixture.validCustomer()));
+        when(sellerGateway.findById(any())).thenReturn(Optional.of(Fixture.SellerFixture.validSeller()));
 
         final var actualOutput = assertThrows(NotificationException.class, () -> usecase.execute(aCommand));
         assertNotNull(actualOutput);
@@ -216,9 +255,13 @@ public class CreateAddressUsecaseTest extends UseCaseTest {
                 expectedAddress.getCity(),
                 null,
                 expectedAddress.getZipCode(),
-                expectedAddress.getNumber(),
-                expectedAddress.getComplement()
+                expectedAddress.getNumeral(),
+                expectedAddress.getComplement(),
+                expectedAddress.getCustomerId(),
+                expectedAddress.getSellerId()
         );
+        when(customerGateway.findById(any())).thenReturn(Optional.of(Fixture.CustomerFixture.validCustomer()));
+        when(sellerGateway.findById(any())).thenReturn(Optional.of(Fixture.SellerFixture.validSeller()));
 
         final var actualOutput = assertThrows(NotificationException.class, () -> usecase.execute(aCommand));
         assertNotNull(actualOutput);
@@ -239,9 +282,13 @@ public class CreateAddressUsecaseTest extends UseCaseTest {
                 expectedAddress.getCity(),
                 null,
                 expectedAddress.getZipCode(),
-                expectedAddress.getNumber(),
-                expectedAddress.getComplement()
+                expectedAddress.getNumeral(),
+                expectedAddress.getComplement(),
+                expectedAddress.getCustomerId(),
+                expectedAddress.getSellerId()
         );
+        when(customerGateway.findById(any())).thenReturn(Optional.of(Fixture.CustomerFixture.validCustomer()));
+        when(sellerGateway.findById(any())).thenReturn(Optional.of(Fixture.SellerFixture.validSeller()));
 
         final var actualOutput = assertThrows(NotificationException.class, () -> usecase.execute(aCommand));
         assertNotNull(actualOutput);
@@ -261,9 +308,13 @@ public class CreateAddressUsecaseTest extends UseCaseTest {
                 expectedAddress.getCity(),
                 expectedAddress.getStreet(),
                 null,
-                expectedAddress.getNumber(),
-                expectedAddress.getComplement()
+                expectedAddress.getNumeral(),
+                expectedAddress.getComplement(),
+                expectedAddress.getCustomerId(),
+                expectedAddress.getSellerId()
         );
+        when(customerGateway.findById(any())).thenReturn(Optional.of(Fixture.CustomerFixture.validCustomer()));
+        when(sellerGateway.findById(any())).thenReturn(Optional.of(Fixture.SellerFixture.validSeller()));
 
         final var actualOutput = assertThrows(NotificationException.class, () -> usecase.execute(aCommand));
         assertNotNull(actualOutput);
@@ -284,9 +335,13 @@ public class CreateAddressUsecaseTest extends UseCaseTest {
                 expectedAddress.getCity(),
                 expectedAddress.getStreet(),
                 " ",
-                expectedAddress.getNumber(),
-                expectedAddress.getComplement()
+                expectedAddress.getNumeral(),
+                expectedAddress.getComplement(),
+                expectedAddress.getCustomerId(),
+                expectedAddress.getSellerId()
         );
+        when(customerGateway.findById(any())).thenReturn(Optional.of(Fixture.CustomerFixture.validCustomer()));
+        when(sellerGateway.findById(any())).thenReturn(Optional.of(Fixture.SellerFixture.validSeller()));
 
         final var actualOutput = assertThrows(NotificationException.class, () -> usecase.execute(aCommand));
         assertNotNull(actualOutput);
@@ -308,8 +363,13 @@ public class CreateAddressUsecaseTest extends UseCaseTest {
                 expectedAddress.getStreet(),
                 expectedAddress.getZipCode(),
                 null,
-                expectedAddress.getComplement()
+                expectedAddress.getComplement(),
+                expectedAddress.getCustomerId(),
+                expectedAddress.getSellerId()
         );
+
+        when(customerGateway.findById(any())).thenReturn(Optional.of(Fixture.CustomerFixture.validCustomer()));
+        when(sellerGateway.findById(any())).thenReturn(Optional.of(Fixture.SellerFixture.validSeller()));
 
         final var actualOutput = assertThrows(NotificationException.class, () -> usecase.execute(aCommand));
         assertNotNull(actualOutput);
@@ -331,8 +391,12 @@ public class CreateAddressUsecaseTest extends UseCaseTest {
                 expectedAddress.getStreet(),
                 expectedAddress.getZipCode(),
                 "",
-                expectedAddress.getComplement()
+                expectedAddress.getComplement(),
+                expectedAddress.getCustomerId(),
+                expectedAddress.getSellerId()
         );
+        when(customerGateway.findById(any())).thenReturn(Optional.of(Fixture.CustomerFixture.validCustomer()));
+        when(sellerGateway.findById(any())).thenReturn(Optional.of(Fixture.SellerFixture.validSeller()));
 
         final var actualOutput = assertThrows(NotificationException.class, () -> usecase.execute(aCommand));
         assertNotNull(actualOutput);
