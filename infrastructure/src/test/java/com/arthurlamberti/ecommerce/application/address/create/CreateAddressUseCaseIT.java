@@ -34,8 +34,10 @@ public class CreateAddressUseCaseIT {
                 expectedAddress.getCity(),
                 expectedAddress.getStreet(),
                 expectedAddress.getZipCode(),
-                expectedAddress.getNumber(),
-                expectedAddress.getComplement()
+                expectedAddress.getNumeral(),
+                expectedAddress.getComplement(),
+                expectedAddress.getCustomerId(),
+                expectedAddress.getSellerId()
         );
 
         final var output = createAddressUsecase.execute(aCommand);

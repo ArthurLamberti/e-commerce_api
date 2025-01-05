@@ -60,8 +60,10 @@ public class AddressAPITest {
                 expectedAddress.getCity(),
                 expectedAddress.getStreet(),
                 expectedAddress.getZipCode(),
-                expectedAddress.getNumber(),
-                expectedAddress.getComplement()
+                expectedAddress.getNumeral(),
+                expectedAddress.getComplement(),
+                expectedAddress.getCustomerId(),
+                expectedAddress.getSellerId()
         );
 
         when(createAddressUsecase.execute(any())).thenReturn(CreateAddressOutput.from(expectedAddress));
@@ -90,8 +92,10 @@ public class AddressAPITest {
                 anAddress.getCity(),
                 anAddress.getStreet(),
                 anAddress.getZipCode(),
-                anAddress.getNumber(),
-                anAddress.getComplement()
+                anAddress.getNumeral(),
+                anAddress.getComplement(),
+                anAddress.getCustomerId(),
+                anAddress.getSellerId()
         );
         final var notification = Notification.create();
         notification.append(new Error(expectedErrorMessage));
