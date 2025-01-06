@@ -21,8 +21,8 @@ public class Address extends AggregateRoot<AddressID> implements Cloneable {
     private String numeral;
     private String complement;
     private boolean active;
-    private String customerId;
-    private String sellerId;
+    private final String customerId;
+    private final String sellerId;
     private final Instant createdAt;
     private Instant updatedAt;
     private Instant deletedAt;

@@ -168,7 +168,7 @@ public final class Fixture {
                     number(),
                     null,
                     uuid(),
-                    uuid()
+                    null
             );
         }
 

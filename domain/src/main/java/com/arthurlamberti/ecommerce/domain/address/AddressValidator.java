@@ -34,6 +34,11 @@ public class AddressValidator extends Validator {
 
         if ((isNull(customerId) || customerId.isBlank()) && (isNull(selledId) || selledId.isBlank())) {
             this.validationHandler().append(new Error("'customerId' or 'sellerId' should not be null"));
+            return;
+        }
+
+        if ((!isNull(customerId) && !customerId.isBlank()) && (!isNull(selledId) && !selledId.isBlank())) {
+            this.validationHandler().append(new Error("'customerId' and 'sellerId' must be unique"));
         }
     }
 

@@ -48,9 +48,23 @@ public class CreateAddressUseCaseIT {
         assertEquals(expectedAddress.getCountry(), actualAddress.getCountry());
     }
 
-    //TODO implement tests
     @Test
-    public void givenAnInvalidNullCountryCommand_whenCallsCreateAddres_shouldReturnAnError() {
+    public void givenAnInvalidNullCountryCommand_whenCallsCreateAddress_shouldReturnAnError() {
+        final var expectedAddress = Fixture.AddressFixture.validAddress();
+        final var aCommand = CreateAddressCommand.with(
+                expectedAddress.getCountry(),
+                expectedAddress.getState(),
+                expectedAddress.getCity(),
+                expectedAddress.getStreet(),
+                expectedAddress.getZipCode(),
+                expectedAddress.getNumeral(),
+                expectedAddress.getComplement(),
+                expectedAddress.getCustomerId(),
+                expectedAddress.getSellerId()
+        );
+
+        var actualException = assertThrows(NotificationException.class,() -> createAddressUsecase.execute(aCommand));
+        assertNotNull(actualException);
     }
 
     @Test

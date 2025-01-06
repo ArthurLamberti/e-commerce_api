@@ -22,7 +22,7 @@ public class AddressTest extends UnitTest {
         final var expectedComplement = Fixture.characters(1, 100);
         final var expectedIsActive = Boolean.TRUE;
         final var expectedCustomerId = Fixture.uuid();
-        final var expectedSellerId = Fixture.uuid();
+        final String expectedSellerId = null;
 
         final var actualAddress = Address.newAddress(
                 expectedCountry,
@@ -61,7 +61,7 @@ public class AddressTest extends UnitTest {
         final var expectedNumber = Fixture.AddressFixture.number();
         final var expectedComplement = Fixture.characters(1, 100);
         final var expectedCustomerId = Fixture.uuid();
-        final var expectedSellerId = Fixture.uuid();
+        final String expectedSellerId = null;
 
         final var expectedErrorCount = 1;
         final var expectedErrorMessage = "'country' should not be null";
@@ -94,7 +94,7 @@ public class AddressTest extends UnitTest {
         final var expectedNumber = Fixture.AddressFixture.number();
         final var expectedComplement = Fixture.characters(1, 100);
         final var expectedCustomerId = Fixture.uuid();
-        final var expectedSellerId = Fixture.uuid();
+        final String expectedSellerId = null;
 
         final var expectedErrorCount = 1;
         final var expectedErrorMessage = "'country' should not be empty";
@@ -127,7 +127,7 @@ public class AddressTest extends UnitTest {
         final var expectedNumber = Fixture.AddressFixture.number();
         final var expectedComplement = Fixture.characters(1, 100);
         final var expectedCustomerId = Fixture.uuid();
-        final var expectedSellerId = Fixture.uuid();
+        final String expectedSellerId = null;
 
         final var expectedErrorCount = 1;
         final var expectedErrorMessage = "'state' should not be null";
@@ -160,7 +160,7 @@ public class AddressTest extends UnitTest {
         final var expectedNumber = Fixture.AddressFixture.number();
         final var expectedComplement = Fixture.characters(1, 100);
         final var expectedCustomerId = Fixture.uuid();
-        final var expectedSellerId = Fixture.uuid();
+        final String expectedSellerId = null;
 
         final var expectedErrorCount = 1;
         final var expectedErrorMessage = "'state' should not be empty";
@@ -193,7 +193,7 @@ public class AddressTest extends UnitTest {
         final var expectedNumber = Fixture.AddressFixture.number();
         final var expectedComplement = Fixture.characters(1, 100);
         final var expectedCustomerId = Fixture.uuid();
-        final var expectedSellerId = Fixture.uuid();
+        final String expectedSellerId = null;
 
         final var expectedErrorCount = 1;
         final var expectedErrorMessage = "'city' should not be null";
@@ -226,7 +226,7 @@ public class AddressTest extends UnitTest {
         final var expectedNumber = Fixture.AddressFixture.number();
         final var expectedComplement = Fixture.characters(1, 100);
         final var expectedCustomerId = Fixture.uuid();
-        final var expectedSellerId = Fixture.uuid();
+        final String expectedSellerId = null;
 
         final var expectedErrorCount = 1;
         final var expectedErrorMessage = "'city' should not be empty";
@@ -259,7 +259,7 @@ public class AddressTest extends UnitTest {
         final var expectedNumber = Fixture.AddressFixture.number();
         final var expectedComplement = Fixture.characters(1, 100);
         final var expectedCustomerId = Fixture.uuid();
-        final var expectedSellerId = Fixture.uuid();
+        final String expectedSellerId = null;
 
         final var expectedErrorCount = 1;
         final var expectedErrorMessage = "'street' should not be null";
@@ -292,7 +292,7 @@ public class AddressTest extends UnitTest {
         final var expectedNumber = Fixture.AddressFixture.number();
         final var expectedComplement = Fixture.characters(1, 100);
         final var expectedCustomerId = Fixture.uuid();
-        final var expectedSellerId = Fixture.uuid();
+        final String expectedSellerId = null;
 
         final var expectedErrorCount = 1;
         final var expectedErrorMessage = "'street' should not be empty";
@@ -325,7 +325,7 @@ public class AddressTest extends UnitTest {
         final var expectedNumber = Fixture.AddressFixture.number();
         final var expectedComplement = Fixture.characters(1, 100);
         final var expectedCustomerId = Fixture.uuid();
-        final var expectedSellerId = Fixture.uuid();
+        final String expectedSellerId = null;
 
         final var expectedErrorCount = 1;
         final var expectedErrorMessage = "'zipcode' should not be null";
@@ -358,7 +358,7 @@ public class AddressTest extends UnitTest {
         final var expectedNumber = Fixture.AddressFixture.number();
         final var expectedComplement = Fixture.characters(1, 100);
         final var expectedCustomerId = Fixture.uuid();
-        final var expectedSellerId = Fixture.uuid();
+        final String expectedSellerId = null;
 
         final var expectedErrorCount = 1;
         final var expectedErrorMessage = "'zipcode' should not be empty";
@@ -392,7 +392,7 @@ public class AddressTest extends UnitTest {
         final String expectedNumber = null;
         final var expectedComplement = Fixture.characters(1,99);
         final var expectedCustomerId = Fixture.uuid();
-        final var expectedSellerId = Fixture.uuid();
+        final String expectedSellerId = null;
 
         final var expectedErrorCount = 1;
         final var expectedErrorMessage = "'number' should not be null";
@@ -416,7 +416,6 @@ public class AddressTest extends UnitTest {
 
     @Test
     public void givenInvalidEmptyNumber_whenCallNewAddress_shouldReceiveAnException(){
-
         final var expectedCountry = Fixture.AddressFixture.country();
         final var expectedState = Fixture.AddressFixture.state();
         final var expectedCity = Fixture.AddressFixture.city();
@@ -425,7 +424,7 @@ public class AddressTest extends UnitTest {
         final var expectedNumber = "";
         final var expectedComplement = Fixture.characters(1,99);
         final var expectedCustomerId = Fixture.uuid();
-        final var expectedSellerId = Fixture.uuid();
+        final String expectedSellerId = null;
 
         final var expectedErrorCount = 1;
         final var expectedErrorMessage = "'number' should not be empty";
@@ -459,7 +458,7 @@ public class AddressTest extends UnitTest {
         final String expectedComplement = null;
         final var expectedIsActive = Boolean.TRUE;
         final var expectedCustomerId = Fixture.uuid();
-        final var expectedSellerId = Fixture.uuid();
+        final String expectedSellerId = null;
 
         final var actualAddress = Address.newAddress(
                 expectedCountry,
@@ -496,7 +495,7 @@ public class AddressTest extends UnitTest {
         final var expectedNumber = Fixture.AddressFixture.number();
         final var expectedComplement = Fixture.characters(101,300);
         final var expectedCustomerId = Fixture.uuid();
-        final var expectedSellerId = Fixture.uuid();
+        final String expectedSellerId = null;
 
         final var expectedErrorCount = 1;
         final var expectedErrorMessage = "'complement' should contains max of 100 characters";
@@ -520,8 +519,46 @@ public class AddressTest extends UnitTest {
     }
 
     @Test
-    public void givenAValidAddress_whenCallDeactivate_shouldReceiveOk(){
+    public void givenACustomerAndSellerId_whenCallsNewAddress_shouldReceiveAnError() {
+        final var expectedCountry = Fixture.AddressFixture.country();
+        final var expectedState = Fixture.AddressFixture.state();
+        final var expectedCity = Fixture.AddressFixture.city();
+        final var expectedStreet = Fixture.AddressFixture.street();
+        final var expectedZipCode = Fixture.AddressFixture.zipCode();
+        final var expectedNumber = Fixture.AddressFixture.number();
+        final var expectedComplement = Fixture.characters(0,89);
+        final var expectedCustomerId = Fixture.uuid();
+        final var expectedSellerId = Fixture.uuid();
 
+        final var expectedErrorCount = 1;
+        final var expectedErrorMessage = "'customerId' and 'sellerId' must be unique";
+
+        final var actualError = assertThrows(
+                NotificationException.class,
+                () ->  Address.newAddress(
+                        expectedCountry,
+                        expectedState,
+                        expectedCity,
+                        expectedStreet,
+                        expectedZipCode,
+                        expectedNumber,
+                        expectedComplement,
+                        expectedCustomerId,
+                        expectedSellerId)
+        );
+
+        assertEquals(expectedErrorCount, actualError.getErrors().size());
+        assertEquals(expectedErrorMessage, actualError.getFirstError().get().message());
+
+    }
+
+    @Test
+    public void givenANullCustomerAndSellerId_whenCallsNewAddress_shouldReceiveAnError(){
+
+    }
+
+    @Test
+    public void givenAValidAddress_whenCallDeactivate_shouldReceiveOk(){
         final var expectedCountry = Fixture.AddressFixture.country();
         final var expectedState = Fixture.AddressFixture.state();
         final var expectedCity = Fixture.AddressFixture.city();
@@ -531,7 +568,7 @@ public class AddressTest extends UnitTest {
         final var expectedComplement = Fixture.characters(1, 100);
         final var expectedIsActive = Boolean.FALSE;
         final var expectedCustomerId = Fixture.uuid();
-        final var expectedSellerId = Fixture.uuid();
+        final String expectedSellerId = null;
 
         final var actualAddress = Address.newAddress(
                 expectedCountry,
@@ -573,7 +610,7 @@ public class AddressTest extends UnitTest {
         final var expectedComplement = Fixture.characters(1, 100);
         final var expectedIsActive = Boolean.TRUE;
         final var expectedCustomerId = Fixture.uuid();
-        final var expectedSellerId = Fixture.uuid();
+        final String expectedSellerId = null;
 
         final var actualAddress = Address.newAddress(
                 expectedCountry,
@@ -616,10 +653,10 @@ public class AddressTest extends UnitTest {
         final var expectedStreet = Fixture.AddressFixture.street();
         final var expectedZipCode = Fixture.AddressFixture.zipCode();
         final var expectedNumber = Fixture.AddressFixture.number();
-        final var expectedComplement = Fixture.characters(1, 100);
+        final var expectedComplement = Fixture.characters(1, 99);
         final var expectedIsActive = Boolean.TRUE;
         final var expectedCustomerId = Fixture.uuid();
-        final var expectedSellerId = Fixture.uuid();
+        final String expectedSellerId = null;
 
         final var initialAddressCopy = initialAddress.clone();
 
