@@ -65,6 +65,10 @@ public final class Fixture {
         return FAKER.number().numberBetween(Integer.MIN_VALUE, -1);
     }
 
+    public static Double randomDouble(int min, int max) {
+        return FAKER.number().randomDouble(2,min,max);
+    }
+
     public static final class SellerFixture {
         public static String name() {
             return FAKER.name().firstName();
