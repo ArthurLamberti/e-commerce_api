@@ -111,17 +111,4 @@ public class Customer extends AggregateRoot<CustomerID> {
         this.updatedAt = now;
         return this;
     }
-
-    public Customer changeAddress(final Address address) {
-        final var notification = Notification.create();
-        if (isNull(address)) {
-            notification.append(new Error("'address' should not be null"));
-        }
-
-        if (notification.hasError()) {
-            throw new NotificationException("Failed to sold item", notification);
-        }
-        this.updatedAt = InstantUtils.now();
-        return this;
-    }
 }
