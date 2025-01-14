@@ -32,7 +32,6 @@ public class Item extends AggregateRoot<ItemID> {
     private Instant deletedAt;
 
     protected Item(final ItemID itemID,
-//                   final Seller seller,
                    final String sellerId,
                    final String name,
                    final String description,
@@ -150,46 +149,6 @@ public class Item extends AggregateRoot<ItemID> {
 
         this.qtyAvailable -= qtyToRemove;
         this.updatedAt = InstantUtils.now();
-    }
-
-    public void soldItem(Integer qtySold) {
-        final var notification = Notification.create();
-        if (qtySold <= 0) {
-            notification.append(new Error("Quantity sold should be positive"));
-        }
-        if (qtySold > this.qtyAvailable) {
-            notification.append(new Error("Item without stock"));
-        }
-        if (this.status == ItemStatus.INACTIVE) {
-            notification.append(new Error("Item should be activate to sold item"));
-        }
-
-        if (notification.hasError()) {
-            throw new NotificationException("Failed to sold item", notification);
-        }
-
-        this.qtyAvailable -= qtySold;
-        this.updatedAt = InstantUtils.now();
-    }
-
-    public void addReview(Integer scoreReview) {
-        final var notification = Notification.create();
-        if (scoreReview <= 0 || scoreReview > 5)
-            notification.append(new Error("Review score must be between 1 and 5"));
-
-        if (this.status == ItemStatus.INACTIVE) {
-            notification.append(new Error("Item should be activate to add review"));
-        }
-
-        if (notification.hasError()) {
-            throw new NotificationException("Failed to add review item", notification);
-        }
-
-        this.updatedAt = InstantUtils.now();
-    }
-
-    public double getReviewScore() {
-        return -1;
     }
 
     private void selfValidate() {

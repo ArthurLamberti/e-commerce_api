@@ -13,6 +13,9 @@ import com.arthurlamberti.ecommerce.domain.validation.handler.Notification;
 
 
 import java.util.Objects;
+import java.util.Optional;
+
+import static java.util.Objects.isNull;
 
 public class DefaultCreateAddressUsecase extends CreateAddressUsecase {
 
@@ -57,8 +60,8 @@ public class DefaultCreateAddressUsecase extends CreateAddressUsecase {
                 )
         );
 
-        final var customer = customerGateway.findById(CustomerID.from(aCustomerId));
-        final var seller = sellerGateway.findById(SellerID.from(aSellerId));
+        final var customer = isNull(aCustomerId) ? Optional.empty() : customerGateway.findById(CustomerID.from(aCustomerId));
+        final var seller = isNull(aSellerId) ? Optional.empty() : sellerGateway.findById(SellerID.from(aSellerId));
 
         if (customer.isEmpty() && seller.isEmpty()) {
             notification.append(new Error("id must exist"));

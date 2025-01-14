@@ -55,7 +55,6 @@ public class CreateAddressUsecaseTest extends UseCaseTest {
 
         when(addressGateway.create(any())).thenAnswer(returnsFirstArg());
         when(customerGateway.findById(any())).thenReturn(Optional.of(Fixture.CustomerFixture.validCustomer()));
-        when(sellerGateway.findById(any())).thenReturn(Optional.of(Fixture.SellerFixture.validSeller()));
 
         final var actualResult = usecase.execute(aCommand);
 
@@ -97,7 +96,6 @@ public class CreateAddressUsecaseTest extends UseCaseTest {
                 expectedAddress.getSellerId()
         );
         when(customerGateway.findById(any())).thenReturn(Optional.of(Fixture.CustomerFixture.validCustomer()));
-        when(sellerGateway.findById(any())).thenReturn(Optional.of(Fixture.SellerFixture.validSeller()));
 
         final var actualOutput = assertThrows(NotificationException.class, () -> usecase.execute(aCommand));
         assertNotNull(actualOutput);
@@ -125,7 +123,6 @@ public class CreateAddressUsecaseTest extends UseCaseTest {
         );
 
         when(customerGateway.findById(any())).thenReturn(Optional.of(Fixture.CustomerFixture.validCustomer()));
-        when(sellerGateway.findById(any())).thenReturn(Optional.of(Fixture.SellerFixture.validSeller()));
 
         final var actualOutput = assertThrows(NotificationException.class, () -> usecase.execute(aCommand));
         assertNotNull(actualOutput);
@@ -152,7 +149,6 @@ public class CreateAddressUsecaseTest extends UseCaseTest {
                 expectedAddress.getSellerId()
         );
         when(customerGateway.findById(any())).thenReturn(Optional.of(Fixture.CustomerFixture.validCustomer()));
-        when(sellerGateway.findById(any())).thenReturn(Optional.of(Fixture.SellerFixture.validSeller()));
 
         final var actualOutput = assertThrows(NotificationException.class, () -> usecase.execute(aCommand));
         assertNotNull(actualOutput);
@@ -179,7 +175,6 @@ public class CreateAddressUsecaseTest extends UseCaseTest {
                 expectedAddress.getSellerId()
         );
         when(customerGateway.findById(any())).thenReturn(Optional.of(Fixture.CustomerFixture.validCustomer()));
-        when(sellerGateway.findById(any())).thenReturn(Optional.of(Fixture.SellerFixture.validSeller()));
 
         final var actualOutput = assertThrows(NotificationException.class, () -> usecase.execute(aCommand));
         assertNotNull(actualOutput);
@@ -207,7 +202,6 @@ public class CreateAddressUsecaseTest extends UseCaseTest {
         );
 
         when(customerGateway.findById(any())).thenReturn(Optional.of(Fixture.CustomerFixture.validCustomer()));
-        when(sellerGateway.findById(any())).thenReturn(Optional.of(Fixture.SellerFixture.validSeller()));
 
         final var actualOutput = assertThrows(NotificationException.class, () -> usecase.execute(aCommand));
         assertNotNull(actualOutput);
@@ -234,7 +228,6 @@ public class CreateAddressUsecaseTest extends UseCaseTest {
                 expectedAddress.getSellerId()
         );
         when(customerGateway.findById(any())).thenReturn(Optional.of(Fixture.CustomerFixture.validCustomer()));
-        when(sellerGateway.findById(any())).thenReturn(Optional.of(Fixture.SellerFixture.validSeller()));
 
         final var actualOutput = assertThrows(NotificationException.class, () -> usecase.execute(aCommand));
         assertNotNull(actualOutput);
@@ -261,7 +254,6 @@ public class CreateAddressUsecaseTest extends UseCaseTest {
                 expectedAddress.getSellerId()
         );
         when(customerGateway.findById(any())).thenReturn(Optional.of(Fixture.CustomerFixture.validCustomer()));
-        when(sellerGateway.findById(any())).thenReturn(Optional.of(Fixture.SellerFixture.validSeller()));
 
         final var actualOutput = assertThrows(NotificationException.class, () -> usecase.execute(aCommand));
         assertNotNull(actualOutput);
@@ -288,7 +280,6 @@ public class CreateAddressUsecaseTest extends UseCaseTest {
                 expectedAddress.getSellerId()
         );
         when(customerGateway.findById(any())).thenReturn(Optional.of(Fixture.CustomerFixture.validCustomer()));
-        when(sellerGateway.findById(any())).thenReturn(Optional.of(Fixture.SellerFixture.validSeller()));
 
         final var actualOutput = assertThrows(NotificationException.class, () -> usecase.execute(aCommand));
         assertNotNull(actualOutput);
@@ -314,7 +305,6 @@ public class CreateAddressUsecaseTest extends UseCaseTest {
                 expectedAddress.getSellerId()
         );
         when(customerGateway.findById(any())).thenReturn(Optional.of(Fixture.CustomerFixture.validCustomer()));
-        when(sellerGateway.findById(any())).thenReturn(Optional.of(Fixture.SellerFixture.validSeller()));
 
         final var actualOutput = assertThrows(NotificationException.class, () -> usecase.execute(aCommand));
         assertNotNull(actualOutput);
@@ -341,7 +331,6 @@ public class CreateAddressUsecaseTest extends UseCaseTest {
                 expectedAddress.getSellerId()
         );
         when(customerGateway.findById(any())).thenReturn(Optional.of(Fixture.CustomerFixture.validCustomer()));
-        when(sellerGateway.findById(any())).thenReturn(Optional.of(Fixture.SellerFixture.validSeller()));
 
         final var actualOutput = assertThrows(NotificationException.class, () -> usecase.execute(aCommand));
         assertNotNull(actualOutput);
@@ -354,7 +343,7 @@ public class CreateAddressUsecaseTest extends UseCaseTest {
     public void givenAnInvalidNullNumberCommand_whenCallsCreateAddres_shouldReturnAnError(){
         final var expectedAddress = Fixture.AddressFixture.validAddress();
         final var expectedErrorCount = 1;
-        final var expectedErrorMessage = "'number' should not be null";
+        final var expectedErrorMessage = "'numeral' should not be null";
 
         final var aCommand = CreateAddressCommand.with(
                 expectedAddress.getCountry(),
@@ -369,7 +358,6 @@ public class CreateAddressUsecaseTest extends UseCaseTest {
         );
 
         when(customerGateway.findById(any())).thenReturn(Optional.of(Fixture.CustomerFixture.validCustomer()));
-        when(sellerGateway.findById(any())).thenReturn(Optional.of(Fixture.SellerFixture.validSeller()));
 
         final var actualOutput = assertThrows(NotificationException.class, () -> usecase.execute(aCommand));
         assertNotNull(actualOutput);
@@ -382,7 +370,7 @@ public class CreateAddressUsecaseTest extends UseCaseTest {
     public void givenAnInvalidEmptyNumberCommand_whenCallsCreateAddres_shouldReturnAnError(){
         final var expectedAddress = Fixture.AddressFixture.validAddress();
         final var expectedErrorCount = 1;
-        final var expectedErrorMessage = "'number' should not be empty";
+        final var expectedErrorMessage = "'numeral' should not be empty";
 
         final var aCommand = CreateAddressCommand.with(
                 expectedAddress.getCountry(),
@@ -396,7 +384,6 @@ public class CreateAddressUsecaseTest extends UseCaseTest {
                 expectedAddress.getSellerId()
         );
         when(customerGateway.findById(any())).thenReturn(Optional.of(Fixture.CustomerFixture.validCustomer()));
-        when(sellerGateway.findById(any())).thenReturn(Optional.of(Fixture.SellerFixture.validSeller()));
 
         final var actualOutput = assertThrows(NotificationException.class, () -> usecase.execute(aCommand));
         assertNotNull(actualOutput);

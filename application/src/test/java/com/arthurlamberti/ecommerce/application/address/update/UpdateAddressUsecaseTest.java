@@ -348,7 +348,7 @@ public class UpdateAddressUsecaseTest extends UseCaseTest {
         final var anAddress = Fixture.AddressFixture.validAddress();
 
         final var expectedErrorCount = 1;
-        final var expectedErrorMessage = "'number' should not be null";
+        final var expectedErrorMessage = "'numeral' should not be null";
 
         final var aCommand = UpdateAddressCommand.with(
                 anAddress.getId().getValue(),
@@ -376,7 +376,7 @@ public class UpdateAddressUsecaseTest extends UseCaseTest {
         final var anAddress = Fixture.AddressFixture.validAddress();
 
         final var expectedErrorCount = 1;
-        final var expectedErrorMessage = "'number' should not be empty";
+        final var expectedErrorMessage = "'numeral' should not be empty";
 
         final var aCommand = UpdateAddressCommand.with(
                 anAddress.getId().getValue(),
