@@ -105,12 +105,12 @@ public class AddressValidator extends Validator {
     private void checkNumberConstraints() {
         final var number = anAddress.getNumeral();
         if (isNull(number)) {
-            this.validationHandler().append(new Error("'number' should not be null"));
+            this.validationHandler().append(new Error("'numeral' should not be null"));
             return;
         }
 
         if (number.isBlank()) {
-            this.validationHandler().append(new Error("'number' should not be empty"));
+            this.validationHandler().append(new Error("'numeral' should not be empty"));
         }
     }
 
